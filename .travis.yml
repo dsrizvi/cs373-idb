@@ -1,0 +1,20 @@
+language: python
+
+python:
+    - "3.4"
+
+sudo: false
+
+install:
+    - pip install --upgrade pip
+    - pip --version
+    - pip install Flask
+
+before_script:
+    - uname -a
+    - printenv
+    - pip list
+
+script:
+    - date
+    - ls -al
