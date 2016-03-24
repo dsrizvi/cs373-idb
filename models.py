@@ -16,7 +16,10 @@ class Person(Base):
     image = Column(String)
     bio = Column(String)
 
+    location_id = Column(Integer, ForeignKey('locations.id'))
+
     connections = relationship("Connection", back_populates="connections")
+    location = relationship("Location", back_populates="locations")
 
 class Company(Base):
     __tablename__ = 'companies'
@@ -24,31 +27,30 @@ class Company(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    num_jobs = Column(Integer, nullable=False)
+    follower_count = Column(String, nullable=False)
     num_investors = Column(Integer, nullable=False)
-    tag = Column(String, nullable=False)
+    market = Column(String, nullable=False)
     product_desc = Column(String)
     company_url = Column(String)
     logo_url = Column(String)
 
+    person_id = Column(Integer, ForeignKey('locations.id'))
+
     connections = relationship("Connection", back_populates="connections")
-    jobs = relationship("Job", back_populates="jobs")
+    location = relationship("Location", back_populates="locations")
 
-class Job(Base):
-    __tablename__ = 'jobs'
-    
+class Location(Base):
+    __tablename__ = 'locations'
+
     id = Column(Integer, primary_key=True)
-    title = Column(String, nullable=False)
-    job_type = Column(String, nullable=False)
-    salary_min = Column(Integer, nullable=False)
-    salary_max = Column(Integer, nullable=False)
-    equity_cliff = Column(Double, nullable=False)
-    equity_min = Column(Double)
-    equity_max = Column(Double)
+    name = Column(String, nullable=False)
+    investor_followers = Column(String, nullable=False)
+    followers = Colunn(String, nullable=False)
+    num_companies = Column(Integer, nullable=False)
+    num_people = Column(Integer, nullable=False)
 
-    company_id = Column(Integer, ForeignKey('companies.id'))
-
-    company = relationship("Company", back_populates="companies")
+    companies = relationship("Company", back_populates="companies")
+    people = relationship("Person", back_populates="people")
 
 class Connection(Base):
     __tablename__ = 'connections'
