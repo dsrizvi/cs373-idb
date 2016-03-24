@@ -21,6 +21,13 @@ class Person(Base):
     connections = relationship("Connection", back_populates="connections")
     location = relationship("Location", back_populates="locations")
 
+    def __init__(self, name, location, founder, investor, num_companies):
+        self.name = name
+        self.location = location
+        self.founder = founder
+        self.investor = investor
+        self.num_companies = num_companies
+
 class Company(Base):
     __tablename__ = 'companies'
     
@@ -38,6 +45,12 @@ class Company(Base):
 
     connections = relationship("Connection", back_populates="connections")
     location = relationship("Location", back_populates="locations")
+    def __init__(self, name, location, follower_count, num_investors, market):
+        self.name = name
+        self.location = location
+        self.follower_count = follower_count
+        self.num_investor = num_investors
+        self.market = market
 
 class Location(Base):
     __tablename__ = 'locations'
@@ -51,6 +64,13 @@ class Location(Base):
 
     companies = relationship("Company", back_populates="companies")
     people = relationship("Person", back_populates="people")
+
+    def __init__(self, name, investor_followers, followers, num_companies, num_people):
+        self.name = name
+        self.investor_followers = investor_followers
+        self.followers = followers
+        self.num_companies = num_companies
+        self.num_people = num_people
 
 class Connection(Base):
     __tablename__ = 'connections'
