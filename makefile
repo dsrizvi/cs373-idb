@@ -3,7 +3,7 @@ FILES :=                              \
     .gitignore                        \
     makefile                          \
     apiary.apib                       \
-    model.html                        \
+    models.html                       \
     models.py                         \
     IDB1.log                          \
     UML.pdf                           \
@@ -38,7 +38,7 @@ config:
 
 scrub:
 	make clean
-	rm -f  model.html
+	rm -f  models.html
 	rm -f  IDB1.log
 
 status:
@@ -48,11 +48,9 @@ status:
 	git remote -v
 	git status
 
-test: tests.py
-    python3 tests.py
+test: tests.py python3 tests.py
 
-model.html: models.py
-	pydoc3 -w models
+models.html: models.py pydoc3 -w models
 
 IDB1.log:
 	git log > IDB1.log
