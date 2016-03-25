@@ -28,9 +28,6 @@ check:
     fi;                                           \
     echo "success";
 
-clean:
-    rm -f  *.pyc
-
 config:
     git config -l
 
