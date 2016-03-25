@@ -127,9 +127,9 @@ class TestIdb(TestCase):
         self.assertEqual(investor, person.investor)
         self.assertEqual(num_companies, person.num_companies)
     
-    # -------------
-    # Person tables
-    # -------------
+    # --------------
+    # Company tables
+    # --------------
 
     def test_company_add_1(self):
         s = session()
@@ -149,7 +149,7 @@ class TestIdb(TestCase):
         s.delete(facebook)
         s.commit()
 
-     def test_company_query_1(self):
+    def test_company_query_1(self):
         s = session()
 
         name = "Facebook"
@@ -294,7 +294,7 @@ class TestIdb(TestCase):
         s.delete(menlo)
         s.commit()
 
-def test_location_delete_1(self):
+    def test_location_delete_1(self):
         s = session()
 
         name = "Menlo Park"
@@ -358,3 +358,9 @@ def test_location_delete_1(self):
         self.assertEqual(num_companies, company.num_companies)
         self.assertEqual(num_people, company.num_people) 
 
+# ----
+# main
+# ----
+
+if __name__ == "__main__":
+    main()
