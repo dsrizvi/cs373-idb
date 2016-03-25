@@ -1,13 +1,10 @@
-FORMAT: 1A
-HOST: http://seriesz.co/
-
 # Series Z
 
 Series Z is a simple API allowing consumers to view polls and vote in them.
 
 ## List Startups [/startups]
 
-### List All Startups [GET]
+### List All Startups [GET] 
 Returns a list of all startups as a JSON object.
 
 + Response 200 (application/json)
@@ -23,35 +20,25 @@ Returns a list of all startups as a JSON object.
 + Parameters
     + id (required,string) - ID of the startup
 
-### Get startup by ID[GET]
+### Get startup by ID[GET]   
 Returns the startup with the given ID as a JSON object.
 + Response 200 (application/json)
 
-        [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "id": "123"
+                "name": "Facebook"
+                "location": "Menlo Park"
+                "follower_count": "123"
+                "num_investors": "123"
+                "market": "Social"
+                "product_desc": "A social network"
+                "company_url": "https://facebook.com"
+                "logo_url": "https://facebook.com/123"
             }
-        ]
 
 ## Get Persons [/people]
 
-### List Persons [GET]
+### List Persons [GET] 
 Returns a list of all people as a JSON object.
 
 + Response 200 (application/json)
@@ -68,77 +55,51 @@ Returns a list of all people as a JSON object.
 + Parameters
     + id (required,string) - ID of the startup
 
-### Get person by ID[GET]
+### Get person by ID[GET]   
 Returns the person with the given ID as a JSON object.
 + Response 200 (application/json)
 
             {
-                    "id":
-                    "name":
-                    "location":
-                    "founder":
-                    "investor":
-                    "num_companies":
-                    "image":
-                    "bio":
+                    "id": "123"
+                    "name": "Mark Zuckerburg
+                    "location": "Menlo Park"
+                    "founder": "Yes"
+                    "investor": "Yes"
+                    "num_companies": "1"
+                    "image": "https://facebook.com/zuck"
+                    "bio": "A Harvard dropout"
             }
-
+        
 ## Get Locations [/locations]
 
-### List Locations [GET]
+### List Locations [GET] 
 Returns a list of all locations as a JSON object.
 
 + Response 200 (application/json)
 
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "id": "123"
+                "name": "Sanfrancisco
             }
         ]
 
-## Get Location [/people/{id}]
+## Get Location [/locations/{id}]
 + Parameters
     + id (required,string) - ID of the startup
 
-### Get person by ID[GET]
+### Get person by ID[GET]   
 Returns the location with the given ID as a JSON object.
 + Response 200 (application/json)
 
-        [
+        
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "id": "123"
+                "name": "San Franscisco"
+                "investor_followers": "123:
+                "followers": "123"
+                "num_companies": "123"
+                "num_people": "123"      
             }
-        ]
-
+        
+        
