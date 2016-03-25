@@ -1,6 +1,6 @@
 # Series Z
 
-Series Z is a simple API allowing consumers to view polls and vote in them.
+Series Z is a simple API allowing consumers to access data about startups, people, and locations.
 
 ## List Startups [/startups]
 
@@ -78,13 +78,14 @@ Returns a list of all locations as a JSON object.
                 "id": "123"
                 "name": "Sanfrancisco"
             }
+            ...
         ]
 
 ## Get Location [/locations/{id}]
 + Parameters
     + id (required,string) - ID of the startup
 
-### Get person by ID[GET]   
+### Get location by ID[GET]   
 Returns the location with the given ID as a JSON object.
 + Response 200 (application/json)
 
