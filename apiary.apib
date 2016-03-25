@@ -51,17 +51,13 @@ Returns a list of all people as a JSON object.
             }
         ]
 
-## Get Person [/people/{id}]
-+ Parameters
-    + id (required,string) - ID of the startup
-
 ### Get person by ID[GET]   
 Returns the person with the given ID as a JSON object.
 + Response 200 (application/json)
 
             {
                     "id": "123"
-                    "name": "Mark Zuckerburg
+                    "name": "Mark Zuckerburg"
                     "location": "Menlo Park"
                     "founder": "Yes"
                     "investor": "Yes"
@@ -80,15 +76,16 @@ Returns a list of all locations as a JSON object.
         [
             {
                 "id": "123"
-                "name": "Sanfrancisco
+                "name": "Sanfrancisco"
             }
+            ...
         ]
 
 ## Get Location [/locations/{id}]
 + Parameters
     + id (required,string) - ID of the startup
 
-### Get person by ID[GET]   
+### Get location by ID[GET]   
 Returns the location with the given ID as a JSON object.
 + Response 200 (application/json)
 
@@ -96,10 +93,9 @@ Returns the location with the given ID as a JSON object.
             {
                 "id": "123"
                 "name": "San Franscisco"
-                "investor_followers": "123:
+                "investor_followers": "123"
                 "followers": "123"
                 "num_companies": "123"
                 "num_people": "123"      
             }
-        
         
