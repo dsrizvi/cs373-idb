@@ -1,0 +1,186 @@
+commit 231024a83a1f79a666cf06812e7ae9148ae7918b
+Merge: 7f416e8 cfa971b
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Thu Mar 24 20:36:50 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 7f416e864c6114c200e1c839fee0d029113c1f2e
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Thu Mar 24 20:36:31 2016 -0500
+
+    Created models.html
+
+commit cfa971b6c678e68aa061bc43e0f1ad92941f844a
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:33:29 2016 -0500
+
+    README fix + apib additions
+
+commit 666150cd7bab0e46e595e43a04e4a2f3bcb1a2a7
+Merge: 4029a50 237f729
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:31:50 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 4029a50b747ee1603c946d68a2f5fe37d677a99c
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:31:43 2016 -0500
+
+    react config files added
+
+commit 237f72974fd8fb40ba04a58f067ef9b9561eea1e
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:14:55 2016 -0500
+
+    Update apiary.apib
+
+commit a950a785aa64415592fb419728c4bc36ed89df02
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:11:07 2016 -0500
+
+    Update apiary.apib
+
+commit bb92007a99c88c0075f2a7112d8ba1ebd3b65239
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:10:42 2016 -0500
+
+    apiary docs updated again
+
+commit 6e9adeb9035d2aaedbaadf2f1d5a094bfd9e2068
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:10:02 2016 -0500
+
+    updated apiary again
+
+commit c868cd0603df89b8b71215ba162f9e8f994094d1
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:09:14 2016 -0500
+
+    added README.md file; close #19
+
+commit dc31277f867489f3ce154d2b0da7ca5b4e8245fb
+Merge: dee859e 4d953f8
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:07:52 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 4d953f832c9c5eece9b84dbf84cc3c3bae2c0697
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:07:37 2016 -0500
+
+    apiary docs actually updated
+
+commit dee859e3cb85c81fab57b1c31a2b96072e3ca770
+Merge: 8e003eb 3e1ecf5
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:07:34 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 8e003eb34bf4bf62616f4161eb57db0ba0560d08
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:07:28 2016 -0500
+
+    install more packages in travis; close issue #17
+
+commit 3e1ecf5ecba1aba6af5a63829904c6447a1b2c4d
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:07:06 2016 -0500
+
+    apiary docs updated
+
+commit af424f486c1791444df3131e091a4d1c256011cf
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 20:04:23 2016 -0500
+
+    Update .travis.yml
+
+commit 0e4432d70e94d7dfb98a0f63da4296ec6020507d
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 19:43:49 2016 -0500
+
+    apiary extenstion corrected
+
+commit 0418e1c585973e99d8e5fc9d214bbae96f6a1c2e
+Merge: fc96e6b e3808f4
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 19:40:38 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit fc96e6bb9729b85be2f37adf34ed65513199eb82
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 19:40:25 2016 -0500
+
+    apiary doc added
+
+commit e3808f420e5ad99df2618a55c5e5be9365373039
+Author: iamkeeb <amanda.keebler@gmail.com>
+Date:   Thu Mar 24 18:52:01 2016 -0500
+
+    adding makefile
+
+commit b36bf2426c6ec3467b5c8cfa3e9f63c542e1e66e
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 16:18:54 2016 -0500
+
+    Added files via upload
+
+commit fec7744e38b51aaedc07b85a443fde0d05c926e1
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 16:06:09 2016 -0500
+
+    Added YUML diagram
+
+commit 11e85a380ccaf78da8fcfa831910a7126e9c37ef
+Merge: 7ada9c5 6b27fcd
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 23:59:28 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 7ada9c51a6ed5a6f7314252e95357e932c1a7539
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 23:59:04 2016 -0500
+
+    Added unit tests
+
+commit 6b27fcd21561213e9f3c5f645a09727c82e18a61
+Merge: 747398f c95949f
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Mar 23 20:27:36 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 747398f108a1c14addc882f8b89fbccd47f32ea1
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Mar 23 20:27:22 2016 -0500
+
+    travis yml edited
+
+commit c95949f36085376d650535159360d32bae53abe4
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 20:17:48 2016 -0500
+
+    revised models with Locations entity
+
+commit 1a4f0f5b5bd5098d517eeeee96ae3e623611c53d
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 19:06:24 2016 -0500
+
+    recreated models to conform to startup data set
+
+commit b5283564e72943b932f47101318cf176ef8aedbf
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Tue Mar 22 21:44:53 2016 -0500
+
+    rough outline for models.py
+
+commit 4505f9c49d598cf5684f6f64dfe0c2d0bb2d7953
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Tue Mar 22 19:55:23 2016 -0500
+
+    first commit
