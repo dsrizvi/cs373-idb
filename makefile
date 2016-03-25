@@ -30,7 +30,6 @@ check:
 
 clean:
     rm -f  *.pyc
-    rm -rf __pycache__
 
 config:
     git config -l
