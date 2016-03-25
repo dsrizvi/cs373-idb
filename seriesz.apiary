@@ -1,0 +1,141 @@
+# Series Z
+
+Series Z is a simple API allowing consumers to view polls and vote in them.
+
+## List Startups [/startups]
+
+### List All Startups [GET]
+Returns a list of all startups as a JSON object.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "name": "Facebook",
+                "id": "12234"
+            }, ...
+        ]
+
+## Get Startup [/startups/{id}]
++ Parameters
+    + id (required,string) - ID of the startup
+
+### Get startup by ID[GET]
+Returns the startup with the given ID as a JSON object.
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+## Get Persons [/people]
+
+### List Persons [GET]
+Returns a list of all people as a JSON object.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "name": "Mark Zuckerburg"
+                "id": "12345",
+                ...
+            }
+        ]
+
+## Get Person [/people/{id}]
++ Parameters
+    + id (required,string) - ID of the startup
+
+### Get person by ID[GET]
+Returns the person with the given ID as a JSON object.
++ Response 200 (application/json)
+
+            {
+                    "id":
+                    "name":
+                    "location":
+                    "founder":
+                    "investor":
+                    "num_companies":
+                    "image":
+                    "bio":
+            }
+
+## Get Locations [/locations]
+
+### List Locations [GET]
+Returns a list of all locations as a JSON object.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+## Get Location [/people/{id}]
++ Parameters
+    + id (required,string) - ID of the startup
+
+### Get person by ID[GET]
+Returns the location with the given ID as a JSON object.
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
