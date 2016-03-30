@@ -5,3 +5,4 @@ app/js/bundle.min.js
 build
 npm-debug.log
 *.swp
+__pycache__/
