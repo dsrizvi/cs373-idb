@@ -1,56 +1,23 @@
-FILES :=                              \
-    .travis.yml                       \
-    .gitignore                        \
-    makefile                          \
-    apiary.apib                       \
-    models.html                       \
-    models.py                         \
-    IDB1.log                          \
-    UML.pdf                           \
-    tests.py
+IMAGE_APP := seriesz_app
+IMAGE_LB := seriesz_lb
+IMAGE_DB := seriesz_db
+DOCKER_HUB_USERNAME := dsrizvi
 
-check:
-	@not_found=0;                                 \
-    for i in $(FILES);                            \
-    do                                            \
-        if [ -e $$i ];                            \
-        then                                      \
-            echo "$$i found";                     \
-        else                                      \
-            echo "$$i NOT FOUND";                 \
-            not_found=`expr "$$not_found" + "1"`; \
-        fi                                        \
-    done;                                         \
-    if [ $$not_found -ne 0 ];                     \
-    then                                          \
-        echo "$$not_found failures";              \
-        exit 1;                                   \
-    fi;                                           \
-    echo "success";
+docker-build-push:
+	@echo "Source docker.env in carina access file first..."
+	@echo "Building all images..."
 
-clean:
-	rm -f  .coverage
-	rm -f  *.pyc
-	rm -rf __pycache__
+	docker login
 
-config:
-	git config -l
+	docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_APP} flask/app
+	docker push ${DOCKER_HUB_USERNAME}/${IMAGE_APP}
 
-scrub:
-	make clean
-	rm -f  models.html
-	rm -f  IDB1.log
+	docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_LB} flask/db
+	docker push ${DOCKER_HUB_USERNAME}/${IMAGE_LB}
 
-status:
-	make clean
-	@echo
-	git branch
-	git remote -v
-	git status
+	docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_LB} flask/lb
+	docker push ${DOCKER_HUB_USERNAME}/${IMAGE_LB}
 
-test: tests.py python3 tests.py
 
-models.html: models.py pydoc3 -w models
-
-IDB1.log:
-	git log > IDB1.log
+docker-run:
+	 docker-compose --file flask/docker-compose-prod.yml up -d
