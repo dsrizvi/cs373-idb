@@ -116,6 +116,21 @@ class Location(Base):
         self.num_companies = num_companies
         self.num_people = num_people
 
+class Investment(Base):
+    """
+    Base is a class that facilitates the many to many relationship between companies and itself. This allows for the representation of venture capital companies    """
+
+    __tablename__ = 'investments'
+
+    id = Column(Integer, primary_key=True)
+
+    #Investment foreign keys
+    company_1_id = Column(Integer, ForeignKey('companies.id'))
+    company_2_id = Column(Integer, ForeignKey('companies.id'))
+
+    #Investment relationships
+    company = relationship("Company", back_populates="companies")
+
 class Connection(Base):
     """
     Connection is a class that facilitates the many to many relationship between people and companies
@@ -124,6 +139,8 @@ class Connection(Base):
     __tablename__ = 'connections'
     
     id = Column(Integer, primary_key=True)
+
+    isInvestor = Column(Boolean, nullable=False)
 
     #Connection foreign keys
     person_id = Column(Integer, ForeignKey('people.id'))
