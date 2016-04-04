@@ -15,6 +15,7 @@ services:
 
   app:
     # The app container. Built from the app/Dockerfile.
+    container_name: seriesz_app
     build: app
     restart: unless-stopped
     networks:

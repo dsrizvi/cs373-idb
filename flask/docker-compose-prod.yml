@@ -30,9 +30,9 @@ services:
       file: docker-compose-common.yml
       service: db
     image: dsrizvi/seriesz_db
-    expose:
-      # Expose port 3306 so it's only visibile on the container, not the host
-      - "3306"
+    # expose:
+    #   # Expose port 3306 so it's only visibile on the container, not the host
+    #   # - "3306"
     env_file:
       - seriesz-mysql-prod.env
       - seriesz-mysql-root-prod.env
