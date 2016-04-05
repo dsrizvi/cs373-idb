@@ -1,9 +1,6 @@
 from angel import angel
 import time
 
-CLIENT_ID = 'f4bc189150f55e3a4e04d7dd47d6f60d5d0101b7c16c9719'
-CLIENT_SECRET = '45e8cf40afa601846ea9af9dcf4d101aef2d183514690433'
-ACCESS_TOKEN = '7b2f970c65843c003f29faab3cd089d9a2fe65fb738a1f69'
 al = angel.AngelList(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
 
 def scrape():
@@ -11,7 +8,7 @@ def scrape():
 	region_ids.append(1692)
 	region_ids.append(1664)
 	num_ids = 100
-	company_ids = get_company_ids(region_ids, num_ids)	
+	company_ids = get_company_ids(region_ids, num_ids)
 
     for company_id in company_ids:
         #query table for company to see if already existing
@@ -80,7 +77,7 @@ def enter_founder_investors(roles, company):
            	if user DNE:
            		user = al.get_user(role['tagged']['id'])
             	enter_user(user)
-            
+
 			if role['role'] == "founder":
 				isInvestor = False
 			else:
@@ -88,7 +85,7 @@ def enter_founder_investors(roles, company):
             person_id = role['tagged']['id']
             company_id = company['id']
  			#upload connection into Connection table
-		
+
 		if role['tagged']['type'] == "Startup":
 			#query table for Company name
             if company DNE:
@@ -97,7 +94,7 @@ def enter_founder_investors(roles, company):
             investor_id = role['tagged']['id']
             company_id = company['id']
 			#upload investment into Investment table
-			
+
 def get_company_ids(region_ids, num_ids):
 	"""
 	region_ids: a list of ids for regions from which you want company ids
@@ -114,4 +111,4 @@ def get_company_ids(region_ids, num_ids):
                 break
             startup_ids.append(startup['id'])
             count += count
-    
+

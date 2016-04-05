@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
-from sqlalchemy import *
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+# from db import Base
 
 Base = declarative_base()
+
 
 #------
 #Person
@@ -31,8 +33,8 @@ class Person(Base):
     location_id = Column(Integer, ForeignKey('locations.id'))
 
     #Person relationships
-    connections = relationship("Connection", back_populates="connections")
-    location = relationship("Location", back_populates="locations")
+    location = relationship("Location", back_populates="people")
+    companies = relationship("Company", back_populates="people")
 
     def __init__(self, name, location, founder, investor, num_companies):
         """
@@ -67,11 +69,11 @@ class Company(Base):
     logo_url = Column(String)
 
     #Company foreign keys
-    person_id = Column(Integer, ForeignKey('locations.id'))
+    location_id = Column(Integer, ForeignKey('locations.id'))
 
     #Company relationships
-    connections = relationship("Connection", back_populates="connections")
-    location = relationship("Location", back_populates="locations")
+    location = relationship("Location", back_populates="companies")
+    people = relationship("People", back_populates="companies")
 
     def __init__(self, name, location, follower_count, num_investors, market):
         """
@@ -103,8 +105,8 @@ class Location(Base):
     num_people = Column(Integer, nullable=False)
 
     #Location relationships
-    companies = relationship("Company", back_populates="companies")
-    people = relationship("Person", back_populates="people")
+    companies = relationship("Company", back_populates="location")
+    people = relationship("Person", back_populates="location")
 
     def __init__(self, name, investor_followers, followers, num_companies, num_people):
         """
@@ -115,37 +117,3 @@ class Location(Base):
         self.followers = followers
         self.num_companies = num_companies
         self.num_people = num_people
-
-class Investment(Base):
-    """
-    Base is a class that facilitates the many to many relationship between companies and itself. This allows for the representation of venture capital companies    """
-
-    __tablename__ = 'investments'
-
-    id = Column(Integer, primary_key=True)
-
-    #Investment foreign keys
-    company_1_id = Column(Integer, ForeignKey('companies.id'))
-    company_2_id = Column(Integer, ForeignKey('companies.id'))
-
-    #Investment relationships
-    company = relationship("Company", back_populates="companies")
-
-class Connection(Base):
-    """
-    Connection is a class that facilitates the many to many relationship between people and companies
-    """
-
-    __tablename__ = 'connections'
-    
-    id = Column(Integer, primary_key=True)
-
-    isInvestor = Column(Boolean, nullable=False)
-
-    #Connection foreign keys
-    person_id = Column(Integer, ForeignKey('people.id'))
-    company_id = Column(Integer, ForeignKey('companies.id'))
-
-    #Connection relationships
-    person = relationship("Person", back_populates="people")
-    company = relationship("Company", back_populates="companies")

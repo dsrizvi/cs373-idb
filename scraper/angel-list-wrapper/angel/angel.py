@@ -33,7 +33,7 @@ _STARTUP_C = '{c_api}/{api}/startups/{id_}/comments?access_token={at}'
 _TAGS = '{c_api}/{api}/tags/{id_}/?access_token={at}'
 _TAGS_CHILDREN = '{c_api}/{api}/tags/{id_}/children?access_token={at}'
 _TAGS_PARENTS = '{c_api}/{api}/tags/{id_}/parents?access_token={at}'
-_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?order=popularity&access_token={at}'
+_TAGS_STARTUPS = '{c_api}/{api}/tags/{id_}/startups?order=popularity&access_token={at}&page={pg}'
 _TAGS_USERS = '{c_api}/{api}/tags/{id_}/users?access_token={at}'
 _STATUS_U = '{c_api}/{api}/status_updates?startup_id={startup_id}&access_token={at}'
 _REVIEWS_USER = '{c_api}/{api}/reviews?user_id={user_id}&access_token={at}'
@@ -357,11 +357,12 @@ class AngelList(object):
                                                                       id_=id_,
                                                                       at=self.access_token))
 
-  def get_tags_startups(self, id_):
+  def get_tags_startups(self, id_, pg):
     return _get_request(_TAGS_STARTUPS.format(c_api=_C_API_BEGINNING,
-                                                                      api=_API_VERSION,
-                                                                      id_=id_,
-								      at=self.access_token))
+                                              api=_API_VERSION,
+                                              id_=id_,
+                                              pg = pg,
+							                                at=self.access_token))
 
   def get_tags_users(self, id_):
     """ Get a particular user which are tagged based on the id_

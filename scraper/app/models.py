@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, create_engine, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, backref
-from db import Base
+from sqlalchemy.orm import relationship
+import datetime
 
-
-class Guest(Base):
-    __tablename__ = 'guests'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(256), nullable=False)
-
-    def __repr__(self):
-        return "[Guest: id={}, name={}]".format(self.id, self.name)
+Base = declarative_base()
+engine = create_engine('sqlite:///seriesz.db', echo=True)
 
 #------
 #Person
@@ -38,10 +31,11 @@ class Person(Base):
 
     #Person foreign keys
     location_id = Column(Integer, ForeignKey('locations.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
 
     #Person relationships
-    connections = relationship("Connection", back_populates="connections")
-    location = relationship("Location", back_populates="locations")
+    location = relationship("Location", back_populates="people")
+    companies = relationship("Company", back_populates="people")
 
     def __init__(self, name, location, founder, investor, num_companies):
         """
@@ -79,8 +73,8 @@ class Company(Base):
     location_id = Column(Integer, ForeignKey('locations.id'))
 
     #Company relationships
-    connections = relationship("Connection", back_populates="companies")
     location = relationship("Location", back_populates="companies")
+    people = relationship("Person", back_populates="companies")
 
     def __init__(self, name, location, follower_count, num_investors, market):
         """
@@ -112,8 +106,8 @@ class Location(Base):
     num_people = Column(Integer, nullable=False)
 
     #Location relationships
-    companies = relationship("Company", back_populates="locations")
-    people = relationship("Person", back_populates="locations")
+    companies = relationship("Company", back_populates="location")
+    people = relationship("Person", back_populates="location")
 
     def __init__(self, name, investor_followers, followers, num_companies, num_people):
         """
@@ -125,19 +119,17 @@ class Location(Base):
         self.num_companies = num_companies
         self.num_people = num_people
 
-class Connection(Base):
+class Current(Base):
     """
-    Connection is a class that facilitates the many to many relationship between people and companies
+    Location is a class representing a geographical region that hosts People and Companies
     """
 
-    __tablename__ = 'connections'
-
+    __tablename__ = 'current'
     id = Column(Integer, primary_key=True)
+    city_id = Column(String, nullable=False)
+    page_num = Column(String, nullable=False)
+    total = Column(Integer, nullable=False)
+    per_page = Column(Integer, nullable=False)
+    last_page = Column(Integer, nullable=False)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
-    #Connection foreign keys
-    person_id = Column(Integer, ForeignKey('people.id'))
-    company_id = Column(Integer, ForeignKey('companies.id'))
-
-    #Connection relationships
-    person = relationship("Person", back_populates="people")
-    company = relationship("Company", back_populates="companies")
