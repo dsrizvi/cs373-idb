@@ -1,12 +1,29 @@
 #!/usr/bin/env python3
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# from db import Base
+from db import Base
 
-Base = declarative_base()
 
+class Guest(Base):
+    __tablename__ = 'guests'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(256), nullable=False)
+
+    def __repr__(self):
+        return "[Guest: id={}, name={}]".format(self.id, self.name)
+
+class Post(Base):
+
+    __tablename__ = 'posts'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String, nullable=False)
+
+    def __init__(self, text):
+        self.text = text
 
 #------
 #Person
@@ -33,8 +50,8 @@ class Person(Base):
     location_id = Column(Integer, ForeignKey('locations.id'))
 
     #Person relationships
-    location = relationship("Location", back_populates="people")
-    companies = relationship("Company", back_populates="people")
+    connections = relationship("Connection", back_populates="connections")
+    location = relationship("Location", back_populates="locations")
 
     def __init__(self, name, location, founder, investor, num_companies):
         """
@@ -69,11 +86,11 @@ class Company(Base):
     logo_url = Column(String)
 
     #Company foreign keys
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    person_id = Column(Integer, ForeignKey('locations.id'))
 
     #Company relationships
-    location = relationship("Location", back_populates="companies")
-    people = relationship("People", back_populates="companies")
+    connections = relationship("Connection", back_populates="connections")
+    location = relationship("Location", back_populates="locations")
 
     def __init__(self, name, location, follower_count, num_investors, market):
         """
@@ -105,8 +122,8 @@ class Location(Base):
     num_people = Column(Integer, nullable=False)
 
     #Location relationships
-    companies = relationship("Company", back_populates="location")
-    people = relationship("Person", back_populates="location")
+    companies = relationship("Company", back_populates="companies")
+    people = relationship("Person", back_populates="people")
 
     def __init__(self, name, investor_followers, followers, num_companies, num_people):
         """
@@ -117,3 +134,20 @@ class Location(Base):
         self.followers = followers
         self.num_companies = num_companies
         self.num_people = num_people
+
+class Connection(Base):
+    """
+    Connection is a class that facilitates the many to many relationship between people and companies
+    """
+
+    __tablename__ = 'connections'
+
+    id = Column(Integer, primary_key=True)
+
+    #Connection foreign keys
+    person_id = Column(Integer, ForeignKey('people.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
+
+    #Connection relationships
+    person = relationship("Person", back_populates="people")
+    company = relationship("Company", back_populates="companies")

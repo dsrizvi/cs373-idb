@@ -1,58 +1,42 @@
-version: "2"
 
-# A Docker Compose file for configuration of the development environment
+app:
+  restart: always
+  build: ./app
+  container_name: series-z-flask
+  expose:
+    - "8000"
+  links:
+    - postgres:postgres
+  volumes:
+    - /usr/src/app/static
+  env_file: postgres-config.env
+  command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
 
-services:
-  # load balancer
-  lb:
-    extends:
-      file: docker-compose-common.yml
-      service: lb
+nginx:
+  restart: always
+  build: ./nginx/
+  container_name: series-z-nginx
+  ports:
+    - "80:80"
+  volumes:
+    - /www/static
+  volumes_from:
+    - app
+  links:
+    - app:app
 
-  # app
-  app:
-    extends:
-      file: docker-compose-common.yml
-      service: app
-    ports:
-      # Publish the port so it's visible on the host, you can access the app directly
-      - "8000:8000"
-    volumes:
-      # Mount the app dir in the container as /src so our changes to the app code
-      # are also changed in the container
-      - ./app:/src
-    environment:
-      # Environment variables to configure the app on startup.
-      # We don't care about commiting these creds to GitHub because they're only
-      # for our local development environment
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin-password
-    command: gunicorn --reload app:app --bind 0.0.0.0:8000
-      # Run Gunicorn to serve app requests and reload on change so we can see our
-      # changes to the app code
+data:
+  image: postgres:latest
+  container_name: series-z-data
+  volumes:
+    - /var/lib/postgresql
+  command: "true"
 
-  db:
-    extends:
-      file: docker-compose-common.yml
-      service: db
-    ports:
-      # Publish the port so it's visible on the host, you can access the db directly
-      - "3306:3306"
-    environment:
-      # Environment variables to configure MySQL on startup.
-      # We don't care about commiting these creds to GitHub because they're only
-      # for our local development environment
-      - MYSQL_ROOT_PASSWORD=admin-root-password
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin-password
-    volumes_from:
-      # Mount the volumes from the data container to store our MySQL files
-      - data
-
-  data:
-    extends:
-      file: docker-compose-common.yml
-      service: data
-
-networks:
-  backend: {}
+postgres:
+  restart: always
+  container_name: series-z-postgres
+  image: postgres:latest
+  volumes_from:
+    - data
+  ports:
+    - "5432:5432"
