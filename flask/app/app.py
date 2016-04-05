@@ -1,9 +1,8 @@
 import logging
 import os
-
 from flask import Flask, render_template, request, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
-from models import Base, Person
+
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -20,6 +19,8 @@ SQLALCHEMY_DATABASE_URI = \
         hostname=os.getenv('MYSQL_HOST'),
         database=os.getenv('MYSQL_DATABASE'))
 
+logger.debug("%s", os.getenv('MYSQL_HOST'))
+
 logger.debug("The log statement below is for educational purposes only. Do *not* log credentials.")
 logger.debug("%s", SQLALCHEMY_DATABASE_URI)
 
@@ -34,17 +35,20 @@ db = SQLAlchemy(app)
 def index():
     logger.debug("index")
 
-    if request.method == 'POST':
-        name = request.form['name']
-        guest = Guest(name=name)
-        db.session.add(guest)
-        db.session.commit()
-        return redirect(url_for('index'))
+    # if request.method == 'POST':
+    #     name = request.form['name']
+    #     guest = Guest(name=name)
+    #     db.session.add(guest)
+    #     db.session.commit()
+    #     return redirect(url_for('index'))
 
 
-    print(Person.query.all())
-    return render_template('index.html', guests=Person.query.all())
+    # print(Person.query.all())
+    return render_template('index.html')
 
+# @app.teardown_appcontext
+# def shutdown_session(exception=None):
+#     db_session.remove()
 
 # class Guest(db.Model):
 #     __tablename__ = 'guests'

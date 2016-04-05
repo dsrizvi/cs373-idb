@@ -3,8 +3,8 @@
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from db import Base
 
-Base = declarative_base()
 
 class Guest(Base):
     __tablename__ = 'guests'
@@ -14,9 +14,6 @@ class Guest(Base):
 
     def __repr__(self):
         return "[Guest: id={}, name={}]".format(self.id, self.name)
-
-
-
 
 #------
 #Person

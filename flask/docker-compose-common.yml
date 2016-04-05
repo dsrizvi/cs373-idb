@@ -26,7 +26,7 @@ services:
     environment:
       # Environment variables to configure the app on startup.
       - MYSQL_DATABASE=startups
-      - MYSQL_HOST=seriesz_db
+      - MYSQL_HOST=192.168.99.100
 
   db:
     # The database container. Built from the db/Dockerfile.
