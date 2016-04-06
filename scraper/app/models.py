@@ -12,6 +12,11 @@ engine = create_engine('sqlite:///seriesz.db', echo=True)
 #Person
 #------
 
+company_to_company = Table("company_to_company", Base.metadata,
+    Column("left_company_id", Integer, ForeignKey("comapnies.id"), primary_key=True),
+    Column("right_company_id", Integer, ForeignKey("companies.id"), primary_key=True)
+)
+
 class Person(Base):
     """
     Person is a class representing an investor or a company founder
@@ -35,7 +40,7 @@ class Person(Base):
 
     #Person relationships
     location = relationship("Location", back_populates="people")
-    companies = relationship("Company", back_populates="people")
+    companies = relationship("PeopleCompanyAssociation", back_populates="company")
 
     def __init__(self, name, location, founder, investor, num_companies):
         """
@@ -75,7 +80,7 @@ class Company(Base):
 
     #Company relationships
     location = relationship("Location", back_populates="companies")
-    people = relationship("Person", back_populates="companies")
+    people = relationship("PeopleCompanyAssociation", back_populates="companies")
 
     def __init__(self, name, location, follower_count, num_investors, market):
         """
@@ -119,6 +124,14 @@ class Location(Base):
         self.followers = followers
         self.num_companies = num_companies
         self.num_people = num_people
+
+class PeopleCompanyAssociation(Base):
+    __tablename__ = 'pc_association'
+    left_id = Column(Integer, ForeignKey('left.id'), primary_key=True)
+    right_id = Column(Integer, ForeignKey('right.id'), primary_key=True)
+    extra_data = Column(String(50))
+    person = relationship("Person", back_populates="people")
+    company = relationship("Company", back_populates="companies")
 
 class Current(Base):
     """

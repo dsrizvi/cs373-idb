@@ -57,6 +57,7 @@ def populateBylocation(locationID):
 			populateStartup(startup_obj)
 
 			location_id = startup['location'][0]['id']
+			location_name = startup_info['location']
 			location_info = buildlocationInfo(location_id)
 			location_obj = Location(**location_info)
 
@@ -106,3 +107,8 @@ def populateLocation(location_obj):
 
 def populatePerson():
 	pass
+
+def locationExists(location_name):
+
+	if Session.query(exists().where(Location.name == location_name))
+
