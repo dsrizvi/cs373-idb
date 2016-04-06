@@ -60,6 +60,7 @@ def populateBylocation(locationID):
 			location_info = buildlocationInfo(location_id)
 			location_obj = Location(**location_info)
 
+
 def buildStartupInfo(startup):
 
 	startup_info = {
@@ -76,7 +77,7 @@ def buildStartupInfo(startup):
 
 	return startup_info
 
-def buildlocationInfo(location_id):
+def buildLocationInfo(location_id):
 
 	location = al.get_tags(location_id)
 
@@ -100,8 +101,8 @@ def populateStartup(startup_obj):
 	except:
 		logger.info(datetime.now() + "| Failed to commit startup object.")
 
-def populateLocation():
-	pass
+def populateLocation(location_obj):
+
 
 def populatePerson():
 	pass
