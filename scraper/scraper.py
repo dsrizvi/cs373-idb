@@ -1,29 +1,55 @@
 from angel import angel
 import time
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import os
+import logging
+import datetime
+
+"""
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(levelname)s: %(message)s')
+logger = logging.getLogger(__name__)
+logger.info(datetime.now() + "| Starting script.")
 
 al = angel.AngelList(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN)
+logger.info(datetime.now() + "| Connected to Angel List API.")
+
+engine = create_engine('sqlite:///seriesz.db')
+logger.info(datetime.now() + "| DB engine created.")
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+logger.info(datetime.now() + "| DB session created.")
+"""
 
 def scrape():
-	region_ids = []
-	region_ids.append(1692)
-	region_ids.append(1664)
-	num_ids = 100
-	company_ids = get_company_ids(region_ids, num_ids)
+    location_ids = []
+    location_ids.append(1692)
+    #region_ids.append(1664)
+    #companies = get_companies(region_ids, num_companies)
 
-    for company_id in company_ids:
-        #query table for company to see if already existing
-        company = al.get_startup(company_id)
-		#not sure what get_startup returns if there's no company for id....
-        if company not None and not company['hidden']:
-            enter_company(company)
-			enter_connections(company)
+    for location_id in location_ids:
+        location = al.get_tags(location_id)
+        enter_location(location)
+        companies = get_companies(location, 1)
+        
+        for company in companies:
+            if (session.query(Company).filter(Company.angel_id == company['id']).count()) == 0:
+                enter_company(company, location) 
+                founders = al.get_startup_roles(startup_id=company['id'], role='founder')
+                
+                for f in founders:
+                    founder = f['tagged']
+                    if f['type'] == 'User' and(session.query(Person).filter(Person.angel_id == founder['id']).count()) == 0:
+                        enter_user(founder, company, location)
 
-def enter_company(company):
-	location_obj = company['locations'][0]
 
+def enter_company(company, location):
     name = company['name']
     #ACCOUNT FOR NO LOCATION?
-    location = location_obj['name']
+    location_name = location['name']
     follower_count = company['follower_count']
     num_investors = 0
     #ACCOUNT FOR NO MARKET?
@@ -32,14 +58,11 @@ def enter_company(company):
     company_url = company['company_url']
     logo_url = company['logo_url']
 
-    #query table for location name
-    location_id = location_obj['id']
-    if location DNE:
-        location_tag = al.get_tags(location_id)
-        enter_location(location_tag)
-
     #upload company to Company table (make sure to include location_id)
+    c = Company(name = name, location_name = location_name, follower_count = follower_count, num_investors = num_investors, market = market, product_desc = product_desc, company_url = company_url, logo_url = logo_url, location = location)
 
+    session.add(c)
+    session.commit()
 
 def enter_location(location):
     name = location['name']
@@ -49,66 +72,45 @@ def enter_location(location):
     num_people = 0
 
     #upload location to Location table
+    loc = Location(name = name, investor_followers = investor_followers, followers = followers, num_companies = num_companies, num_people = num_people)
 
-def enter_user(user):
-    name = user['name']
+    session.add(loc)
+    session.commit()
+
+def enter_user(founder, company, location):
+    name = founder['name']
     #ACCOUNT FOR NO LOCATION
-    location = user['locations'][0]['name']
-    founder = False
-    investor = False
+    location_name = location['name']
+    follower_count = founder['follower_count']
+    investor = founder['investor']
     num_companies = 0
-    image = user['image']
-    bio = user['bio']
+    image = founder['image']
+    bio = founder['bio']
 
     #upload user to Person table
+    f = Person(name = name, location_name = location_name, founder = founder, investor = investor, num_companies = num_companies, image = image, bio = bio, location = location)
+    f.companies.append(company)
 
-def enter_connections(company):
-    founders = al.get_startup_roles(startup_id=company['id'], role=['founder'])
-    investors = al.get_startup_roles(startup_id=company['id'], role=['past_investor'])
-    enter_founder_investors(founders, company)
-    enter_founder_investors(investors, company)
+    session.add(u)
+    session.commit()
 
-#not positive about the logic in this function
-def enter_founder_investors(roles, company):
-    role_list = roles['startup_roles']
-    for role in role_list:
-        if role['tagged']['type'] == "User":
-           	#query table for User name
-           	if user DNE:
-           		user = al.get_user(role['tagged']['id'])
-            	enter_user(user)
 
-			if role['role'] == "founder":
-				isInvestor = False
-			else:
-				isInvestor = True
-            person_id = role['tagged']['id']
-            company_id = company['id']
- 			#upload connection into Connection table
+def get_company_ids(region, num_companies):
+    """
+    currently only works up to one page
+    region: region object
+    num_ids: the max number of company ids you want from each region
+    """
 
-		if role['tagged']['type'] == "Startup":
-			#query table for Company name
-            if company DNE:
-            	comp = al.get_startup(role['tagged']['id'])
-            	enter_company(comp)
-            investor_id = role['tagged']['id']
-            company_id = company['id']
-			#upload investment into Investment table
+    companies = []
 
-def get_company_ids(region_ids, num_ids):
-	"""
-	region_ids: a list of ids for regions from which you want company ids
-	num_ids: the max number of company ids you want from each region
-	"""
+    startups = al.get_tags_startups(region['id'], 1)
+    count = 0
+    for startup in startups:
+        if count >= num_ids:
+            break
+        companies.append(startup)
+        count += count
 
-	startup_ids = []
-
-	for r_id in region_ids:
-		startups = al.get_tags_startups(r_id)
-		count = 0
-        for startup in startups:
-            if count >= num_ids:
-                break
-            startup_ids.append(startup['id'])
-            count += count
+    return companies
 

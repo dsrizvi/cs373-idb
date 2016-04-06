@@ -12,10 +12,11 @@ engine = create_engine('sqlite:///seriesz.db', echo=True)
 #Person
 #------
 
-company_to_company = Table("company_to_company", Base.metadata,
-    Column("left_company_id", Integer, ForeignKey("companies.id"), primary_key=True),
-    Column("right_company_id", Integer, ForeignKey("companies.id"), primary_key=True)
+company_to_founder = Table("company_to_founder", Base.metadata,
+    Column("company_id", Integer, ForeignKey("companies.id"), primary_key=True),
+    Column("founder_id", Integer, ForeignKey("people.id"), primary_key=True)
 )
+
 
 class Person(Base):
     '''
@@ -27,8 +28,8 @@ class Person(Base):
     #Person attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    location = Column(String, nullable=False)
-    founder = Column(Boolean, nullable=False)
+    location_name = Column(String, nullable=False)
+    follower_count = Column(Integer, nullable=False)
     investor = Column(Boolean, nullable=False)
     num_companies = Column(Integer, nullable=False)
     image = Column(String)
@@ -40,7 +41,7 @@ class Person(Base):
 
     #Person relationships
     location = relationship("Location", back_populates="people")
-    companies = relationship("PeopleCompanyAssociation", back_populates="company")
+    companies = relationship("Company", secondary=company_to_founder, back_populates="people")
 
     def __init__(self, name, location, founder, investor, num_companies):
         '''
@@ -66,7 +67,7 @@ class Company(Base):
     #Company attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    location = Column(String, nullable=False)
+    location_name = Column(String, nullable=False)
     follower_count = Column(String, nullable=False)
     num_investors = Column(Integer, nullable=False)
     market = Column(String, nullable=False)
@@ -80,7 +81,7 @@ class Company(Base):
 
     #Company relationships
     location = relationship("Location", back_populates="companies")
-    people = relationship("PeopleCompanyAssociation", back_populates="companies")
+    people = relationship("Person", secondary=company_to_founder, back_populates="companies")
 
     def __init__(self, name, location, follower_count, num_investors, market):
         '''
@@ -125,6 +126,7 @@ class Location(Base):
         self.num_companies = num_companies
         self.num_people = num_people
 
+"""
 class PeopleCompanyAssociation(Base):
 
     __tablename__ = 'pc_association'
@@ -134,6 +136,7 @@ class PeopleCompanyAssociation(Base):
     is_founder = Column(Boolean)
     person = relationship("Person", back_populates="people")
     company = relationship("Company", back_populates="companies")
+"""
 
 class Current(Base):
     '''
