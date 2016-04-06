@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, create_engine, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, create_engine, DateTime, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime
@@ -13,7 +13,7 @@ engine = create_engine('sqlite:///seriesz.db', echo=True)
 #------
 
 company_to_company = Table("company_to_company", Base.metadata,
-    Column("left_company_id", Integer, ForeignKey("comapnies.id"), primary_key=True),
+    Column("left_company_id", Integer, ForeignKey("companies.id"), primary_key=True),
     Column("right_company_id", Integer, ForeignKey("companies.id"), primary_key=True)
 )
 
@@ -127,8 +127,8 @@ class Location(Base):
 
 class PeopleCompanyAssociation(Base):
     __tablename__ = 'pc_association'
-    left_id = Column(Integer, ForeignKey('left.id'), primary_key=True)
-    right_id = Column(Integer, ForeignKey('right.id'), primary_key=True)
+    left_id = Column(Integer, ForeignKey('people.id'), primary_key=True)
+    right_id = Column(Integer, ForeignKey('companies.id'), primary_key=True)
     extra_data = Column(String(50))
     person = relationship("Person", back_populates="people")
     company = relationship("Company", back_populates="companies")
