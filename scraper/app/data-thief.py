@@ -27,7 +27,7 @@ session = DBSession()
 logger.info(datetime.now() + "| DB session created.")
 
 def main():
-
+	pass
 
 def populateBylocation(locationID):
 

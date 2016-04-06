@@ -18,9 +18,9 @@ company_to_company = Table("company_to_company", Base.metadata,
 )
 
 class Person(Base):
-    """
+    '''
     Person is a class representing an investor or a company founder
-    """
+    '''
 
     __tablename__ = 'people'
 
@@ -43,9 +43,9 @@ class Person(Base):
     companies = relationship("PeopleCompanyAssociation", back_populates="company")
 
     def __init__(self, name, location, founder, investor, num_companies):
-        """
+        '''
         Standard constructor for Person
-        """
+        '''
         self.name = name
         self.location = location
         self.founder = founder
@@ -57,9 +57,9 @@ class Person(Base):
 #-------
 
 class Company(Base):
-    """
+    '''
     Company is a class representing a startup or VC Firm
-    """
+    '''
 
     __tablename__ = 'companies'
 
@@ -83,9 +83,9 @@ class Company(Base):
     people = relationship("PeopleCompanyAssociation", back_populates="companies")
 
     def __init__(self, name, location, follower_count, num_investors, market):
-        """
+        '''
         Standard constructor for Company
-        """
+        '''
         self.name = name
         self.location = location
         self.follower_count = follower_count
@@ -97,9 +97,9 @@ class Company(Base):
 #--------
 
 class Location(Base):
-    """
+    '''
     Location is a class representing a geographical region that hosts People and Companies
-    """
+    '''
 
     __tablename__ = 'locations'
 
@@ -116,9 +116,9 @@ class Location(Base):
     people = relationship("Person", back_populates="location")
 
     def __init__(self, name, investor_followers, followers, num_companies, num_people):
-        """
+        '''
         Standard constructor for Location
-        """
+        '''
         self.name = name
         self.investor_followers = investor_followers
         self.followers = followers
@@ -126,17 +126,19 @@ class Location(Base):
         self.num_people = num_people
 
 class PeopleCompanyAssociation(Base):
+
     __tablename__ = 'pc_association'
+
     left_id = Column(Integer, ForeignKey('people.id'), primary_key=True)
     right_id = Column(Integer, ForeignKey('companies.id'), primary_key=True)
-    extra_data = Column(String(50))
+    is_founder = Column(Boolean)
     person = relationship("Person", back_populates="people")
     company = relationship("Company", back_populates="companies")
 
 class Current(Base):
-    """
+    '''
     Location is a class representing a geographical region that hosts People and Companies
-    """
+    '''
 
     __tablename__ = 'current'
     id = Column(Integer, primary_key=True)
