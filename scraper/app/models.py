@@ -82,6 +82,11 @@ class Company(Base):
     location = relationship("Location", back_populates="companies")
     people = relationship("PeopleCompanyAssociation", back_populates="companies")
 
+    companies = relationship('User',
+                           secondary=company_to_company,
+                           primaryjoin=id==company_to_company.left_company_id,
+                           secondaryjoin=id==company_to_company.right_company_id)
+
     def __init__(self, name, location, follower_count, num_investors, market):
         '''
         Standard constructor for Company
