@@ -68,6 +68,7 @@ class Company(Base):
     product_desc = Column(String)
     company_url = Column(String)
     logo_url = Column(String)
+    company_type = Column(String)
 
     #Company foreign keys
     location_id = Column(Integer, ForeignKey('locations.id'))
