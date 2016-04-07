@@ -9,82 +9,113 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import *
 
+engine = create_engine('sqlite:///seriesz.db')
+Session = sessionmaker(bind=engine)
+s = Session()
+
 class TestIdb(TestCase):
-
-    engine = create_engine('sqlite:///seriesz.db')
-    Session = sessionmaker(bind=engine)
-    s = Session()
-
     # -------------
-    # Founder tables
+    # Founder queries
     # -------------
 
     def test_founder_add_1(self):
 
-        name = 'Mark Zuckerburg'
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+
+        name = 'Test Name'
         angel_id = 123
         popularity = 123
         image_url = 'http://markzuckerburg.com/photo'
         bio = 'A dropout'
         rank = 1
         num_startups = 1
-        city_name = 'Menlo Park'
-        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name)
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
 
         s.add(mark)
         s.commit()
 
-        mark_test = s.query(Founder).filter(Founder.name == "Mark Zuckerburg").one()
+        mark_test = s.query(Founder).filter(Founder.name == "Test Name")[0]
         self.assertEqual(mark, mark_test)
 
         s.delete(mark)
+        s.delete(menlo)
         s.commit()
 
     def test_founder_query_1(self):
 
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        name = "Mark Zuckerburg"
-        startup = "Menlo Park"
-        founder = True
-        investor = True
-        num_companies = 10
-        mark = Founder(name, startup, founder, investor, num_companies)
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
 
-        name = "Tyler Winklevoss"
-        Startup = "Menlo Park"
-        founder = True
-        investor = True
-        num_companies = 10
-        tyler = Founder(name, startup, founder, investor, num_companies)
+        name = 'Tyler Winklevoss'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        tyler = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
 
         s.add(mark)
         s.add(tyler)
         s.commit()
 
-        tyler_test = s.query(Founder).filter(Founder.name == "Tyler Winklevoss").one()
+        tyler_test = s.query(Founder).filter(Founder.name == "Tyler Winklevoss")[0]
 
         self.assertEqual(tyler, tyler_test)
 
         s.delete(mark)
         s.delete(tyler)
+        s.delete(menlo)
         s.commit()
 
     def test_founder_delete_1(self):
 
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        name = "Mark Zuckerburg"
-        startup = "Menlo Park"
-        founder = True
-        investor = True
-        num_companies = 10
-        mark = Founder(name, startup, founder, investor, num_companies)
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
 
         s.add(mark)
         s.commit()
         s.delete(mark)
+        s.delete(menlo)
         s.commit()
 
-        count = session.query(Founder).filter(Founder.name == "Mark Zuckerburg").count()
+        count = s.query(Founder).filter(Founder.name == "Test Name").count()
 
         self.assertEquals(0, count)
 
@@ -93,46 +124,159 @@ class TestIdb(TestCase):
     # ---------------
 
     def test_founder_init_1(self):
-        name = "Mark Zuckerburg"
-        startup = "Menlo Park"
-        founder = True
-        investor = True
-        num_companies = 10
-        joe = Founder(name, startup, founder, investor, num_companies)
 
-        self.assertEqual(name, joe.name)
-        self.assertEqual(startup, joe.startup)
-        self.assertEqual(joe, joe.joe)
-        self.assertEqual(investor, joe.investor)
-        self.assertEqual(num_companies, joe.num_companies)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        self.assertEqual(name, mark.name)
+        self.assertEqual(angel_id, mark.angel_id)
+        self.assertEqual(popularity, mark.popularity)
+        self.assertEqual(image_url, mark.image_url)
+        self.assertEqual(bio, mark.bio)
+        self.assertEqual(rank, mark.rank)
+        self.assertEqual(num_startups, mark.num_startups)
+        self.assertEqual(city_name, mark.city_name)
 
     def test_founder_init_2(self):
-        name = ""
-        startup = ""
-        founder = False
-        investor = False
-        num_companies = 0
-        joe = Founder(name, startup, founder, investor, num_companies)
 
-        self.assertEqual(name, joe.name)
-        self.assertEqual(startup, joe.startup)
-        self.assertEqual(joe, joe.joe)
-        self.assertEqual(investor, joe.investor)
-        self.assertEqual(num_companies, joe.num_companies)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = ''
+        angel_id = 0
+        popularity = 0
+        image_url = ''
+        bio = ''
+        rank = 0
+        num_startups = 0
+        city_name = ''
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        self.assertEqual(name, mark.name)
+        self.assertEqual(angel_id, mark.angel_id)
+        self.assertEqual(popularity, mark.popularity)
+        self.assertEqual(image_url, mark.image_url)
+        self.assertEqual(bio, mark.bio)
+        self.assertEqual(rank, mark.rank)
+        self.assertEqual(num_startups, mark.num_startups)
+        self.assertEqual(city_name, mark.city_name)
 
     def test_founder_init_3(self):
-        name = None
-        Startup = None
-        founder = None
-        investor = None
-        num_companies = None
-        joe = Founder(name, startup, founder, investor, num_companies)
 
-        self.assertEqual(name, joe.name)
-        self.assertEqual(startup, joe.startup)
-        self.assertEqual(joe, joe.joe)
-        self.assertEqual(investor, joe.investor)
-        self.assertEqual(num_companies, joe.num_companies)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = None
+        angel_id = None
+        popularity = None
+        image_url = None
+        bio = None
+        rank = None
+        num_startups = None
+        city_name = None
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        self.assertEqual(name, mark.name)
+        self.assertEqual(angel_id, mark.angel_id)
+        self.assertEqual(popularity, mark.popularity)
+        self.assertEqual(image_url, mark.image_url)
+        self.assertEqual(bio, mark.bio)
+        self.assertEqual(rank, mark.rank)
+        self.assertEqual(num_startups, mark.num_startups)
+        self.assertEqual(city_name, mark.city_name)
+
+    def test_founder_city(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        s.add(mark)
+        s.commit()
+
+        self.assertEquals(menlo, mark.city)
+
+        s.delete(menlo)
+        s.delete(mark)
+        s.commit()
+
+    def test_founder_startup(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Startup'
+        city = 'Test City'
+        popularity = 123
+        market = 'Social Network'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, city, popularity, market, num_founders, product_desc, company_url, logo_url, city=menlo)
+
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        mark.startups.append(facebook)
+
+        s.add(mark)
+        s.commit()
+
+        self.assertEquals(facebook, mark.startups[0])
+
+        s.delete(menlo)
+        s.delete(facebook)
+        s.delete(mark)
+        s.commit()
+
 
     # --------------
     # Startup tables
@@ -140,66 +284,98 @@ class TestIdb(TestCase):
 
     def test_startup_add_1(self):
 
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        name = "Facebook"
-        startup = "Menlo Park"
-        follower_count = 10
-        num_investors = 10
-        market = "Startup"
-        facebook = Startup(name, startup, follower_count, num_investors, market)
+        name = 'Test Startup'
+        city = 'Test City'
+        popularity = 123
+        market = 'Social Network'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, city, popularity, market, num_founders, product_desc, company_url, logo_url, city=menlo)
+
         s.add(facebook)
         s.commit()
 
-        fb_test = s.query(Startup).filter(Startup.name == "Facebook").one()
+        fb_test = s.query(Startup).filter(Startup.name == "Test Startup")[0]
         self.assertEquals(facebook, fb_test)
 
+        s.delete(menlo)
         s.delete(facebook)
         s.commit()
 
     def test_startup_query_1(self):
 
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        name = "Facebook"
-        startup = "Menlo Park"
-        follower_count = 10
-        num_investors = 10
-        market = "Startup"
-        facebook = Startup(name, startup, follower_count, num_investors, market)
 
-        name = "FB"
-        startup = "Menlo Park"
-        follower_count = 10
-        num_investors = 10
-        market = "Startup"
-        fb = Startup(name, startup, follower_count, num_investors, market)
+        name = 'Test Startup'
+        location = 'Test City'
+        popularity = 123
+        market = 'Social Netowrk'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, location, popularity, market , num_founders, product_desc, company_url , logo_url, city = menlo)
 
         s.add(facebook)
-        s.add(fb)
         s.commit()
 
-        fb_test = s.query(Startup).filter(Startup.name == "Facebook").one()
+        fb_test = s.query(Startup).filter(Startup.name == "Test Startup")[0]
 
-        self.assertEqual(fb, fb_test)
+        self.assertEqual(fb_test.name, facebook.name)
+        self.assertEqual(fb_test.location, facebook.location)
+        self.assertEqual(fb_test.popularity, facebook.popularity)
+        self.assertEqual(fb_test.market, facebook.market)
+        self.assertEqual(fb_test.num_founders, facebook.num_founders)
+        self.assertEqual(fb_test.product_desc, facebook.product_desc)
+        self.assertEqual(fb_test.company_url, facebook.company_url)
+        self.assertEqual(fb_test.logo_url, facebook.logo_url)
 
+        s.delete(menlo)
         s.delete(facebook)
-        s.delete(fb)
         s.commit()
 
     def test_startup_delete_1(self):
 
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        name = "Facebook"
-        Startup = "Menlo Park"
-        follower_count = 10
-        num_investors = 10
-        market = "Startup"
-        facebook = Startup(name, startup, follower_count, num_investors, market)
+        name = 'Test Startup'
+        city = 'Test City'
+        popularity = 123
+        market = 'Social Netowrk'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, city, popularity, market , num_founders, product_desc, company_url , logo_url, city=menlo)
+
         s.add(facebook)
         s.commit()
+
         s.delete(facebook)
+        s.delete(menlo)
         s.commit()
 
-        count = session.query(Startup).filter(Startup.name == "Facebook").count()
+        count = s.query(Startup).filter(Startup.name == "Facebook").count()
 
         self.assertEquals(0, count)
 
@@ -208,92 +384,210 @@ class TestIdb(TestCase):
     # ----------------
 
     def test_startup_init_1(self):
-        name = "Facebook"
-        startup = "Menlo Park"
-        follower_count = 10
-        num_investors = 10
-        market = "Startup"
-        Startup = Startup(name, startup, follower_count, num_investors, market)
 
-        self.assertEqual(name, Startup.name)
-        self.assertEqual(Startup, Startup.startup)
-        self.assertEqual(follower_count, Startup.follower_count)
-        self.assertEqual(num_investors, Startup.num_investors)
-        self.assertEqual(market, Startup.market)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Startup'
+        location = 'Test City'
+        popularity = 123
+        market = 'Social Netowrk'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, location, popularity, market , num_founders, product_desc, company_url , logo_url, city= menlo)
+
+        self.assertEqual(name, facebook.name)
+        self.assertEqual(location, facebook.location)
+        self.assertEqual(popularity, facebook.popularity)
+        self.assertEqual(market, facebook.market)
+        self.assertEqual(num_founders, facebook.num_founders)
+        self.assertEqual(product_desc, facebook.product_desc)
+        self.assertEqual(company_url, facebook.company_url)
+        self.assertEqual(logo_url, facebook.logo_url)
 
     def test_startup_init_2(self):
-        name = ""
-        startup = ""
-        follower_count = 0
-        num_investors = 0
-        market = ""
-        Startup = Startup(name, startup, follower_count, num_investors, market)
 
-        self.assertEqual(name, Startup.name)
-        self.assertEqual(startup, Startup.Startup)
-        self.assertEqual(follower_count, Startup.follower_count)
-        self.assertEqual(num_investors, Startup.num_investors)
-        self.assertEqual(market, Startup.market)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = ''
+        location = ''
+        popularity = 0
+        market = ''
+        num_founders = 0
+        product_desc = ''
+        company_url = ''
+        logo_url = ''
+        facebook = Startup(name, location, popularity, market , num_founders, product_desc, company_url , logo_url, city=menlo)
+
+        self.assertEqual(name, facebook.name)
+        self.assertEqual(location, facebook.location)
+        self.assertEqual(popularity, facebook.popularity)
+        self.assertEqual(market, facebook.market)
+        self.assertEqual(num_founders, facebook.num_founders)
+        self.assertEqual(product_desc, facebook.product_desc)
+        self.assertEqual(company_url, facebook.company_url)
+        self.assertEqual(logo_url, facebook.logo_url)
 
     def test_startup_init_3(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
         name = None
-        Startup = None
-        follower_count = None
-        num_investors = None
+        location = None
+        popularity = None
         market = None
-        Startup = Startup(name, startup, follower_count, num_investors, market)
+        num_founders = None
+        product_desc = None
+        company_url = None
+        logo_url = None
+        facebook = Startup(name, location, popularity, market , num_founders, product_desc, company_url , logo_url, city=menlo)
 
-        self.assertEqual(name, Startup.name)
-        self.assertEqual(startup, Startup.Startup)
-        self.assertEqual(follower_count, Startup.follower_count)
-        self.assertEqual(num_investors, Startup.num_investors)
-        self.assertEqual(market, Startup.market)
+        self.assertEqual(name, facebook.name)
+        self.assertEqual(location, facebook.location)
+        self.assertEqual(popularity, facebook.popularity)
+        self.assertEqual(market, facebook.market)
+        self.assertEqual(num_founders, facebook.num_founders)
+        self.assertEqual(product_desc, facebook.product_desc)
+        self.assertEqual(company_url, facebook.company_url)
+        self.assertEqual(logo_url, facebook.logo_url)
+
+    def test_startup_city(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Startup'
+        city = 'Test City'
+        popularity = 123
+        market = 'Social Network'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, city, popularity, market, num_founders, product_desc, company_url, logo_url, city=menlo)
+
+        s.add(facebook)
+        s.commit()
+
+        self.assertEquals(menlo, facebook.city)
+
+        s.delete(menlo)
+        s.delete(facebook)
+        s.commit()
+
+
+    def test_startup_founder(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Startup'
+        city = 'Test City'
+        popularity = 123
+        market = 'Social Network'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, city, popularity, market, num_founders, product_desc, company_url, logo_url, city=menlo)
+
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        facebook.founders.append(mark)
+
+        s.add(mark)
+        s.commit()
+
+        self.assertEquals(mark, facebook.founders[0])
+
+        s.delete(menlo)
+        s.delete(facebook)
+        s.delete(mark)
+        s.commit()
+
 
     # ---------------
-    # Location tables
+    # city tables
     # ---------------
 
-    def test_location_add_1(self):
+    def test_city_add_1(self):
 
-
-        name = "Menlo Park"
-        investor_followers = 100
-        followers = 1000
-        num_companies = 10
-        num_people = 100
-        menlo = Startup(name, investor_followers, followers, num_companies, num_people)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
         s.add(menlo)
         s.commit()
 
-        menlo_test = s.query(Startup).filter(Startup.name == "Menlo Park").one()
-        self.assertEqual(menlo, menlo_test)
+        menlo_test = s.query(City).filter(City.name == "Test City")[0]
+
+        self.assertEqual(menlo_test.name, menlo.name)
+        self.assertEqual(menlo_test.investor_followers, menlo.investor_followers)
+        self.assertEqual(menlo_test.popularity, menlo.popularity)
+        self.assertEqual(menlo_test.num_companies, menlo.num_companies)
+        self.assertEqual(menlo_test.num_people, menlo.num_people)
+
 
         s.delete(menlo)
         s.commit()
 
-    def test_location_query_1(self):
+    def test_city_query_1(self):
 
 
-        name = "Menlo Park"
-        investor_followers = 100
-        followers = 1000
-        num_companies = 10
-        num_people = 100
-        menlo = Startup(name, investor_followers, followers, num_companies, num_people)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        name = "MP"
-        investor_followers = 100
-        followers = 1000
-        num_companies = 10
-        num_people = 100
-        mp = Startup(name, investor_followers, followers, num_companies, num_people)
+        name = 'MP'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        mp = City(name, investor_followers, popularity, num_companies, num_people)
 
         s.add(menlo)
         s.add(mp)
         s.commit
 
-        mp_test = s.query(Startup).filter(Startup.name == "MP").one()
+        mp_test = s.query(City).filter(City.name == "MP")[0]
 
         self.assertEqual(mp, mp_test)
 
@@ -301,69 +595,128 @@ class TestIdb(TestCase):
         s.delete(menlo)
         s.commit()
 
-    def test_location_delete_1(self):
+    def test_city_delete_1(self):
 
-
-        name = "Menlo Park"
-        investor_followers = 100
-        followers = 1000
-        num_companies = 10
-        num_people = 100
-        menlo = Startup(name, investor_followers, followers, num_companies, num_people)
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
         s.add(menlo)
         s.commit()
         s.delete(menlo)
         s.commit()
 
-        count = session.query(Startup).filter(Startup.name == "Menlo Park").count()
+        count = s.query(City).filter(City.name == "Test City").count()
 
         self.assertEquals(0, count)
     # -----------------
     # Startup __init__
     # -----------------
 
-    def test_location_init_1(self):
-        name = "Menlo Park"
-        investor_followers = 100
-        followers = 1000
-        num_companies = 10
-        num_people = 100
-        Startup = Startup(name, investor_followers, followers, num_companies, num_people)
+    def test_city_init_1(self):
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        self.assertEqual(name, Startup.name)
-        self.assertEqual(investor_followers, Startup.investor_followers)
-        self.assertEqual(followers, Startup.followers)
-        self.assertEqual(num_companies, Startup.num_companies)
-        self.assertEqual(num_people, Startup.num_people)
+        self.assertEqual(name, menlo.name)
+        self.assertEqual(investor_followers, menlo.investor_followers)
+        self.assertEqual(popularity, menlo.popularity)
+        self.assertEqual(num_companies, menlo.num_companies)
+        self.assertEqual(num_people, menlo.num_people)
 
-    def test_location_init_2(self):
+    def test_city_init_2(self):
         name = ""
         investor_followers = 0
-        followers = 0
+        popularity = 0
         num_companies = 0
         num_people = 0
-        Startup = Startup(name, investor_followers, followers, num_companies, num_people)
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        self.assertEqual(name, Startup.name)
-        self.assertEqual(investor_followers, Startup.investor_followers)
-        self.assertEqual(followers, Startup.followers)
-        self.assertEqual(num_companies, Startup.num_companies)
-        self.assertEqual(num_people, Startup.num_people)
+        self.assertEqual(name, menlo.name)
+        self.assertEqual(investor_followers, menlo.investor_followers)
+        self.assertEqual(popularity, menlo.popularity)
+        self.assertEqual(num_companies, menlo.num_companies)
+        self.assertEqual(num_people, menlo.num_people)
 
-    def test_location_init_3(self):
+    def test_city_init_3(self):
         name = None
         investor_followers = None
-        followers = None
+        popularity = None
         num_companies = None
         num_people = None
-        Startup = Startup(name, investor_followers, followers, num_companies, num_people)
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
-        self.assertEqual(name, Startup.name)
-        self.assertEqual(investor_followers, Startup.investor_followers)
-        self.assertEqual(followers, Startup.followers)
-        self.assertEqual(num_companies, Startup.num_companies)
-        self.assertEqual(num_people, Startup.num_people)
+        self.assertEqual(name, menlo.name)
+        self.assertEqual(investor_followers, menlo.investor_followers)
+        self.assertEqual(popularity, menlo.popularity)
+        self.assertEqual(num_companies, menlo.num_companies)
+        self.assertEqual(num_people, menlo.num_people)
+
+
+    def test_city_startup(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Startup'
+        city = 'Test City'
+        popularity = 123
+        market = 'Social Network'
+        num_founders = 4
+        product_desc = 'A social network.'
+        company_url = 'http://www.facebook.com'
+        logo_url = 'http://www.facebook.com/logo'
+        facebook = Startup(name, city, popularity, market, num_founders, product_desc, company_url, logo_url, city=menlo)
+
+        s.add(facebook)
+        s.commit()
+
+        self.assertEquals(menlo.startups[0], facebook)
+
+        s.delete(menlo)
+        s.delete(facebook)
+        s.commit()
+
+
+    def test_city_founder(self):
+
+        name = 'Test City'
+        investor_followers = 123
+        popularity = 123
+        num_companies = 123
+        num_people = 123
+        menlo = City(name, investor_followers, popularity, num_companies, num_people)
+
+        name = 'Test Name'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Test City'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city=menlo)
+
+        s.add(mark)
+        s.commit()
+
+        self.assertEquals(mark, menlo.founders[0])
+
+        s.delete(menlo)
+        s.delete(mark)
+        s.commit()
+
+
 
 # ----
 # main

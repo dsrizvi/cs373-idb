@@ -42,7 +42,7 @@ class Founder(Base):
     #Founder attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    angel_id = Column(String, nullable=False)
+    angel_id = Column(Integer, nullable=False)
     popularity = Column(Integer)
     image_url = Column(String)
     bio = Column(String)
@@ -56,7 +56,7 @@ class Founder(Base):
     city = relationship("City", back_populates="founders")
     startups = relationship("Startup", secondary=startup_to_founder, back_populates="founders")
 
-    def __init__(self, name, angel_id, popularity, image_url, bio):
+    def __init__(self, name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city):
         """
         Standard constructor for Founder
         """
@@ -66,9 +66,9 @@ class Founder(Base):
         self.image_url = image_url
         self.bio = bio
         self.rank = rank
-        self.num_startups = num_startup
-        self.city_name = city_nam
-
+        self.num_startups = num_startups
+        self.city_name = city_name
+        self.city = city
 #-------
 #Startup
 #-------
@@ -84,9 +84,9 @@ class Startup(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    popularity = Column(String, nullable=False)
+    popularity = Column(Integer, nullable=False)
     market = Column(String, nullable=False)
-    num_founders = Column(String, nullable=False)
+    num_founders = Column(Integer, nullable=False)
     product_desc = Column(String)
     company_url = Column(String)
     logo_url = Column(String)
@@ -98,7 +98,7 @@ class Startup(Base):
     city = relationship("City", back_populates="startups")
     founders = relationship("Founder", secondary=startup_to_founder, back_populates="startups")
 
-    def __init__(self, name, location, popularity, market, product_desc, company_url, logo_url):
+    def __init__(self, name, location, popularity, market, num_founders, product_desc, company_url, logo_url, city):
         """
         Standard constructor for Startup
         """
@@ -106,9 +106,11 @@ class Startup(Base):
         self.location = location
         self.popularity = popularity
         self.market = market
+        self.num_founders = num_founders
         self.product_desc = product_desc
         self.company_url = company_url
         self.logo_url = logo_url
+        self.city = city
 
 #--------
 #City
@@ -130,8 +132,8 @@ class City(Base):
     num_people = Column(Integer, nullable=False)
 
     #City relationships
-    startups = relationship("Startup", back_populates="cities")
-    founders = relationship("Founder", back_populates="cities")
+    startups = relationship("Startup", back_populates="city")
+    founders = relationship("Founder", back_populates="city")
 
     def __init__(self, name, investor_followers, popularity, num_companies, num_people):
         """
