@@ -1,262 +1,158 @@
-# #!/usr/bin/env python3
-
-# from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-# from sqlalchemy.ext.declarative import declarative_base
-# from sqlalchemy.orm import relationship
-# # from db import Base
-
-# Base = declarative_base()
-
-
-# #------
-# #Person
-# #------
-
-# class Person(Base):
-#     """
-#     Person is a class representing an investor or a company founder
-#     """
-
-#     __tablename__ = 'people'
-
-#     #Person attributes
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String, nullable=False)
-#     location = Column(String, nullable=False)
-#     founder = Column(Boolean, nullable=False)
-#     investor = Column(Boolean, nullable=False)
-#     num_companies = Column(Integer, nullable=False)
-#     image = Column(String)
-#     bio = Column(String)
-
-#     #Person foreign keys
-#     location_id = Column(Integer, ForeignKey('locations.id'))
-
-#     #Person relationships
-#     location = relationship("Location", back_populates="people")
-#     companies = relationship("Company", back_populates="people")
-
-#     def __init__(self, name, location, founder, investor, num_companies):
-#         """
-#         Standard constructor for Person
-#         """
-#         self.name = name
-#         self.location = location
-#         self.founder = founder
-#         self.investor = investor
-#         self.num_companies = num_companies
-
-# #-------
-# #Company
-# #-------
-
-# class Company(Base):
-#     """
-#     Company is a class representing a startup or VC Firm
-#     """
-
-#     __tablename__ = 'companies'
-
-#     #Company attributes
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String, nullable=False)
-#     location = Column(String, nullable=False)
-#     follower_count = Column(String, nullable=False)
-#     num_investors = Column(Integer, nullable=False)
-#     market = Column(String, nullable=False)
-#     product_desc = Column(String)
-#     company_url = Column(String)
-#     logo_url = Column(String)
-
-#     #Company foreign keys
-#     location_id = Column(Integer, ForeignKey('locations.id'))
-
-#     #Company relationships
-#     location = relationship("Location", back_populates="companies")
-#     people = relationship("People", back_populates="companies")
-
-#     def __init__(self, name, location, follower_count, num_investors, market):
-#         """
-#         Standard constructor for Company
-#         """
-#         self.name = name
-#         self.location = location
-#         self.follower_count = follower_count
-#         self.num_investor = num_investors
-#         self.market = market
-
-# #--------
-# #Location
-# #--------
-
-# class Location(Base):
-#     """
-#     Location is a class representing a geographical region that hosts People and Companies
-#     """
-
-#     __tablename__ = 'locations'
-
-#     #Location attributes
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String, nullable=False)
-#     investor_followers = Column(Integer, nullable=False)
-#     followers = Column(Integer, nullable=False)
-#     num_companies = Column(Integer, nullable=False)
-#     num_people = Column(Integer, nullable=False)
-
-#     #Location relationships
-#     companies = relationship("Company", back_populates="location")
-#     people = relationship("Person", back_populates="location")
-
-#     def __init__(self, name, investor_followers, followers, num_companies, num_people):
-#         """
-#         Standard constructor for Location
-#         """
-#         self.name = name
-#         self.investor_followers = investor_followers
-#         self.followers = followers
-#         self.num_companies = num_companies
-#         self.num_people = num_people
-
 #!/usr/bin/env python3
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, create_engine, DateTime, Table
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-import datetime
+# from db import Base
+
+# from series_z import app
+# comment
+
 
 Base = declarative_base()
-engine = create_engine('sqlite:///seriesz.db', echo=True)
 
-#------
-#Person
-#------
+#---------
+#Relations
+#---------
 
-company_to_company = Table("company_to_company", Base.metadata,
-    Column("left_company_id", Integer, ForeignKey("companies.id"), primary_key=True),
-    Column("right_company_id", Integer, ForeignKey("companies.id"), primary_key=True)
+startup_to_founder = Table("startup_to_founder", Base.metadata,
+    Column("startup_id", Integer, ForeignKey("startups.id"), primary_key=True),
+    Column("founder_id", Integer, ForeignKey("founders.id"), primary_key=True)
 )
 
-class Person(Base):
-    '''
-    Person is a class representing an investor or a company founder
-    '''
+#------
+#Founder
+#------
+"""
+{'angel_id': 80212,
+  'bio': u'Founder & CEO of @calm  - working to bring the amazing benefits of meditation to a busy world',
+  'image_url': u'https://d1qb2nb5cznatu.cloudfront.net/users/80212-medium_jpg?1405484501',
+  'name': u'Alex Tew',
+  'popularity': 1028
+}
+"""
 
-    __tablename__ = 'people'
+class Founder(Base):
+    """
+    Founder is a class representing an investor or a company founder
+    """
 
-    #Person attributes
+    __tablename__ = 'founders'
+
+    #Founder attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    location = Column(String, nullable=False)
-    founder = Column(Boolean, nullable=False)
-    investor = Column(Boolean, nullable=False)
-    num_companies = Column(Integer, nullable=False)
-    image = Column(String)
+    angel_id = Column(Integer, nullable=False)
+    popularity = Column(Integer)
+    image_url = Column(String)
     bio = Column(String)
+    rank = Column(Integer)
+    num_startups = Column(Integer)
+    city_name = Column(String)
+    #Founder foreign keys
+    city_id = Column(Integer, ForeignKey('cities.id'))
 
-    #Person foreign keys
-    location_id = Column(Integer, ForeignKey('locations.id'))
-    company_id = Column(Integer, ForeignKey('companies.id'))
+    #Founder relationships
+    city = relationship("City", back_populates="founders")
+    startups = relationship("Startup", secondary=startup_to_founder, back_populates="founders")
 
-    #Person relationships
-    location = relationship("Location", back_populates="people")
-    companies = relationship("PeopleCompanyAssociation", back_populates="company")
-
-    def __init__(self, name, location, founder, investor, num_companies):
-        '''
-        Standard constructor for Person
-        '''
+    def __init__(self, name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city):
+        """
+        Standard constructor for Founder
+        """
         self.name = name
-        self.location = location
-        self.founder = founder
-        self.investor = investor
-        self.num_companies = num_companies
-
+        self.angel_id = angel_id
+        self.popularity = popularity
+        self.image_url = image_url
+        self.bio = bio
+        self.rank = rank
+        self.num_startups = num_startups
+        self.city_name = city_name
+        self.city = city
 #-------
-#Company
+#Startup
 #-------
 
-class Company(Base):
-    '''
-    Company is a class representing a startup or VC Firm
-    '''
+class Startup(Base):
+    """
+    Startup is a class representing a startup
+    """
 
-    __tablename__ = 'companies'
+    __tablename__ = 'startups'
 
-    #Company attributes
+    #Startup attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    follower_count = Column(String, nullable=False)
-    num_investors = Column(Integer, nullable=False)
+    popularity = Column(Integer, nullable=False)
     market = Column(String, nullable=False)
+    num_founders = Column(Integer, nullable=False)
     product_desc = Column(String)
     company_url = Column(String)
     logo_url = Column(String)
-    company_type = Column(String)
 
-    #Company foreign keys
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    #Startup foreign keys
+    city_id = Column(Integer, ForeignKey('cities.id'))
 
-    #Company relationships
-    location = relationship("Location", back_populates="companies")
-    people = relationship("PeopleCompanyAssociation", back_populates="companies")
+    #Startup relationships
+    city = relationship("City", back_populates="startups")
+    founders = relationship("Founder", secondary=startup_to_founder, back_populates="startups")
 
-    companies = relationship('User',
-                           secondary=company_to_company,
-                           primaryjoin=id==company_to_company.left_company_id,
-                           secondaryjoin=id==company_to_company.right_company_id)
-
-
-    def __init__(self, name, location, follower_count, num_investors, market):
-        '''
-        Standard constructor for Company
-        '''
+    def __init__(self, name, location, popularity, market, num_founders, product_desc, company_url, logo_url, city):
+        """
+        Standard constructor for Startup
+        """
         self.name = name
         self.location = location
-        self.follower_count = follower_count
-        self.num_investor = num_investors
+        self.popularity = popularity
         self.market = market
+        self.num_founders = num_founders
+        self.product_desc = product_desc
+        self.company_url = company_url
+        self.logo_url = logo_url
+        self.city = city
 
 #--------
-#Location
+#City
 #--------
 
-class Location(Base):
-    '''
-    Location is a class representing a geographical region that hosts People and Companies
-    '''
+class City(Base):
+    """
+    City is a class representing a geographical region that hosts People and Companies
+    """
 
-    __tablename__ = 'locations'
+    __tablename__ = 'cities'
 
-    #Location attributes
+    #City attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     investor_followers = Column(Integer, nullable=False)
-    followers = Column(Integer, nullable=False)
+    popularity = Column(Integer, nullable=False)
     num_companies = Column(Integer, nullable=False)
     num_people = Column(Integer, nullable=False)
 
-    #Location relationships
-    companies = relationship("Company", back_populates="location")
-    people = relationship("Person", back_populates="location")
+    #City relationships
+    startups = relationship("Startup", back_populates="city")
+    founders = relationship("Founder", back_populates="city")
 
-    def __init__(self, name, investor_followers, followers, num_companies, num_people):
-        '''
-        Standard constructor for Location
-        '''
+    def __init__(self, name, investor_followers, popularity, num_companies, num_people):
+        """
+        Standard constructor for City
+        """
         self.name = name
         self.investor_followers = investor_followers
-        self.followers = followers
+        self.popularity = popularity
         self.num_companies = num_companies
         self.num_people = num_people
 
-class PeopleCompanyAssociation(Base):
 
-    __tablename__ = 'pc_association'
+# # models for which we want to create API endpoints
+# app.config['API_MODELS'] = {'companies': Startup,
+#                             'people': Founder,
+#                             'cities': City}
 
-    left_id = Column(Integer, ForeignKey('people.id'), primary_key=True)
-    right_id = Column(Integer, ForeignKey('companies.id'), primary_key=True)
-    is_founder = Column(Boolean)
-    person = relationship("Person", back_populates="people")
-    company = relationship("Company", back_populates="companies")
+# # models for which we want to create CRUD-style URL endpoints,
+# # and pass the routing onto our AngularJS application
+# app.config['CRUD_URL_MODELS'] = {'companies': Startup,
+#                                  'people': Founder,
+#                                  'cities': City}
