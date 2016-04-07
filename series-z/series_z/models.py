@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# from db import Base
-
-from series_z.core import db
-from series_z import app
 
 Base = declarative_base()
 
@@ -14,22 +10,25 @@ Base = declarative_base()
 #Relations
 #---------
 
-founders = db.Table('founders',
-    db.Column('founder_id', db.Integer, db.ForeignKey('founder.id')),
-    db.Column('city_id', db.Integer, db.ForeignKey('city.id')),
-    db.Column('company_id', db.Integer, db.ForeignKey('company.id'))
+founders = Table('founders',
+    Base.metadata,
+    Column('founder_id', Integer, ForeignKey('founder.id')),
+    Column('city_id', Integer, ForeignKey('city.id')),
+    Column('company_id', Integer, ForeignKey('startup.id'))
 )
 
-cities = db.Table('cities',
-    db.Column('city_id', db.Integer, db.ForeignKey('city.id')),
-    db.Column('person_id', db.Integer, db.ForeignKey('person.id')),
-    db.Column('company_id', db.Integer, db.ForeignKey('company.id'))
+cities = Table('cities',
+    Base.metadata,
+    Column('city_id', Integer, ForeignKey('city.id')),
+    Column('person_id', Integer, ForeignKey('founder.id')),
+    Column('company_id', Integer, ForeignKey('startup.id'))
 )
 
-companies = db.Table('companies',
-    db.Column('company_id', db.Integer, db.ForeignKey('company.id')),
-    db.Column('city_id', db.Integer, db.ForeignKey('city.id')),
-    db.Column('company_id', db.Integer, db.ForeignKey('company.id'))
+companies = Table('companies',
+    Base.metadata,
+    Column('company_id', Integer, ForeignKey('company.id')),
+    Column('city_id', Integer, ForeignKey('city.id')),
+    Column('company_id', Integer, ForeignKey('startup.id'))
 )
 
 #------
@@ -150,13 +149,3 @@ class City(Base):
         self.num_people = num_people
 
 
-# models for which we want to create API endpoints
-app.config['API_MODELS'] = {'companies': Startup,
-                            'people': Founder,
-                            'cities': City}
-
-# models for which we want to create CRUD-style URL endpoints,
-# and pass the routing onto our AngularJS application
-app.config['CRUD_URL_MODELS'] = {'companies': Startup,
-                                 'people': Founder,
-                                 'cities': City}
