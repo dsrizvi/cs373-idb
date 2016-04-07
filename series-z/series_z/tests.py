@@ -291,21 +291,30 @@ class TestIdb(TestCase):
         num_people = 123
         menlo = City(name, investor_followers, popularity, num_companies, num_people)
 
+
         name = 'Test Startup'
-        city = 'Test City'
+        location = 'Test City'
         popularity = 123
         market = 'Social Network'
         num_founders = 4
         product_desc = 'A social network.'
         company_url = 'http://www.facebook.com'
         logo_url = 'http://www.facebook.com/logo'
-        facebook = Startup(name, city, popularity, market, num_founders, product_desc, company_url, logo_url, city=menlo)
+        facebook = Startup(name, location, popularity, market , num_founders, product_desc, company_url , logo_url, city = menlo)
 
         s.add(facebook)
         s.commit()
 
-        fb_test = s.query(Startup).filter(Startup.name == "Test Startup")[0]
-        self.assertEquals(facebook, fb_test)
+        fb_test = s.query(Startup).filter(Startup.name == 'Test Startup')[0]
+
+        self.assertEqual(fb_test.name, facebook.name)
+        self.assertEqual(fb_test.location, facebook.location)
+        self.assertEqual(fb_test.popularity, facebook.popularity)
+        self.assertEqual(fb_test.market, facebook.market)
+        self.assertEqual(fb_test.num_founders, facebook.num_founders)
+        self.assertEqual(fb_test.product_desc, facebook.product_desc)
+        self.assertEqual(fb_test.company_url, facebook.company_url)
+        self.assertEqual(fb_test.logo_url, facebook.logo_url)
 
         s.delete(menlo)
         s.delete(facebook)
@@ -324,7 +333,7 @@ class TestIdb(TestCase):
         name = 'Test Startup'
         location = 'Test City'
         popularity = 123
-        market = 'Social Netowrk'
+        market = 'Social Network'
         num_founders = 4
         product_desc = 'A social network.'
         company_url = 'http://www.facebook.com'
@@ -334,16 +343,9 @@ class TestIdb(TestCase):
         s.add(facebook)
         s.commit()
 
-        fb_test = s.query(Startup).filter(Startup.name == "Test Startup")[0]
+        fb_test = s.query(Startup).filter(Startup.name == 'Test Startup')[0]
 
-        self.assertEqual(fb_test.name, facebook.name)
-        self.assertEqual(fb_test.location, facebook.location)
-        self.assertEqual(fb_test.popularity, facebook.popularity)
-        self.assertEqual(fb_test.market, facebook.market)
-        self.assertEqual(fb_test.num_founders, facebook.num_founders)
-        self.assertEqual(fb_test.product_desc, facebook.product_desc)
-        self.assertEqual(fb_test.company_url, facebook.company_url)
-        self.assertEqual(fb_test.logo_url, facebook.logo_url)
+        self.assertEqual(facebook, fb_test)
 
         s.delete(menlo)
         s.delete(facebook)
