@@ -12,7 +12,6 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
-logger.debug("Starting script.")
 
 SQLALCHEMY_DATABASE_URI = BaseConfig.SQLALCHEMY_DATABASE_URI
 logger.debug(SQLALCHEMY_DATABASE_URI)
@@ -22,6 +21,7 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI, convert_unicode=True, echo=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
+
 # Base = declarative_base()
 # Base.query = db_session.query_property()
 
@@ -30,7 +30,7 @@ def init_db():
   # they will be registered properly on the metadata.  Otherwise
   # you will have to import them first before calling init_db()
   Base.metadata.create_all(bind=engine)
-  logger.debug("Models created.")
+  # logger.debug("Models created.")
 
 
 if __name__ == '__main__':

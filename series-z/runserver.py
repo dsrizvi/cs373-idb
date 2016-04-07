@@ -1,5 +1,5 @@
 import os
-from series_z import app
+from app import app
 
 
 def runserver():
