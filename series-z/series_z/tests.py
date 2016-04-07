@@ -5,56 +5,60 @@
 # -------
 
 from unittest import main, TestCase
-
-from models import Person, Company, Location, Connection
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import *
 
 class TestIdb(TestCase):
- 
+
+    engine = create_engine('sqlite:///seriesz.db')
+    Session = sessionmaker(bind=engine)
+    s = Session()
+
     # -------------
-    # Person tables
+    # Founder tables
     # -------------
 
-    def test_person_add_1(self):
-        s = session()
-        
+    def test_Founder_add_1(self):
+
         name = "Mark Zuckerburg"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        mark = Person(name, location, founder, investor, num_companies)
- 
+        mark = Founder(name, Startup, founder, investor, num_companies)
+
         s.add(mark)
         s.commit()
 
-        mark_test = s.query(Person).filter(Person.name == "Mark Zuckerburg").one()
+        mark_test = s.query(Founder).filter(Founder.name == "Mark Zuckerburg").one()
         self.assertEqual(mark, mark_test)
 
         s.delete(mark)
         s.commit()
 
-    def test_person_query_1(self):
-        s = session()
+    def test_Founder_query_1(self):
+
 
         name = "Mark Zuckerburg"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        mark = Person(name, location, founder, investor, num_companies)
+        mark = Founder(name, Startup, founder, investor, num_companies)
 
         name = "Tyler Winklevoss"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        tyler = Person(name, location, founder, investor, num_companies) 
+        tyler = Founder(name, Startup, founder, investor, num_companies)
 
         s.add(mark)
         s.add(tyler)
         s.commit()
-        
-        tyler_test = s.query(Person).filter(Person.name == "Tyler Winklevoss").one()        
+
+        tyler_test = s.query(Founder).filter(Founder.name == "Tyler Winklevoss").one()
 
         self.assertEqual(tyler, tyler_test)
 
@@ -62,115 +66,115 @@ class TestIdb(TestCase):
         s.delete(tyler)
         s.commit()
 
-    def test_person_delete_1(self):
-        s = session()
+    def test_Founder_delete_1(self):
+
 
         name = "Mark Zuckerburg"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        mark = Person(name, location, founder, investor, num_companies)
+        mark = Founder(name, Startup, founder, investor, num_companies)
 
         s.add(mark)
         s.commit()
         s.delete(mark)
         s.commit()
 
-        count = session.query(Person).filter(Person.name == "Mark Zuckerburg").count() 
+        count = session.query(Founder).filter(Founder.name == "Mark Zuckerburg").count()
 
-        self.assertEquals(0, count)        
+        self.assertEquals(0, count)
 
     # ---------------
-    # Person __init__
+    # Founder __init__
     # ---------------
 
-    def test_person_init_1(self):
+    def test_Founder_init_1(self):
         name = "Mark Zuckerburg"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        person = Person(name, location, founder, investor, num_companies)
-        
-        self.assertEqual(name, person.name)
-        self.assertEqual(location, person.location)
-        self.assertEqual(founder, person.founder)
-        self.assertEqual(investor, person.investor)
-        self.assertEqual(num_companies, person.num_companies)
+        Founder = Founder(name, Startup, founder, investor, num_companies)
 
-    def test_person_init_2(self):
+        self.assertEqual(name, Founder.name)
+        self.assertEqual(Startup, Founder.Startup)
+        self.assertEqual(founder, Founder.founder)
+        self.assertEqual(investor, Founder.investor)
+        self.assertEqual(num_companies, Founder.num_companies)
+
+    def test_Founder_init_2(self):
         name = ""
-        location = ""
+        Startup = ""
         founder = False
         investor = False
         num_companies = 0
-        person = Person(name, location, founder, investor, num_companies)
+        Founder = Founder(name, Startup, founder, investor, num_companies)
 
-        self.assertEqual(name, person.name)
-        self.assertEqual(location, person.location)
-        self.assertEqual(founder, person.founder)
-        self.assertEqual(investor, person.investor)
-        self.assertEqual(num_companies, person.num_companies) 
- 
-    def test_person_init_3(self):
+        self.assertEqual(name, Founder.name)
+        self.assertEqual(Startup, Founder.Startup)
+        self.assertEqual(founder, Founder.founder)
+        self.assertEqual(investor, Founder.investor)
+        self.assertEqual(num_companies, Founder.num_companies)
+
+    def test_Founder_init_3(self):
         name = None
-        location = None
+        Startup = None
         founder = None
         investor = None
         num_companies = None
-        person = Person(name, location, founder, investor, num_companies)
+        Founder = Founder(name, Startup, founder, investor, num_companies)
 
-        self.assertEqual(name, person.name)
-        self.assertEqual(location, person.location)
-        self.assertEqual(founder, person.founder)
-        self.assertEqual(investor, person.investor)
-        self.assertEqual(num_companies, person.num_companies)
-    
+        self.assertEqual(name, Founder.name)
+        self.assertEqual(Startup, Founder.Startup)
+        self.assertEqual(founder, Founder.founder)
+        self.assertEqual(investor, Founder.investor)
+        self.assertEqual(num_companies, Founder.num_companies)
+
     # --------------
-    # Company tables
+    # Startup tables
     # --------------
 
-    def test_company_add_1(self):
-        s = session()
-        
+    def test_Startup_add_1(self):
+
+
         name = "Facebook"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        facebook = Company(name, location, follower_count, num_investors, market) 
+        facebook = Startup(name, Startup, follower_count, num_investors, market)
         s.add(facebook)
         s.commit()
 
-        fb_test = s.query(Company).filter(Company.name == "Facebook").one()
+        fb_test = s.query(Startup).filter(Startup.name == "Facebook").one()
         self.assertEquals(facebook, fb_test)
 
         s.delete(facebook)
         s.commit()
 
-    def test_company_query_1(self):
-        s = session()
+    def test_Startup_query_1(self):
+
 
         name = "Facebook"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        facebook = Company(name, location, follower_count, num_investors, market)
-        
+        facebook = Startup(name, Startup, follower_count, num_investors, market)
+
         name = "FB"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        fb = Company(name, location, follower_count, num_investors, market)
-        
+        fb = Startup(name, Startup, follower_count, num_investors, market)
+
         s.add(facebook)
         s.add(fb)
         s.commit()
 
-        fb_test = s.query(Company).filter(Company.name == "FB").one()
+        fb_test = s.query(Startup).filter(Startup.name == "FB").one()
 
         self.assertEqual(fb, fb_test)
 
@@ -178,115 +182,115 @@ class TestIdb(TestCase):
         s.delete(fb)
         s.commit()
 
-    def test_company_delete_1(self):
-        s = session()
+    def test_Startup_delete_1(self):
+
 
         name = "Facebook"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        facebook = Company(name, location, follower_count, num_investors, market)
+        facebook = Startup(name, Startup, follower_count, num_investors, market)
         s.add(facebook)
         s.commit()
         s.delete(facebook)
         s.commit()
 
-        count = session.query(Company).filter(Company.name == "Facebook").count()
-    
+        count = session.query(Startup).filter(Startup.name == "Facebook").count()
+
         self.assertEquals(0, count)
 
     # ----------------
-    # Company __init__
+    # Startup __init__
     # ----------------
 
-    def test_company_init_1(self):
+    def test_Startup_init_1(self):
         name = "Facebook"
-        location = "Menlo Park"
+        Startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        company = Company(name, location, follower_count, num_investors, market)
+        Startup = Startup(name, Startup, follower_count, num_investors, market)
 
-        self.assertEqual(name, company.name)
-        self.assertEqual(location, company.location)
-        self.assertEqual(follower_count, company.follower_count)
-        self.assertEqual(num_investors, company.num_investors)
-        self.assertEqual(market, company.market)
+        self.assertEqual(name, Startup.name)
+        self.assertEqual(Startup, Startup.Startup)
+        self.assertEqual(follower_count, Startup.follower_count)
+        self.assertEqual(num_investors, Startup.num_investors)
+        self.assertEqual(market, Startup.market)
 
-    def test_company_init_2(self):
+    def test_Startup_init_2(self):
         name = ""
-        location = ""
+        Startup = ""
         follower_count = 0
         num_investors = 0
         market = ""
-        company = Company(name, location, follower_count, num_investors, market)
+        Startup = Startup(name, Startup, follower_count, num_investors, market)
 
-        self.assertEqual(name, company.name)
-        self.assertEqual(location, company.location)
-        self.assertEqual(follower_count, company.follower_count)
-        self.assertEqual(num_investors, company.num_investors)
-        self.assertEqual(market, company.market)
- 
-    def test_company_init_3(self):
+        self.assertEqual(name, Startup.name)
+        self.assertEqual(Startup, Startup.Startup)
+        self.assertEqual(follower_count, Startup.follower_count)
+        self.assertEqual(num_investors, Startup.num_investors)
+        self.assertEqual(market, Startup.market)
+
+    def test_Startup_init_3(self):
         name = None
-        location = None
+        Startup = None
         follower_count = None
         num_investors = None
         market = None
-        company = Company(name, location, follower_count, num_investors, market)
+        Startup = Startup(name, Startup, follower_count, num_investors, market)
 
-        self.assertEqual(name, company.name)
-        self.assertEqual(location, company.location)
-        self.assertEqual(follower_count, company.follower_count)
-        self.assertEqual(num_investors, company.num_investors)
-        self.assertEqual(market, company.market)
+        self.assertEqual(name, Startup.name)
+        self.assertEqual(Startup, Startup.Startup)
+        self.assertEqual(follower_count, Startup.follower_count)
+        self.assertEqual(num_investors, Startup.num_investors)
+        self.assertEqual(market, Startup.market)
 
     # ---------------
-    # Location tables
+    # Startup tables
     # ---------------
 
     def test_location_add_1(self):
-        s = session()        
+
 
         name = "Menlo Park"
         investor_followers = 100
         followers = 1000
         num_companies = 10
         num_people = 100
-        menlo = Location(name, investor_followers, followers, num_companies, num_people)
-    
+        menlo = Startup(name, investor_followers, followers, num_companies, num_people)
+
         s.add(menlo)
         s.commit()
 
-        menlo_test = s.query(Location).filter(Location.name == "Menlo Park").one()
+        menlo_test = s.query(Startup).filter(Startup.name == "Menlo Park").one()
         self.assertEqual(menlo, menlo_test)
 
         s.delete(menlo)
-        s.commit()    
+        s.commit()
 
     def test_location_query_1(self):
-        s = session()
+
 
         name = "Menlo Park"
         investor_followers = 100
         followers = 1000
         num_companies = 10
         num_people = 100
-        menlo = Location(name, investor_followers, followers, num_companies, num_people)
+        menlo = Startup(name, investor_followers, followers, num_companies, num_people)
 
         name = "MP"
         investor_followers = 100
         followers = 1000
         num_companies = 10
         num_people = 100
-        mp = Location(name, investor_followers, followers, num_companies, num_people)     
+        mp = Startup(name, investor_followers, followers, num_companies, num_people)
 
         s.add(menlo)
         s.add(mp)
         s.commit
 
-        mp_test = s.query(Location).filter(Location.name == "MP").one()
+        mp_test = s.query(Startup).filter(Startup.name == "MP").one()
 
         self.assertEqual(mp, mp_test)
 
@@ -295,25 +299,25 @@ class TestIdb(TestCase):
         s.commit()
 
     def test_location_delete_1(self):
-        s = session()
+
 
         name = "Menlo Park"
         investor_followers = 100
         followers = 1000
         num_companies = 10
         num_people = 100
-        menlo = Location(name, investor_followers, followers, num_companies, num_people)
+        menlo = Startup(name, investor_followers, followers, num_companies, num_people)
 
         s.add(menlo)
         s.commit()
         s.delete(menlo)
         s.commit()
 
-        count = session.query(Location).filter(Location.name == "Menlo Park").count()
+        count = session.query(Startup).filter(Startup.name == "Menlo Park").count()
 
-        self.assertEquals(0, count)        
+        self.assertEquals(0, count)
     # -----------------
-    # Location __init__
+    # Startup __init__
     # -----------------
 
     def test_location_init_1(self):
@@ -322,13 +326,13 @@ class TestIdb(TestCase):
         followers = 1000
         num_companies = 10
         num_people = 100
-        location = Location(name, investor_followers, followers, num_companies, num_people)
+        Startup = Startup(name, investor_followers, followers, num_companies, num_people)
 
-        self.assertEqual(name, company.name)
-        self.assertEqual(investor_followers, company.investor_followers)
-        self.assertEqual(followers, company.followers)
-        self.assertEqual(num_companies, company.num_companies)
-        self.assertEqual(num_people, company.num_people) 
+        self.assertEqual(name, Startup.name)
+        self.assertEqual(investor_followers, Startup.investor_followers)
+        self.assertEqual(followers, Startup.followers)
+        self.assertEqual(num_companies, Startup.num_companies)
+        self.assertEqual(num_people, Startup.num_people)
 
     def test_location_init_2(self):
         name = ""
@@ -336,13 +340,13 @@ class TestIdb(TestCase):
         followers = 0
         num_companies = 0
         num_people = 0
-        location = Location(name, investor_followers, followers, num_companies, num_people)
+        Startup = Startup(name, investor_followers, followers, num_companies, num_people)
 
-        self.assertEqual(name, company.name)
-        self.assertEqual(investor_followers, company.investor_followers)
-        self.assertEqual(followers, company.followers)
-        self.assertEqual(num_companies, company.num_companies)
-        self.assertEqual(num_people, company.num_people)
+        self.assertEqual(name, Startup.name)
+        self.assertEqual(investor_followers, Startup.investor_followers)
+        self.assertEqual(followers, Startup.followers)
+        self.assertEqual(num_companies, Startup.num_companies)
+        self.assertEqual(num_people, Startup.num_people)
 
     def test_location_init_3(self):
         name = None
@@ -350,13 +354,13 @@ class TestIdb(TestCase):
         followers = None
         num_companies = None
         num_people = None
-        location = Location(name, investor_followers, followers, num_companies, num_people)
+        Startup = Startup(name, investor_followers, followers, num_companies, num_people)
 
-        self.assertEqual(name, company.name)
-        self.assertEqual(investor_followers, company.investor_followers)
-        self.assertEqual(followers, company.followers)
-        self.assertEqual(num_companies, company.num_companies)
-        self.assertEqual(num_people, company.num_people) 
+        self.assertEqual(name, Startup.name)
+        self.assertEqual(investor_followers, Startup.investor_followers)
+        self.assertEqual(followers, Startup.followers)
+        self.assertEqual(num_companies, Startup.num_companies)
+        self.assertEqual(num_people, Startup.num_people)
 
 # ----
 # main

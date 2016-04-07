@@ -3,6 +3,9 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+# from db import Base
+
+from series_z import app
 
 Base = declarative_base()
 
@@ -10,25 +13,30 @@ Base = declarative_base()
 #Relations
 #---------
 
-founders = Table('founders',
-    Base.metadata,
-    Column('founder_id', Integer, ForeignKey('founder.id')),
-    Column('city_id', Integer, ForeignKey('city.id')),
-    Column('company_id', Integer, ForeignKey('startup.id'))
+startup_to_founder = Table("startup_to_founder", Base.metadata,
+    Column("startup_id", Integer, ForeignKey("startups.id"), primary_key=True),
+    Column("founder_id", Integer, ForeignKey("founders.id"), primary_key=True)
 )
 
-cities = Table('cities',
+founders = Table('founders_association',
     Base.metadata,
-    Column('city_id', Integer, ForeignKey('city.id')),
-    Column('person_id', Integer, ForeignKey('founder.id')),
-    Column('company_id', Integer, ForeignKey('startup.id'))
+    Column('founder_id', Integer, ForeignKey('founders.id')),
+    Column('city_id', Integer, ForeignKey('cities.id')),
+    Column('company_id', Integer, ForeignKey('startups.id'))
 )
 
-companies = Table('companies',
+cities = Table('cities_association',
+    Base.metadata,
+    Column('city_id', Integer, ForeignKey('cities.id')),
+    Column('person_id', Integer, ForeignKey('founders.id')),
+    Column('company_id', Integer, ForeignKey('startups.id'))
+)
+
+companies = Table('companies_association',
     Base.metadata,
     Column('company_id', Integer, ForeignKey('company.id')),
-    Column('city_id', Integer, ForeignKey('city.id')),
-    Column('company_id', Integer, ForeignKey('startup.id'))
+    Column('city_id', Integer, ForeignKey('cities.id')),
+    Column('company_id', Integer, ForeignKey('startups.id'))
 )
 
 #------
@@ -48,7 +56,7 @@ class Founder(Base):
     Founder is a class representing an investor or a company founder
     """
 
-    __tablename__ = 'founder'
+    __tablename__ = 'founders'
 
     #Founder attributes
     id = Column(Integer, primary_key=True)
@@ -59,11 +67,11 @@ class Founder(Base):
     bio = Column(String)
 
     #Founder foreign keys
-    # location_id = Column(Integer, ForeignKey('locations.id'))
+    city_id = Column(Integer, ForeignKey('cities.id'))
 
     #Founder relationships
-    # location = relationship("City", back_populates="people")
-    # companies = relationship("Startup", back_populates="people")
+    city = relationship("City", back_populates="founders")
+    startups = relationship("Startup", secondary=startup_to_founder, back_populates="founders")
 
     def __init__(self, name, angel_id, popularity, image_url, bio):
         """
@@ -84,7 +92,7 @@ class Startup(Base):
     Startup is a class representing a startup
     """
 
-    __tablename__ = 'startup'
+    __tablename__ = 'startups'
 
     #Startup attributes
     id = Column(Integer, primary_key=True)
@@ -97,11 +105,11 @@ class Startup(Base):
     logo_url = Column(String)
 
     #Startup foreign keys
-    # location_id = Column(Integer, ForeignKey('locations.id'))
+    city_id = Column(Integer, ForeignKey('cities.id'))
 
     #Startup relationships
-    # location = relationship("City", back_populates="companies")
-    # people = relationship("People", back_populates="companies")
+    city = relationship("City", back_populates="startups")
+    founders = relationship("Founder", secondary=startup_to_founder, back_populates="startups")
 
     def __init__(self, name, location, popularity, market, product_desc, company_url, logo_url):
         """
@@ -124,7 +132,7 @@ class City(Base):
     City is a class representing a geographical region that hosts People and Companies
     """
 
-    __tablename__ = 'city'
+    __tablename__ = 'cities'
 
     #City attributes
     id = Column(Integer, primary_key=True)
@@ -135,8 +143,8 @@ class City(Base):
     num_people = Column(Integer, nullable=False)
 
     #City relationships
-    companies = relationship("Startup", back_populates="location")
-    people = relationship("Founder", back_populates="location")
+    companies = relationship("Startup", back_populates="cities")
+    people = relationship("Founder", back_populates="cities")
 
     def __init__(self, name, investor_followers, followers, num_companies, num_people):
         """
@@ -149,3 +157,13 @@ class City(Base):
         self.num_people = num_people
 
 
+# # models for which we want to create API endpoints
+# app.config['API_MODELS'] = {'companies': Startup,
+#                             'people': Founder,
+#                             'cities': City}
+
+# # models for which we want to create CRUD-style URL endpoints,
+# # and pass the routing onto our AngularJS application
+# app.config['CRUD_URL_MODELS'] = {'companies': Startup,
+#                                  'people': Founder,
+#                                  'cities': City}
