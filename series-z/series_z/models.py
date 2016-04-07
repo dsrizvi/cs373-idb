@@ -65,6 +65,9 @@ class Founder(Base):
         self.popularity = popularity
         self.image_url = image_url
         self.bio = bio
+        self.rank = rank
+        self.num_startups = num_startup
+        self.city_name = city_nam
 
 #-------
 #Startup
@@ -122,7 +125,7 @@ class City(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     investor_followers = Column(Integer, nullable=False)
-    followers = Column(Integer, nullable=False)
+    popularity = Column(Integer, nullable=False)
     num_companies = Column(Integer, nullable=False)
     num_people = Column(Integer, nullable=False)
 
@@ -130,13 +133,13 @@ class City(Base):
     startups = relationship("Startup", back_populates="cities")
     founders = relationship("Founder", back_populates="cities")
 
-    def __init__(self, name, investor_followers, followers, num_companies, num_people):
+    def __init__(self, name, investor_followers, popularity, num_companies, num_people):
         """
         Standard constructor for City
         """
         self.name = name
         self.investor_followers = investor_followers
-        self.followers = followers
+        self.popularity = popularity
         self.num_companies = num_companies
         self.num_people = num_people
 
