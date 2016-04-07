@@ -1,23 +1,62 @@
-IMAGE_APP := seriesz_app
-IMAGE_LB := seriesz_lb
-IMAGE_DB := seriesz_db
-DOCKER_HUB_USERNAME := dsrizvi
+FILES :=							\
+	.gitignore						\
+    .travis.yml						\
+    apiary.apib						\
+    IDB1.log						\
+    models.html						\
+    models.py						\
+    tests.py						\
+    UML.pdf
 
-docker-build-push:
-	@echo "Source docker.env in carina access file first..."
-	@echo "Building all images..."
+check:
+	@not_found=0;                                 \
+    for i in $(FILES);                            \
+    do                                            \
+        if [ -e $$i ];                            \
+        then                                      \
+            echo "$$i found";                     \
+        else                                      \
+            echo "$$i NOT FOUND";                 \
+            not_found=`expr "$$not_found" + "1"`; \
+        fi                                        \
+    done;                                         \
+    if [ $$not_found -ne 0 ];                     \
+    then                                          \
+        echo "$$not_found failures";              \
+        exit 1;                                   \
+    fi;                                           \
+    echo "success";
 
-	docker login
+clean:
+	rm -f  .coverage
+	rm -f  *.pyc
+	rm -rf __pycache__
+	rm -f tests.tmp
 
-	docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_APP} flask/app
-	docker push ${DOCKER_HUB_USERNAME}/${IMAGE_APP}
+config:
+	git config -l
 
-	docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_LB} flask/db
-	docker push ${DOCKER_HUB_USERNAME}/${IMAGE_LB}
+scrub:
+	make clean
+	rm -f  models.html
+	rm -f  IDB1.log
 
-	docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_LB} flask/lb
-	docker push ${DOCKER_HUB_USERNAME}/${IMAGE_LB}
+status:
+	make clean
+	@echo
+	git branch
+	git remote -v
+	git status
 
+test: tests.tmp
 
-docker-run:
-	 docker-compose --file flask/docker-compose-prod.yml up -d
+models.html: models.py
+	pydoc -w models
+
+IDB1.log:
+	git log > IDB1.log
+
+tests.tmp: tests.py
+	coverage3 run    --branch tests.py >  tests.tmp 2>&1
+	coverage3 report -m                      >> tests.tmp
+	cat tests.tmp
