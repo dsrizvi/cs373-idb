@@ -3,10 +3,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# from db import Base
-
-# from series_z import app
-# comment
 
 
 Base = declarative_base()
@@ -23,14 +19,6 @@ startup_to_founder = Table("startup_to_founder", Base.metadata,
 #------
 #Founder
 #------
-"""
-{'angel_id': 80212,
-  'bio': u'Founder & CEO of @calm  - working to bring the amazing benefits of meditation to a busy world',
-  'image_url': u'https://d1qb2nb5cznatu.cloudfront.net/users/80212-medium_jpg?1405484501',
-  'name': u'Alex Tew',
-  'popularity': 1028
-}
-"""
 
 class Founder(Base):
     """
@@ -145,14 +133,3 @@ class City(Base):
         self.num_companies = num_companies
         self.num_people = num_people
 
-
-# # models for which we want to create API endpoints
-# app.config['API_MODELS'] = {'companies': Startup,
-#                             'people': Founder,
-#                             'cities': City}
-
-# # models for which we want to create CRUD-style URL endpoints,
-# # and pass the routing onto our AngularJS application
-# app.config['CRUD_URL_MODELS'] = {'companies': Startup,
-#                                  'people': Founder,
-#                                  'cities': City}

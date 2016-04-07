@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import time, os, json, logging, sys
 from angel import AngelList
-from series_z.core import db
-from series_z.models import *
-from series_z import app
+from models import *
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, exists
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+
 
 #-----
 #Setup
@@ -17,14 +17,16 @@ num_missed_founders = 0
 num_missed_cities = 0
 num_missed_city_data = 0
 
-def get_db_connection() :
-    engine = create_engine('sqlite:///series_z.db')
-    logger.info("DB engine created")
+def get_db_session() :
+    engine = create_engine('sqlite:///seriesz.db')
+    logging.info("DB engine created")
 
-    conn = engine.connect()
-    logger.info("DB connected")
+    engine = create_engine('sqlite:///seriesz.db')
+    Session = sessionmaker(bind=engine)
+    s = Session()
+    logging.info("DB session created")
 
-    return conn
+    return s
 
 
 def get_angel_list() :
@@ -49,7 +51,7 @@ def test_angel_list(al) :
     else :
         logging.info("Could not connect to API")
 
-    return al.get_set() is not None
+    return al.get_self() is not None
 
 def configure_logging() :
     """
@@ -60,13 +62,6 @@ def configure_logging() :
                         filemode='w',
                         stream=sys.stdout)
 
-
-
-al = get_angel_list()
-conn = get_db_connection()
-
-test_angel_list(al)
-configure_logging()
 
 def filter_hidden(data) :
     return list(filter(lambda d : not d['hidden'], data))
@@ -81,18 +76,15 @@ def get_city_data(city_id) :
         missing_keys = keys - set(data.keys())
 
         if missing_keys :
-            if 'name' in missing_keys :
-                return
-            logging.warn(data['name'] + " is missing keys: " + ', '.join(list(missing_keys)))
+            return
 
         city_stats = data['statistics']['all']
 
         city_data = {
-                    'name': data['name'] if data['name'] else '',
-                    'angel_id': data['id'],
-                    'display_name': data['display_name'] if data['display_name'] else '',
+                    'name': data['display_name'] if data['display_name'] else data['name'],
+                    # 'angel_id': data['id'],
                     'popularity': city_stats['followers'] if city_stats['followers'] else 0,
-                    'investor_popularity': city_stats['investor_followers'] if city_stats['investor_followers'] else 0,
+                    'investor_followers': city_stats['investor_followers'] if city_stats['investor_followers'] else 0,
                     'num_companies': city_stats['startups'] if city_stats['startups'] else 0,
                     'num_people': city_stats['users'] if city_stats['users'] else 0
                     }
@@ -110,6 +102,7 @@ def get_city_data(city_id) :
             retries -= 1
             time.sleep(2)
 
+
     if not response or response['tag_type'] != 'LocationTag' :
         logging.debug("tag_id is not for a location: " + city_id)
         num_missed_city_data += 1
@@ -119,7 +112,7 @@ def get_city_data(city_id) :
 
 
 
-def get_companies_by_city(city_id) :
+def get_companies_by_city(city_id, page) :
     """
     Returns full list of company objects
     """
@@ -129,9 +122,7 @@ def get_companies_by_city(city_id) :
         missing_keys = keys - set(data.keys())
 
         if missing_keys :
-            if 'name' in missing_keys :
-                return
-            logging.warn(data['name'] + " is missing keys: " + ', '.join(list(missing_keys)))
+            return
 
         company_data = {
                         'name': data['name'],
@@ -140,16 +131,10 @@ def get_companies_by_city(city_id) :
                         'popularity': data['follower_count'] if data['follower_count'] else 0,
                         'product_desc': data['product_desc'] if data['product_desc'] else '',
                         'company_url': data['company_url'] if data['company_url'] else '',
-                        'comapany_size': data['company_size'] if data['company_size'] else '',
+                        'market': data['markets'][0]['name'] if data['markets'] else '',
+                        'location': data['locations'][0]['name'] if data['locations'] else '',
+                        'num_founders': 1
                         }
-
-        company_data['market'] = company_data['location'] = ''
-
-        if data['markets'] :
-            company_data['market'] = data['markets'][0]['name']
-
-        if data['locations'] :
-            company_data['location'] = data['locations'][0]['name']
 
         return company_data
 
@@ -157,7 +142,7 @@ def get_companies_by_city(city_id) :
     retries = 3
     while retries and not response :
         try :
-            response = al.get_tags_startups(city_id)
+            response = al.get_tags_startups(city_id, page)
             logging.info("Recieved response for startups in: " + str(city_id))
         except :
             logging.debug("Company response error from city: " + str(city_id))
@@ -175,7 +160,7 @@ def get_companies_by_city(city_id) :
     return [clean_data(company) for company in companies_data]
 
 
-def get_founders_by_company(company_id, city_id) :
+def get_founders_by_company(company_id) :
     """
     Returns full list of founder objects
     """
@@ -184,9 +169,7 @@ def get_founders_by_company(company_id, city_id) :
         missing_keys = keys - set(data.keys())
 
         if missing_keys :
-            if 'name' in missing_keys :
-                return
-            logging.warn(data['name'] + " is missing keys: " + ', '.join(list(missing_keys)))
+            return
 
         founder_data = {
                         'name': data['name'],
@@ -194,7 +177,8 @@ def get_founders_by_company(company_id, city_id) :
                         'bio': data['bio'] if data['bio'] else '',
                         'popularity': data['follower_count'] if data['follower_count'] else 0,
                         'image_url': data['image'] if data['image'] else '',
-                        'city_id': city_id
+                        'rank': 0,
+                        'num_startups': 1
                         }
 
         return founder_data
@@ -211,6 +195,7 @@ def get_founders_by_company(company_id, city_id) :
             time.sleep(2)
 
 
+
     if not response or 'startup_roles' not in response :
         logging.debug("No founders found for: " + company_id)
         num_missed_founders += 1
@@ -218,55 +203,85 @@ def get_founders_by_company(company_id, city_id) :
 
     founders_data = (f['tagged'] for f in response['startup_roles'])
 
-    return [clean_data(founder) for founder in founders_data]
+    return filter(lambda f: f, [clean_data(founder) for founder in founders_data])
 
 
-def insert_companies_by_city(companies_data, city_id) :
-    """
-    Insert all companies for a given city
-    """
-    company = None
-    c_ins = companies.insert()
-    for company in companies_data :
-        pass
 
-def insert_founder(founder, company_id) :
-    f = Founder(**founder)
-    db.session.add(f)
-    conn.execute(f_ins, dict(founder_id=f['angel_id'], company_id=company_id))
+al = get_angel_list()
 
-def insert_founders_by_company(founders_data, company_id) :
-    """
-    Insert all founders for a given company
-    """
-    f_ins = founders.insert()
-    for founder in founders_data :
-        try :
-            f = Founder(**founder)
-        except :
-            log.debug("Failed to insert founder" + founder['angel_id'])
-        # if not conn.query(exists().where(Founder.angel_id==f['angel_id'])):
-        db.session.add(f)
-        conn.execute(f_ins, dict(founder_id=f['angel_id'], company_id=company_id))
+session = get_db_session()
 
-    db.session.commit()
-
-def __main__() :
+if __name__ == "__main__" :
     configure_logging()
+    test_angel_list(al)
 
-    city_ids = [1692, 1664]
+    # city_ids = [1692, 1664]
+    # city_ids = [1617, 1620, 84579, 1621, 1653, 1694]
+    city_ids = [1840, 1616, 84579, 1621, 1653, 1694]
 
     all_companies = []
     all_founders = []
     all_cities = []
 
     for city_id in city_ids :
-        companies_data = get_companies_by_city(city_id)
-        company_ids = (c['id'] for c in companies_data)
-        all_companies += companies_data
 
-        for company_id in company_ids :
-            founders_data = get_founders_by_company(company_id, city_id)
+        city_data = get_city_data(city_id)
+
+        if not session.query(exists().where(City.name == city_data['name'])).scalar() :
+
+            city = City(**city_data)
+            city_companies = get_companies_by_city(city_id, 1)
+            # for i in range(1, 4) :
+            #     city_companies += get_companies_by_city(city_id,i)
+
+            for c in city_companies :
+
+                try :
+                    if not session.query(exists().where(Startup.name == c['name'])).scalar() :
+
+                        company_founders = get_founders_by_company(c['angel_id'])
+                        c['num_founders'] = len(company_founders)
+
+                        company = Startup(c['name'], c['location'], c['popularity'], 
+                                          c['market'], c['num_founders'], c['product_desc'], 
+                                          c['company_url'], c['logo_url'], city = city)
+
+                        for f in company_founders :
+
+                            try :
+                                if not session.query(exists().where(Founder.name == f['name'])).scalar() :
+
+                                    founder = Founder(f['name'], f['angel_id'], f['popularity'], 
+                                                      f['image_url'], f['bio'], f['rank'], f['num_startups'], 
+                                                      city_name=city.name, city=city)
+
+                                    
+                                    city.founders.append(founder)
+                                    founder.startups.append(company)
+
+                                    session.add(founder)
+                                    # logging.info("Added founder: " + str(founder.name))
+                            except :
+                                logging.debug("Founder insert failed: " + f['name'])
+
+                        city.startups.append(company)
+
+
+                        session.add(company)
+                        # logging.info("Added company: " + str(company.name))
+
+                except :
+                    logging.debug("Startup insert failed: " + c['name'])
+
+
+            session.add(city)
+            # logging.info("Added city: " + str(city.name))
+
+    for founder in session.query(Founder).all() :
+        founder.num_startups = len(founder.startups)
+
+    session.commit()
+
 
 
 
