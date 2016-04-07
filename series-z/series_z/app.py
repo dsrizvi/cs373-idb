@@ -1,14 +1,35 @@
 import os
+import json
+from flask import Flask, request, Response
+from flask import render_template, send_from_directory, url_for
+
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.restless import APIManager
+
+app = Flask(__name__)
+
+app.config.from_object('settings')
+
+app.url_map.strict_slashes = False
+
+
+db = SQLAlchemy(app)
+
+api_manager = APIManager(app, flask_sqlalchemy_db=db)
+
+
+
+
+
+import os
 
 from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort
 
-from series_z import app
 
 # routing for API endpoints, generated from the models designated as API_MODELS
-from series_z.core import api_manager
-from series_z.models import *
+from models import *
 
 
 session = api_manager.session
@@ -19,13 +40,12 @@ session = api_manager.session
 @app.route('/about')
 @app.route('/blog')
 def basic_pages(**kwargs):
-    return make_response(open('series_z/templates/index-b.html').read())
+    return make_response(open('templates/index-b.html').read())
 
 
 # routing for CRUD-style endpoints
 # passes routing onto the angular frontend if the requested resource exists
 from sqlalchemy.sql import exists
-
 
 data =  {
             'startups' : [
@@ -108,17 +128,7 @@ data =  {
 
 @app.route('/<model_name>/')
 def show_model_page(model_name):
-    return render_template('listing.html', model_name=model_name.capitalize(), data=data[model_name])
-
-# @app.route('/<model_name>/<item_id>')
-# def rest_pages(model_name, item_id=None):
-    # if model_name in crud_url_models:
-    #     model_class = crud_url_models[model_name]
-    #     if item_id is None or session.query(exists().where(
-    #             model_class.id == item_id)).scalar():
-    #         return make_response(open(
-    #             'series_z/templates/index-b.html').read())
-    # abort(404)
+    return render_template('templates/listing.html', model_name=model_name.capitalize(), data=data[model_name])
 
 
 # special file handlers and error handlers
@@ -131,3 +141,13 @@ def favicon():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+
+
+def runserver():
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+if __name__ == '__main__':
+    runserver()
