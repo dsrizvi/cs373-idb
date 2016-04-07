@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 # from db import Base
 
-from series_z import app
+# from series_z import app
 
 Base = declarative_base()
 
@@ -16,27 +16,6 @@ Base = declarative_base()
 startup_to_founder = Table("startup_to_founder", Base.metadata,
     Column("startup_id", Integer, ForeignKey("startups.id"), primary_key=True),
     Column("founder_id", Integer, ForeignKey("founders.id"), primary_key=True)
-)
-
-founders = Table('founders_association',
-    Base.metadata,
-    Column('founder_id', Integer, ForeignKey('founders.id')),
-    Column('city_id', Integer, ForeignKey('cities.id')),
-    Column('company_id', Integer, ForeignKey('startups.id'))
-)
-
-cities = Table('cities_association',
-    Base.metadata,
-    Column('city_id', Integer, ForeignKey('cities.id')),
-    Column('person_id', Integer, ForeignKey('founders.id')),
-    Column('company_id', Integer, ForeignKey('startups.id'))
-)
-
-companies = Table('companies_association',
-    Base.metadata,
-    Column('company_id', Integer, ForeignKey('company.id')),
-    Column('city_id', Integer, ForeignKey('cities.id')),
-    Column('company_id', Integer, ForeignKey('startups.id'))
 )
 
 #------
@@ -65,7 +44,9 @@ class Founder(Base):
     popularity = Column(Integer)
     image_url = Column(String)
     bio = Column(String)
-
+    rank = Column(Integer)
+    num_startups = Column(Integer)
+    city_name = Column(String)
     #Founder foreign keys
     city_id = Column(Integer, ForeignKey('cities.id'))
 
@@ -100,6 +81,7 @@ class Startup(Base):
     location = Column(String, nullable=False)
     popularity = Column(String, nullable=False)
     market = Column(String, nullable=False)
+    num_founders = Column(String, nullable=False)
     product_desc = Column(String)
     company_url = Column(String)
     logo_url = Column(String)
@@ -143,8 +125,8 @@ class City(Base):
     num_people = Column(Integer, nullable=False)
 
     #City relationships
-    companies = relationship("Startup", back_populates="cities")
-    people = relationship("Founder", back_populates="cities")
+    startups = relationship("Startup", back_populates="cities")
+    founders = relationship("Founder", back_populates="cities")
 
     def __init__(self, name, investor_followers, followers, num_companies, num_people):
         """

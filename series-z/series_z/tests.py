@@ -19,14 +19,17 @@ class TestIdb(TestCase):
     # Founder tables
     # -------------
 
-    def test_Founder_add_1(self):
+    def test_founder_add_1(self):
 
-        name = "Mark Zuckerburg"
-        Startup = "Menlo Park"
-        founder = True
-        investor = True
-        num_companies = 10
-        mark = Founder(name, Startup, founder, investor, num_companies)
+        name = 'Mark Zuckerburg'
+        angel_id = 123
+        popularity = 123
+        image_url = 'http://markzuckerburg.com/photo'
+        bio = 'A dropout'
+        rank = 1
+        num_startups = 1
+        city_name = 'Menlo Park'
+        mark = Founder(name, angel_id, popularity, image_url, bio, rank, num_startups, city_name)
 
         s.add(mark)
         s.commit()
@@ -37,22 +40,22 @@ class TestIdb(TestCase):
         s.delete(mark)
         s.commit()
 
-    def test_Founder_query_1(self):
+    def test_founder_query_1(self):
 
 
         name = "Mark Zuckerburg"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        mark = Founder(name, Startup, founder, investor, num_companies)
+        mark = Founder(name, startup, founder, investor, num_companies)
 
         name = "Tyler Winklevoss"
         Startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        tyler = Founder(name, Startup, founder, investor, num_companies)
+        tyler = Founder(name, startup, founder, investor, num_companies)
 
         s.add(mark)
         s.add(tyler)
@@ -66,15 +69,15 @@ class TestIdb(TestCase):
         s.delete(tyler)
         s.commit()
 
-    def test_Founder_delete_1(self):
+    def test_founder_delete_1(self):
 
 
         name = "Mark Zuckerburg"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        mark = Founder(name, Startup, founder, investor, num_companies)
+        mark = Founder(name, startup, founder, investor, num_companies)
 
         s.add(mark)
         s.commit()
@@ -89,61 +92,61 @@ class TestIdb(TestCase):
     # Founder __init__
     # ---------------
 
-    def test_Founder_init_1(self):
+    def test_founder_init_1(self):
         name = "Mark Zuckerburg"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         founder = True
         investor = True
         num_companies = 10
-        Founder = Founder(name, Startup, founder, investor, num_companies)
+        joe = Founder(name, startup, founder, investor, num_companies)
 
-        self.assertEqual(name, Founder.name)
-        self.assertEqual(Startup, Founder.Startup)
-        self.assertEqual(founder, Founder.founder)
-        self.assertEqual(investor, Founder.investor)
-        self.assertEqual(num_companies, Founder.num_companies)
+        self.assertEqual(name, joe.name)
+        self.assertEqual(startup, joe.startup)
+        self.assertEqual(joe, joe.joe)
+        self.assertEqual(investor, joe.investor)
+        self.assertEqual(num_companies, joe.num_companies)
 
-    def test_Founder_init_2(self):
+    def test_founder_init_2(self):
         name = ""
-        Startup = ""
+        startup = ""
         founder = False
         investor = False
         num_companies = 0
-        Founder = Founder(name, Startup, founder, investor, num_companies)
+        joe = Founder(name, startup, founder, investor, num_companies)
 
-        self.assertEqual(name, Founder.name)
-        self.assertEqual(Startup, Founder.Startup)
-        self.assertEqual(founder, Founder.founder)
-        self.assertEqual(investor, Founder.investor)
-        self.assertEqual(num_companies, Founder.num_companies)
+        self.assertEqual(name, joe.name)
+        self.assertEqual(startup, joe.startup)
+        self.assertEqual(joe, joe.joe)
+        self.assertEqual(investor, joe.investor)
+        self.assertEqual(num_companies, joe.num_companies)
 
-    def test_Founder_init_3(self):
+    def test_founder_init_3(self):
         name = None
         Startup = None
         founder = None
         investor = None
         num_companies = None
-        Founder = Founder(name, Startup, founder, investor, num_companies)
+        joe = Founder(name, startup, founder, investor, num_companies)
 
-        self.assertEqual(name, Founder.name)
-        self.assertEqual(Startup, Founder.Startup)
-        self.assertEqual(founder, Founder.founder)
-        self.assertEqual(investor, Founder.investor)
-        self.assertEqual(num_companies, Founder.num_companies)
+        self.assertEqual(name, joe.name)
+        self.assertEqual(startup, joe.startup)
+        self.assertEqual(joe, joe.joe)
+        self.assertEqual(investor, joe.investor)
+        self.assertEqual(num_companies, joe.num_companies)
 
     # --------------
     # Startup tables
     # --------------
 
-    def test_Startup_add_1(self):
+    def test_startup_add_1(self):
 
 
         name = "Facebook"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        facebook = Startup(name, Startup, follower_count, num_investors, market)
+        facebook = Startup(name, startup, follower_count, num_investors, market)
         s.add(facebook)
         s.commit()
 
@@ -153,28 +156,28 @@ class TestIdb(TestCase):
         s.delete(facebook)
         s.commit()
 
-    def test_Startup_query_1(self):
+    def test_startup_query_1(self):
 
 
         name = "Facebook"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        facebook = Startup(name, Startup, follower_count, num_investors, market)
+        facebook = Startup(name, startup, follower_count, num_investors, market)
 
         name = "FB"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        fb = Startup(name, Startup, follower_count, num_investors, market)
+        fb = Startup(name, startup, follower_count, num_investors, market)
 
         s.add(facebook)
         s.add(fb)
         s.commit()
 
-        fb_test = s.query(Startup).filter(Startup.name == "FB").one()
+        fb_test = s.query(Startup).filter(Startup.name == "Facebook").one()
 
         self.assertEqual(fb, fb_test)
 
@@ -182,7 +185,7 @@ class TestIdb(TestCase):
         s.delete(fb)
         s.commit()
 
-    def test_Startup_delete_1(self):
+    def test_startup_delete_1(self):
 
 
         name = "Facebook"
@@ -190,7 +193,7 @@ class TestIdb(TestCase):
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        facebook = Startup(name, Startup, follower_count, num_investors, market)
+        facebook = Startup(name, startup, follower_count, num_investors, market)
         s.add(facebook)
         s.commit()
         s.delete(facebook)
@@ -204,50 +207,50 @@ class TestIdb(TestCase):
     # Startup __init__
     # ----------------
 
-    def test_Startup_init_1(self):
+    def test_startup_init_1(self):
         name = "Facebook"
-        Startup = "Menlo Park"
+        startup = "Menlo Park"
         follower_count = 10
         num_investors = 10
         market = "Startup"
-        Startup = Startup(name, Startup, follower_count, num_investors, market)
+        Startup = Startup(name, startup, follower_count, num_investors, market)
 
         self.assertEqual(name, Startup.name)
-        self.assertEqual(Startup, Startup.Startup)
+        self.assertEqual(Startup, Startup.startup)
         self.assertEqual(follower_count, Startup.follower_count)
         self.assertEqual(num_investors, Startup.num_investors)
         self.assertEqual(market, Startup.market)
 
-    def test_Startup_init_2(self):
+    def test_startup_init_2(self):
         name = ""
-        Startup = ""
+        startup = ""
         follower_count = 0
         num_investors = 0
         market = ""
-        Startup = Startup(name, Startup, follower_count, num_investors, market)
+        Startup = Startup(name, startup, follower_count, num_investors, market)
 
         self.assertEqual(name, Startup.name)
-        self.assertEqual(Startup, Startup.Startup)
+        self.assertEqual(startup, Startup.Startup)
         self.assertEqual(follower_count, Startup.follower_count)
         self.assertEqual(num_investors, Startup.num_investors)
         self.assertEqual(market, Startup.market)
 
-    def test_Startup_init_3(self):
+    def test_startup_init_3(self):
         name = None
         Startup = None
         follower_count = None
         num_investors = None
         market = None
-        Startup = Startup(name, Startup, follower_count, num_investors, market)
+        Startup = Startup(name, startup, follower_count, num_investors, market)
 
         self.assertEqual(name, Startup.name)
-        self.assertEqual(Startup, Startup.Startup)
+        self.assertEqual(startup, Startup.Startup)
         self.assertEqual(follower_count, Startup.follower_count)
         self.assertEqual(num_investors, Startup.num_investors)
         self.assertEqual(market, Startup.market)
 
     # ---------------
-    # Startup tables
+    # Location tables
     # ---------------
 
     def test_location_add_1(self):
