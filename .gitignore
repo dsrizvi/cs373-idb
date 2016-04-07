@@ -6,3 +6,4 @@ build
 npm-debug.log
 *.swp
 __pycache__/
+*.pyc

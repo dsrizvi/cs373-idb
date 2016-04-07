@@ -17,15 +17,14 @@ num_missed_founders = 0
 num_missed_cities = 0
 num_missed_city_data = 0
 
-def get_db_session () :
+def get_db_connection() :
     engine = create_engine('sqlite:///series_z.db')
     logger.info("DB engine created")
 
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    logger.info("DB session created")
+    conn = engine.connect()
+    logger.info("DB connected")
 
-    return session
+    return conn
 
 
 def get_angel_list() :
@@ -64,7 +63,7 @@ def configure_logging() :
 
 
 al = get_angel_list()
-session = get_db_session()
+conn = get_db_connection()
 
 test_angel_list(al)
 configure_logging()
@@ -89,13 +88,13 @@ def get_city_data(city_id) :
         city_stats = data['statistics']['all']
 
         city_data = {
-                        'name': data['name'] if data['name'] else '',
-                        'angel_id': data['id'],
-                        'display_name': data['display_name'] if data['display_name'] else '',
-                        'popularity': city_stats['followers'] if city_stats['followers'] else 0,
-                        'investor_popularity': city_stats['investor_followers'] if city_stats['investor_followers'] else 0,
-                        'num_companies': city_stats['startups'] if city_stats['startups'] else 0,
-                        'num_people': city_stats['users'] if city_stats['users'] else 0,
+                    'name': data['name'] if data['name'] else '',
+                    'angel_id': data['id'],
+                    'display_name': data['display_name'] if data['display_name'] else '',
+                    'popularity': city_stats['followers'] if city_stats['followers'] else 0,
+                    'investor_popularity': city_stats['investor_followers'] if city_stats['investor_followers'] else 0,
+                    'num_companies': city_stats['startups'] if city_stats['startups'] else 0,
+                    'num_people': city_stats['users'] if city_stats['users'] else 0
                     }
         
         return city_data
@@ -176,7 +175,7 @@ def get_companies_by_city(city_id) :
     return [clean_data(company) for company in companies_data]
 
 
-def get_founders_by_company(company_id) :
+def get_founders_by_company(company_id, city_id) :
     """
     Returns full list of founder objects
     """
@@ -195,6 +194,7 @@ def get_founders_by_company(company_id) :
                         'bio': data['bio'] if data['bio'] else '',
                         'popularity': data['follower_count'] if data['follower_count'] else 0,
                         'image_url': data['image'] if data['image'] else '',
+                        'city_id': city_id
                         }
 
         return founder_data
@@ -221,11 +221,35 @@ def get_founders_by_company(company_id) :
     return [clean_data(founder) for founder in founders_data]
 
 
-def insert_founders_by_company(founder_data, company_id, city_id) :
-    founder = None
-    for f in founder_data :
-        founder = Founder(**f)
-        if (session.query(Founder).filter(Location.angel_id == location_id).count()) == 0:
+def insert_companies_by_city(companies_data, city_id) :
+    """
+    Insert all companies for a given city
+    """
+    company = None
+    c_ins = companies.insert()
+    for company in companies_data :
+        pass
+
+def insert_founder(founder, company_id) :
+    f = Founder(**founder)
+    db.session.add(f)
+    conn.execute(f_ins, dict(founder_id=f['angel_id'], company_id=company_id))
+
+def insert_founders_by_company(founders_data, company_id) :
+    """
+    Insert all founders for a given company
+    """
+    f_ins = founders.insert()
+    for founder in founders_data :
+        try :
+            f = Founder(**founder)
+        except :
+            log.debug("Failed to insert founder" + founder['angel_id'])
+        # if not conn.query(exists().where(Founder.angel_id==f['angel_id'])):
+        db.session.add(f)
+        conn.execute(f_ins, dict(founder_id=f['angel_id'], company_id=company_id))
+
+    db.session.commit()
 
 def __main__() :
     configure_logging()
@@ -236,13 +260,14 @@ def __main__() :
     all_founders = []
     all_cities = []
 
-    # for city_id in city_ids :
-    #     companies_data = get_companies_by_city(city_id)
-    #     company_ids = (c['id'] for c in companies_data)
-    #     all_companies += companies_data
+    for city_id in city_ids :
+        companies_data = get_companies_by_city(city_id)
+        company_ids = (c['id'] for c in companies_data)
+        all_companies += companies_data
 
-    #     for company_id in company_ids :
-    #         founders_data = get_founders_by_company(company_id)
+        for company_id in company_ids :
+            founders_data = get_founders_by_company(company_id, city_id)
+
 
 
 
