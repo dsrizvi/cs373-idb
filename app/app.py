@@ -10,6 +10,9 @@ from sqlalchemy.sql import exists
 
 from models import *
 
+app.config.update(
+    PROPAGATE_EXCEPTIONS = True
+)
 
 app = Flask(__name__)
 
@@ -107,8 +110,10 @@ def page_not_found(e):
 ################ Danyal start ################
 
 @app.route('/api/startups', methods=['GET'])
-def api_startups(id):
-    startups = Startup.query.all()
+def api_startups():
+
+    startups = db_session.query(City).all()
+    data = []
 
     for startup in startups:
         data.append(row_dict(startup))
@@ -117,10 +122,9 @@ def api_startups(id):
 
     return data
 
-
-@app.route('/api/startups/<int:id_>', methods=['GET'])
+@app.route('/api/startup/<int:id>', methods=['GET'])
 def api_startup(id):
-    startup = Startup.query.filter(Startup.id == id_).one_or_none()
+    startup = db_session.query(Startup).get(id)
 
     if startup:
         startup = row_dict(startup)
@@ -131,20 +135,21 @@ def api_startup(id):
     return data
 
 @app.route('/api/founders', methods=['GET'])
-def api_founders(id):
-    founders = Founder.query.all()
+def api_founders():
 
+    founders = db_session.query(Founder).all()
+    data = []
     for founder in founders:
-        data.append(row_dict(founders))
+        data.append(row_dict(founder))
 
     data = json.dumps(data)
 
     return data
 
 
-@app.route('/api/founder/<int:id_>', methods=['GET'])
+@app.route('/api/founder/<int:id>', methods=['GET'])
 def api_founder(id):
-    founder = Founder.query.filter(Founder.id == id_).one_or_none()
+    founder = db_session.query(Founder).get(id)
 
     if founder:
         founder = row_dict(founder)
@@ -155,9 +160,9 @@ def api_founder(id):
     return data
 
 @app.route('/api/cities', methods=['GET'])
-def api_cities(id):
-    cities = City.query.all()
-
+def api_cities():
+    cities = db_session.query(City).all()
+    data = []
     for city in cities:
         data.append(row_dict(city))
 
@@ -166,15 +171,16 @@ def api_cities(id):
     return data
 
 
-@app.route('/api/city/<int:id_>', methods=['GET'])
+@app.route('/api/city/<int:id>', methods=['GET'])
 def api_city(id):
-    city = City.query.filter(Startup.id == id_).one_or_none()
+    city = db_session.query(City).get(id)
 
     if city:
         city = row_dict(city)
         data = json.dumps(city, ensure_ascii=False)
     else:
         data = ''
+
 
     return data
 
