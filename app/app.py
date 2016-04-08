@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json
 from flask import Flask, request, Response
 from flask import render_template, send_from_directory, url_for, redirect, send_file, make_response, abort
@@ -13,110 +13,72 @@ from models import *
 
 app = Flask(__name__)
 
-
 app.url_map.strict_slashes = False
-
 db = SQLAlchemy(app)
-
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
-
-
 session = api_manager.session
 
+from sqlalchemy import create_engine, exists
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-# routing for basic pages (pass routing onto the Angular app)
+
+engine = create_engine('sqlite:///seriesz.db')
+Session = sessionmaker(bind=engine)
+db_session = Session()
+
 @app.route('/')
 @app.route('/about')
-@app.route('/blog')
 def basic_pages(**kwargs):
     return make_response(open('templates/index-b.html').read())
 
 
-# routing for CRUD-style endpoints
-# passes routing onto the angular frontend if the requested resource exists
-
-data =  {
-            'startups' : [
-                {
-                    'name': 'Slack',
-                    'location': 'San Francisco',
-                    'founders': ['Stewart Butterfield'],
-                    'popularity': 50,
-                    'investors': 6,
-                    'market': 'Productivity'
-                },
-                {
-                    'name': 'Uber',
-                    'location': 'San Francisco',
-                    'founders': ['Travis Kalanik'],
-                    'popularity': 50,
-                    'investors': 6,
-                    'market': 'Transportation'
-                },
-                {
-                    'name': 'Palantir Technologies',
-                    'location': 'San Francisco',
-                    'founders': ['Alex Karp'],
-                    'popularity': 50,
-                    'investors': 6,
-                    'market': 'Data Analytics'
-                }
-            ],
-
-            'people' : [
-                {
-                    'name': 'Stewart Butterfield',
-                    'location': 'San Francisco',
-                    'founder': True,
-                    'investor': False,
-                    'companies': 3
-                },
-                {
-                    'name': 'Alex Karp',
-                    'location': 'San Francisco',
-                    'founder': True,
-                    'investor': False,
-                    'companies': 3
-                },
-                {
-                    'name': 'John Smith',
-                    'location': 'San Francisco',
-                    'founder': False,
-                    'investor': True,
-                    'companies': 3
-                }
-            ],
-
-            'cities' : [
-                {
-                    'name': 'San Francisco',
-                    'popularity': 39,
-                    'investors': 231,
-                    'founders': 234,
-                    'companies': 124,
-                },
-                {
-                    'name': 'Austin',
-                    'popularity': 39,
-                    'investors': 231,
-                    'founders': 234,
-                    'companies': 124,
-                },
-                {
-                    'name': 'New York',
-                    'popularity': 39,
-                    'investors': 231,
-                    'founders': 234,
-                    'companies': 124,
-                }
-
-            ]
-        }
-
 
 @app.route('/<model_name>/')
 def show_model_page(model_name):
-    return render_template('listing.html', model_name=model_name.capitalize(), data=data[model_name])
+
+    if model_name == 'cities' :
+        data = [f.__dict__ for f in db_session.query(City).all()]
+        return render_template("city_listing.html", cities=data)
+
+    if model_name == 'founders' :
+        data = [f.__dict__ for f in db_session.query(Founder).all()]
+        return render_template("founder_listing.html", founders=data)
+
+    if model_name == 'startups' :
+        data = [f.__dict__ for f in db_session.query(Startup).all()]
+        return render_template("startup_listing.html", startups=data)
+
+    return render_template('404.html') 
+
+
+@app.route('/<model_name>/<item_id>')
+def show_item_page(model_name, item_id):
+    if model_name == 'cities' :
+        try :
+            item = db_session.query(City).get(item_id)
+            return render_template('city.html')
+        except :
+            return render_template('index-b.html')
+
+    if model_name == 'founders' :
+        try :
+            item = db_session.query(Founder).get(item_id)
+            print item.__dict__
+            return render_template('founder.html')
+        except :
+            print sys.exc_info()[0]
+            return render_template('index-b.html')
+
+    if model_name == 'startups' :
+        try :
+            item = db_session.query(Startup).get(item_id)
+            return render_template('startup.html')
+        except :
+            print sys.exc_info()[0]
+            return render_template('index-b.html')
+
+
+    return render_template('404.html')
 
 
 # special file handlers and error handlers
@@ -130,7 +92,9 @@ def favicon():
 def page_not_found(e):
     return render_template('404.html'), 404
 
+################ Danyal start ################
 
+################ Danyal end   ################
 
 
 def runserver():

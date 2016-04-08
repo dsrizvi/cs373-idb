@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Series Z | {{ model_name }}</title>
+        <title>Series Z | Founders</title>
         <meta charset="utf-8" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +20,7 @@
                         <ul>
                             <li><a href="/">Home</a></li>
                             <li><a href="/startups">Startups</a></li>
-                            <li><a href="/people">People</a></li>
+                            <li><a href="/founders">Founders</a></li>
                             <li><a href="/cities">Cities</a></li>
                         </ul>
                     </nav>
@@ -28,7 +28,7 @@
 
             <!-- Banner -->
                 <section id="banner">
-                    <h2>{{ model_name }}</h2>
+                    <h2>Founders</h2>
                 </section>
 
             <!-- Main -->
@@ -40,32 +40,46 @@
 
                                     <!-- <h4>Default</h4> -->
                                     <div class="table-wrapper">
-                                        <table class="sortable">
+                                        <table class="sortable with-pager">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    {% for label in data[0] %}
-                                                        {% if label != 'name' %}
-                                                            <td>{{ label.capitalize() }}<td>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                    <th>Popularity</th>
+                                                    <th>Number of startups</th>
+                                                    <th>City</th>
+                                                    <th>Rank</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for row in data %}
+                                                {% for founder in founders %}
                                                 <tr>
-                                                    <td>{{ row['name'] }}</td>
-                                                    {% for key in row %}
-                                                        {% if key != 'name' %}
-                                                        <td>{{ row[key] }}<td>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                    <td><a href="/founders/{{ founder['id'] }}">{{ founder['name'] }}</a></td>
+                                                    <td>{{ founder['popularity'] }}</td>
+                                                    <td>{{ founder['num_startups'] }}</td>
+                                                    <td>{{ founder['city_name'].title() }}</td>
+                                                    <td>{{ founder['rank'] }}</td>
+
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
                                             <tfoot>
                                             </tfoot>
                                         </table>
+                                        <nav>
+                                          <ul class="pager" style="list-style-type:none">
+                                            <li class="previous" style="display: inline">
+                                              <a href="#">
+                                                Prev
+                                              </a>
+                                            </li>
+                                            <li class="next" style="display: inline">
+                                              <a href="#">
+                                                Next 
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </nav>
+
                                     </div>
                                 </section>
 
@@ -80,6 +94,7 @@
             <script src="/static/js-b/jquery.scrollgress.min.js"></script>
             <script src="/static/js-b/skel.min.js"></script>
             <script src="/static/js-b/util.js"></script>
+            <script src="/static/js-b/simple-bootstrap-paginator.js"></script>
             <!--[if lte IE 8]><script src="/static/js-b/ie/respond.min.js"></script><![endif]-->
             <script src="/static/js-b/main.js"></script>
 
