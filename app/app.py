@@ -27,55 +27,67 @@ Session = sessionmaker(bind=engine)
 db_session = Session()
 
 @app.route('/')
-@app.route('/about')
 def basic_pages(**kwargs):
     return make_response(open('templates/index-b.html').read())
 
-
+@app.route('/about')
+def show_about():
+    return render_template("about.html")
 
 @app.route('/<model_name>/')
 def show_model_page(model_name):
 
     if model_name == 'cities' :
-        data = [f.__dict__ for f in db_session.query(City).all()]
-        return render_template("city_listing.html", cities=data)
+        try:
+            data = db_session.query(City).all()
+            return render_template("city_listing.html", cities=data)
+        except :
+            print sys.exc_info()
 
     if model_name == 'founders' :
-        data = [f.__dict__ for f in db_session.query(Founder).all()]
-        return render_template("founder_listing.html", founders=data)
+        try:
+            data = db_session.query(Founder).all()
+            return render_template("founder_listing.html", founders=data)
+        except :
+            print sys.exc_info()
 
     if model_name == 'startups' :
-        data = [f.__dict__ for f in db_session.query(Startup).all()]
-        return render_template("startup_listing.html", startups=data)
+        try:
+            data = db_session.query(Startup).all()
+            return render_template("startup_listing.html", startups=data)
+        except :
+            print sys.exc_info()
 
     return render_template('404.html') 
 
+
+city_images = {"San Francisco" : "http://www.jetblue.com/img/vacations/destination/San-Francisco-960-x-420.jpg", "New York City" : "https://media-cdn.tripadvisor.com/media/photo-s/03/9b/2d/f2/new-york-city.jpg", "Austin" : "http://intelligenttravel.nationalgeographic.com/files/2015/11/dowtown-austin-skyline-590-590x393.jpg", "Boston" : "https://media-cdn.tripadvisor.com/media/photo-s/03/9b/2f/47/boston.jpg", "Boulder" : "https://res-3.cloudinary.com/simpleview/image/upload/c_fill,f_auto,h_360,q_50,w_1024/v1/clients/boulder/AerialwithBoulderHighField_013f6e79-aa0f-42df-8adf-cf81bf59a2f2.jpg", "Los Angeles" : "http://usa.sae.edu/assets/Campuses/Los-Angeles/2015/Los_Angeles_city_view.jpg", "Palo Alto" : "https://cbsboston.files.wordpress.com/2011/07/stanford-university-palo-alto-california.jpg"}
 
 @app.route('/<model_name>/<item_id>')
 def show_item_page(model_name, item_id):
     if model_name == 'cities' :
         try :
             item = db_session.query(City).get(item_id)
-            return render_template('city.html')
+            return render_template('city.html', city=item, images=city_images)
         except :
-            return render_template('index-b.html')
+            print sys.exc_info()
+            return render_template('404.html')
 
     if model_name == 'founders' :
         try :
-            item = db_session.query(Founder).get(item_id)
-            print item.__dict__
-            return render_template('founder.html')
+            founder = db_session.query(Founder).get(item_id)
+            return render_template('founder.html', founder=founder)
         except :
-            print sys.exc_info()[0]
-            return render_template('index-b.html')
+            print sys.exc_info()
+            return render_template('404.html')
 
     if model_name == 'startups' :
         try :
             item = db_session.query(Startup).get(item_id)
-            return render_template('startup.html')
+            return render_template('startup.html', startup=item)
         except :
-            print sys.exc_info()[0]
-            return render_template('index-b.html')
+            print sys.exc_info()
+            return render_template('404.html')
 
 
     return render_template('404.html')
@@ -93,6 +105,86 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 ################ Danyal start ################
+
+@app.route('/api/startups', methods=['GET'])
+def api_startups(id):
+    startups = Startup.query.all()
+
+    for startup in startups:
+        data.append(row_dict(startup))
+
+    data = json.dumps(data)
+
+    return data
+
+
+@app.route('/api/startups/<int:id_>', methods=['GET'])
+def api_startup(id):
+    startup = Startup.query.filter(Startup.id == id_).one_or_none()
+
+    if startup:
+        startup = row_dict(startup)
+        data = json.dumps(startup, ensure_ascii=False)
+    else:
+        data = ''
+
+    return data
+
+@app.route('/api/founders', methods=['GET'])
+def api_founders(id):
+    founders = Founder.query.all()
+
+    for founder in founders:
+        data.append(row_dict(founders))
+
+    data = json.dumps(data)
+
+    return data
+
+
+@app.route('/api/founder/<int:id_>', methods=['GET'])
+def api_founder(id):
+    founder = Founder.query.filter(Founder.id == id_).one_or_none()
+
+    if founder:
+        founder = row_dict(founder)
+        data = json.dumps(founder, ensure_ascii=False)
+    else:
+        data = ''
+
+    return data
+
+@app.route('/api/cities', methods=['GET'])
+def api_cities(id):
+    cities = City.query.all()
+
+    for city in cities:
+        data.append(row_dict(city))
+
+    data = json.dumps(data)
+
+    return data
+
+
+@app.route('/api/city/<int:id_>', methods=['GET'])
+def api_city(id):
+    city = City.query.filter(Startup.id == id_).one_or_none()
+
+    if city:
+        city = row_dict(city)
+        data = json.dumps(city, ensure_ascii=False)
+    else:
+        data = ''
+
+    return data
+
+def row_dict(row):
+    d = {}
+    for column in row.__table__.columns:
+        d[column.name] = str(getattr(row, column.name))
+
+    return d
+
 
 ################ Danyal end   ################
 

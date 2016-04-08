@@ -44,7 +44,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Location</th>
+                                                    <th>City</th>
                                                     <th>Popularity</th>
                                                     <th>Number of Founders</th>
                                                     <th>Market</th>
@@ -53,11 +53,11 @@
                                             <tbody>
                                                 {% for startup in startups %}
                                                 <tr>
-                                                    <td><a href="/startups/{{ startup['id'] }}">{{ startup['name'] }}</a></td>
-                                                    <td>{{ startup['location'].title() }}</td>
-                                                    <td>{{ startup['popularity'] }}</td>
-                                                    <td>{{ startup['num_founders'] }}</td>
-                                                    <td>{{ startup['market'].capitalize() }}</td>
+                                                    <td><a href="/startups/{{ startup.id }}">{{ startup.name }}</a></td>
+                                                    <td><a href="/cities/{{ startup.city.id }}">{{ startup.city.name }}</a></td>
+                                                    <td>{{ startup.popularity }}</td>
+                                                    <td>{{ startup.num_founders }}</td>
+                                                    <td>{{ startup.market.capitalize() }}</td>
 
                                                 </tr>
                                                 {% endfor %}

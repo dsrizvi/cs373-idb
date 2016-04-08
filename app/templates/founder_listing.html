@@ -53,11 +53,11 @@
                                             <tbody>
                                                 {% for founder in founders %}
                                                 <tr>
-                                                    <td><a href="/founders/{{ founder['id'] }}">{{ founder['name'] }}</a></td>
-                                                    <td>{{ founder['popularity'] }}</td>
-                                                    <td>{{ founder['num_startups'] }}</td>
-                                                    <td>{{ founder['city_name'].title() }}</td>
-                                                    <td>{{ founder['rank'] }}</td>
+                                                    <td><a href="/founders/{{ founder.id }}">{{ founder.name }}</a></td>
+                                                    <td>{{ founder.popularity }}</td>
+                                                    <td>{{ founder.num_startups }}</td>
+                                                    <td><a href="/cities/{{ founder.city.id }}">{{ founder.city.name }}</a></td>
+                                                    <td>{{ founder.rank }}</td>
 
                                                 </tr>
                                                 {% endfor %}

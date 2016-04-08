@@ -1,119 +1,135 @@
 #!/usr/bin/env python3
 
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# from db import Base
+
 
 Base = declarative_base()
 
+#---------
+#Relations
+#---------
+
+startup_to_founder = Table("startup_to_founder", Base.metadata,
+    Column("startup_id", Integer, ForeignKey("startups.id"), primary_key=True),
+    Column("founder_id", Integer, ForeignKey("founders.id"), primary_key=True)
+)
 
 #------
-#Person
+#Founder
 #------
 
-class Person(Base):
+class Founder(Base):
     """
-    Person is a class representing an investor or a company founder
+    Founder is a class representing an investor or a company founder
     """
 
-    __tablename__ = 'people'
+    __tablename__ = 'founders'
 
-    #Person attributes
+    #Founder attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    location = Column(String, nullable=False)
-    founder = Column(Boolean, nullable=False)
-    investor = Column(Boolean, nullable=False)
-    num_companies = Column(Integer, nullable=False)
-    image = Column(String)
+    angel_id = Column(Integer, nullable=False)
+    popularity = Column(Integer)
+    image_url = Column(String)
     bio = Column(String)
+    rank = Column(Integer)
+    num_startups = Column(Integer)
+    city_name = Column(String)
+    #Founder foreign keys
+    city_id = Column(Integer, ForeignKey('cities.id'))
 
-    #Person foreign keys
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    #Founder relationships
+    city = relationship("City", back_populates="founders")
+    startups = relationship("Startup", secondary=startup_to_founder, back_populates="founders")
 
-    #Person relationships
-    location = relationship("Location", back_populates="people")
-    companies = relationship("Company", back_populates="people")
-
-    def __init__(self, name, location, founder, investor, num_companies):
+    def __init__(self, name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city):
         """
-        Standard constructor for Person
+        Standard constructor for Founder
         """
         self.name = name
-        self.location = location
-        self.founder = founder
-        self.investor = investor
-        self.num_companies = num_companies
-
+        self.angel_id = angel_id
+        self.popularity = popularity
+        self.image_url = image_url
+        self.bio = bio
+        self.rank = rank
+        self.num_startups = num_startups
+        self.city_name = city_name
+        self.city = city
 #-------
-#Company
+#Startup
 #-------
 
-class Company(Base):
+class Startup(Base):
     """
-    Company is a class representing a startup or VC Firm
+    Startup is a class representing a startup
     """
 
-    __tablename__ = 'companies'
+    __tablename__ = 'startups'
 
-    #Company attributes
+    #Startup attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    follower_count = Column(String, nullable=False)
-    num_investors = Column(Integer, nullable=False)
+    popularity = Column(Integer, nullable=False)
     market = Column(String, nullable=False)
+    num_founders = Column(Integer, nullable=False)
     product_desc = Column(String)
     company_url = Column(String)
     logo_url = Column(String)
 
-    #Company foreign keys
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    #Startup foreign keys
+    city_id = Column(Integer, ForeignKey('cities.id'))
 
-    #Company relationships
-    location = relationship("Location", back_populates="companies")
-    people = relationship("People", back_populates="companies")
+    #Startup relationships
+    city = relationship("City", back_populates="startups")
+    founders = relationship("Founder", secondary=startup_to_founder, back_populates="startups")
 
-    def __init__(self, name, location, follower_count, num_investors, market):
+    def __init__(self, name, location, popularity, market, num_founders, product_desc, company_url, logo_url, city):
         """
-        Standard constructor for Company
+        Standard constructor for Startup
         """
         self.name = name
         self.location = location
-        self.follower_count = follower_count
-        self.num_investor = num_investors
+        self.popularity = popularity
         self.market = market
+        self.num_founders = num_founders
+        self.product_desc = product_desc
+        self.company_url = company_url
+        self.logo_url = logo_url
+        self.city = city
 
 #--------
-#Location
+#City
 #--------
 
-class Location(Base):
+class City(Base):
     """
-    Location is a class representing a geographical region that hosts People and Companies
+    City is a class representing a geographical region that hosts People and Companies
     """
 
-    __tablename__ = 'locations'
+    __tablename__ = 'cities'
 
-    #Location attributes
+    #City attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     investor_followers = Column(Integer, nullable=False)
-    followers = Column(Integer, nullable=False)
+    popularity = Column(Integer, nullable=False)
     num_companies = Column(Integer, nullable=False)
     num_people = Column(Integer, nullable=False)
 
-    #Location relationships
-    companies = relationship("Company", back_populates="location")
-    people = relationship("Person", back_populates="location")
+    #City relationships
+    startups = relationship("Startup", back_populates="city")
+    founders = relationship("Founder", back_populates="city")
 
-    def __init__(self, name, investor_followers, followers, num_companies, num_people):
+    def __init__(self, name, investor_followers, popularity, num_companies, num_people):
         """
-        Standard constructor for Location
+        Standard constructor for City
         """
         self.name = name
         self.investor_followers = investor_followers
-        self.followers = followers
+        self.popularity = popularity
         self.num_companies = num_companies
         self.num_people = num_people
+

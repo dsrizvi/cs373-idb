@@ -16,24 +16,15 @@
                 <header>
                     <span class="image avatar"><img src="{{ founder['image_url'] }}" alt="" /></span>
                     <h1 id="logo"><a href="#">{{ founder['name'] }}</a></h1>
-                    <p>{{ founder['bio'] }}</p>
                 </header>
                 <nav id="nav">
                     <ul>
                         <li><a href="#about" class="active">About</a></li>
-                        <li><a href="#investments">Investments</a></li>
                         <li><a href="#Companies">Companies</a></li>
                     </ul>
                 </nav>
                 <footer>
-<!--                    <ul class="icons">
-                        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                        <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                        <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-                        <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-                    </ul>
- -->                </footer>
+               </footer>
             </section>
 
         <!-- Wrapper -->
@@ -46,10 +37,10 @@
                             <section id="one">
                                 <footer>
                                    <ul class="icons">
-                                        <li><a href="../../index.html" class="icon fa-home"><span class="label">Home</span></a></li>
-                                        <li><a href="../startups.html" class="icon fa-gears"><span class="label">Startups</span></a></li>
-                                        <li><a href="../people.html" class="icon fa-users"><span class="label">People</span></a></li>
-                                        <li><a href="../cities.html" class="icon fa-building"><span class="label">Cities</span></a></li>
+                                        <li><a href="/" class="icon fa-home"><span class="label">Home</span></a></li>
+                                        <li><a href="/startups" class="icon fa-gears"><span class="label">Startups</span></a></li>
+                                        <li><a href="/founders" class="icon fa-users"><span class="label">People</span></a></li>
+                                        <li><a href="/cities" class="icon fa-building"><span class="label">Cities</span></a></li>
                                     </ul>
                                 </footer>
                             </section>
@@ -58,43 +49,13 @@
                             <section id="about">
                                 <div class="container">
                                     <h3>About</h3>
-                                    <p>I am an investor so I invest in investments of course.</p>
+                                    <p>{{ founder['bio'] }}</p>
                                     <ul class="feature-icons">
-                                        <li class="fa-money">Investor</li>
-                                        <li class="fa-star">3 companies</li>
-                                        <li class="fa-building">San Francisco</li>
+                                        <li class="fa-fire">{{ founder.popularity }} popularity score</li>
+                                        <li class="fa-users">#{{ founder.rank }} best founder</li>
+                                        <li class="fa-star">{{ founder.num_startups }} companies</li>
+                                        <li class="fa-building"><a href="/cities/{{founder.city.id}}">{{ founder.city_name }}</a></li>
                                     </ul>
-                                </div>
-                            </section>
-
-                        <!-- investments -->
-                            <section id="investments">
-                                <div class="container">
-                                    <h3>Investments</h3>
-                                    <p>I've inveted money in companies. Look!</p>
-                                    <div class="features">
-                                        <article>
-                                            <a href="../startups/slack.html" class="image"><img src="../images/slack.jpg" alt="" /></a>
-                                            <div class="inner">
-                                                <h4>Slack</h4>
-                                                <p>Messaging for teams.</p>
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <a href="../startups/uber.html" class="image"><img src="../images/uber.jpg" alt="" /></a>
-                                            <div class="inner">
-                                                <h4>Uber</h4>
-                                                <p>Your personal driver.</p>
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <a href="../startups/palantir.html" class="image"><img src="../images/palantir.png" alt="" /></a>
-                                            <div class="inner">
-                                                <h4>Palantir</h4>
-                                                <p>Products for a purpose.</p>
-                                            </div>
-                                        </article>
-                                    </div>
                                 </div>
                             </section>
 
@@ -104,27 +65,15 @@
                                     <h3>Companies</h3>
                                     <p>Here are the companies I've founded.</p>
                                     <div class="features">
+                                        {% for startup in founder.startups %}
                                         <article>
-                                            <a href="../startups/slack.html" class="image"><img src="../images/slack.jpg" alt="" /></a>
+                                            <a href="/startups/{{ startup.id }}" class="image"><img src="{{ startup.logo_url }}" alt="" /></a>
                                             <div class="inner">
-                                                <h4>Slack</h4>
-                                                <p>Messaging for teams.</p>
+                                                <h4>{{ startup.name }}</h4>
+                                                <p>{{ startup.product_desc[:140] }} <a href="/startups/{{ startup.id }}">...</a> </p>
                                             </div>
                                         </article>
-                                        <article>
-                                            <a href="../startups/uber.html" class="image"><img src="../images/uber.jpg" alt="" /></a>
-                                            <div class="inner">
-                                                <h4>Uber</h4>
-                                                <p>Your personal driver.</p>
-                                            </div>
-                                        </article>
-                                        <article>
-                                            <a href="../startups/palantir.html" class="image"><img src="../images/palantir.png" alt="" /></a>
-                                            <div class="inner">
-                                                <h4>Palantir</h4>
-                                                <p>Products for a purpose.</p>
-                                            </div>
-                                        </article>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </section>
