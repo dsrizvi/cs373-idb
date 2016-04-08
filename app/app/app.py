@@ -22,7 +22,8 @@ from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
-engine = create_engine('sqlite:///seriesz.db')
+URI = 'postgresql://postgres:postgres@146.20.68.107/postgres'
+engine = create_engine(URI)
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
@@ -63,10 +64,8 @@ def show_item_page(model_name, item_id):
     if model_name == 'founders' :
         try :
             item = db_session.query(Founder).get(item_id)
-            print item.__dict__
             return render_template('founder.html')
         except :
-            print sys.exc_info()[0]
             return render_template('index-b.html')
 
     if model_name == 'startups' :
@@ -93,11 +92,85 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 ################ Danyal start ################
-@app.route('/api/startups/<int:id_>', methods=['GET'])
-def api_startups(id):
-    startup = Startup.query.filter(Startup.id == id_).one_or_none().__dict__
 
-    return json.dumps(startup)
+@app.route('/api/startups', methods=['GET'])
+def api_startups(id):
+    startups = Startup.query.all())
+
+    for startup in startups:
+        data.append(row_dict(startup))
+
+    data = json.dumps(data)
+
+    return data
+
+
+@app.route('/api/startups/<int:id_>', methods=['GET'])
+def api_startup(id):
+    startup = Startup.query.filter(Startup.id == id_).one_or_none()
+
+    if startup:
+        startup = row_dict(startup)
+        data = json.dumps(startup, ensure_ascii=False)
+    else:
+        data = ''
+
+    return data
+
+@app.route('/api/founders', methods=['GET'])
+def api_founders(id):
+    founders = Founder.query.all())
+
+    for founder in founders:
+        data.append(row_dict(founders))
+
+    data = json.dumps(data)
+
+    return data
+
+
+@app.route('/api/founder/<int:id_>', methods=['GET'])
+def api_startup(id):
+    founder = Founder.query.filter(Founder.id == id_).one_or_none()
+
+    if founder:
+        founder = row_dict(founder)
+        data = json.dumps(founder, ensure_ascii=False)
+    else:
+        data = ''
+
+    return data
+
+@app.route('/api/cities', methods=['GET'])
+def api_startupss(id):
+    cities = City.query.all())
+
+    for city in cities:
+        data.append(row_dict(city))
+
+    data = json.dumps(data)
+
+    return data
+
+
+@app.route('/api/city/<int:id_>', methods=['GET'])
+def api_startup(id):
+    city = City.query.filter(Startup.id == id_).one_or_none()
+
+    if city:
+        city = row_dict(city)
+        data = json.dumps(city, ensure_ascii=False)
+    else:
+        data = ''
+
+    return data
+
+def row_dict(row):
+    d = {}
+    for column in row.__table__.columns:
+        d[column.name] = str(getattr(row, column.name))
+
+    return d
 
 
 ################ Danyal end   ################
