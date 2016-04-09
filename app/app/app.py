@@ -18,9 +18,6 @@ app = Flask(__name__)
 app.config.update(PROPAGATE_EXCEPTIONS = True)
 
 app.url_map.strict_slashes = False
-db = SQLAlchemy(app)
-api_manager = APIManager(app, flask_sqlalchemy_db=db)
-session = api_manager.session
 
 from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import scoped_session, sessionmaker
