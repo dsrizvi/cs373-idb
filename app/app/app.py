@@ -50,27 +50,17 @@ def show_about():
 
 @app.route('/<model_name>/')
 def show_model_page(model_name):
-
     if model_name == 'cities' :
-        try:
-            data = db_session.query(City).all()
-            return render_template("city_listing.html", cities=data)
-        except :
-            print sys.exc_info()
+        data = db_session.query(City).all()
+        return render_template("city_listing.html", cities=data)
 
     if model_name == 'founders' :
-        try:
-            data = db_session.query(Founder).all()
-            return render_template("founder_listing.html", founders=data)
-        except :
-            print sys.exc_info()
+        data = db_session.query(Founder).all()
+        return render_template("founder_listing.html", founders=data)
 
     if model_name == 'startups' :
-        try:
-            data = db_session.query(Startup).all()
-            return render_template("startup_listing.html", startups=data)
-        except :
-            print sys.exc_info()
+        data = db_session.query(Startup).all()
+        return render_template("startup_listing.html", startups=data)
 
     return render_template('404.html') 
 
@@ -84,7 +74,6 @@ def show_item_page(model_name, item_id):
             item = db_session.query(City).get(item_id)
             return render_template('city.html', city=item, images=city_images)
         except :
-            print sys.exc_info()
             return render_template('404.html')
 
     if model_name == 'founders' :
@@ -92,7 +81,6 @@ def show_item_page(model_name, item_id):
             founder = db_session.query(Founder).get(item_id)
             return render_template('founder.html', founder=founder)
         except :
-            print sys.exc_info()
             return render_template('404.html')
 
     if model_name == 'startups' :
@@ -100,9 +88,7 @@ def show_item_page(model_name, item_id):
             item = db_session.query(Startup).get(item_id)
             return render_template('startup.html', startup=item)
         except :
-            print sys.exc_info()
             return render_template('404.html')
-
 
     return render_template('404.html')
 
