@@ -11,16 +11,6 @@ from flask.ext.restless import APIManager
 from sqlalchemy.sql import exists
 
 from models import *
-from StringIO import StringIO
-
-class Capturing(list):
-    def __enter__(self):
-        self._stdout = sys.stdout
-        sys.stdout = self._stringio = StringIO()
-        return self
-    def __exit__(self, *args):
-        self.extend(self._stringio.getvalue().splitlines())
-        sys.stdout = self._stdout
 
 
 app = Flask(__name__)
