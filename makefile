@@ -1,15 +1,15 @@
-FILES :=							\
-	.gitignore						\
-    .travis.yml						\
-    apiary.apib						\
-    IDB1.log						\
-    models.html						\
-    models.py						\
-    tests.py						\
+FILES :=           \
+    .gitignore		 \
+    .travis.yml    \
+    makefile       \
+    apiary.apib		 \
+    app/models.py			 \
+    app/tests.py			 \
     UML.pdf
 
+
 check:
-	@not_found=0;                                 \
+	@not_found=0;                                 	\
     for i in $(FILES);                            \
     do                                            \
         if [ -e $$i ];                            \
@@ -31,14 +31,13 @@ clean:
 	rm -f  .coverage
 	rm -f  *.pyc
 	rm -rf __pycache__
-	rm -f tests.tmp
 
 config:
 	git config -l
 
 scrub:
 	make clean
-	rm -f  models.html
+	rm -f  model.html
 	rm -f  IDB1.log
 
 status:
@@ -48,15 +47,15 @@ status:
 	git remote -v
 	git status
 
-test: tests.tmp
+test:
+	cd app && python3 tests.py
+	cd ..
 
-models.html: models.py
-	pydoc -w models
+models.html:
+	pydoc -w app/models.py
 
 IDB1.log:
 	git log > IDB1.log
 
-tests.tmp: tests.py
-	coverage3 run    --branch tests.py >  tests.tmp 2>&1
-	coverage3 report -m                      >> tests.tmp
-	cat tests.tmp
+IDB2.log:
+	git log > IDB2.log	 docker-compose --file flask/docker-compose-prod.yml up -d

@@ -9,7 +9,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>models</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/v/filer4b/v38q001/agt457/cs373/project3/cs373-idb/models.py">/v/filer4b/v38q001/agt457/cs373/project3/cs373-idb/models.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/moizrizvi/GoogleDrive/Spring2016/CS373/Projects/idb/cs373-idb/models.py">/Users/moizrizvi/GoogleDrive/Spring2016/CS373/Projects/idb/cs373-idb/models.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -22,10 +22,9 @@
 <dt><font face="helvetica, arial">sqlalchemy.ext.declarative.api.Base(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="models.html#Company">Company</a>
-</font></dt><dt><font face="helvetica, arial"><a href="models.html#Connection">Connection</a>
-</font></dt><dt><font face="helvetica, arial"><a href="models.html#Location">Location</a>
-</font></dt><dt><font face="helvetica, arial"><a href="models.html#Person">Person</a>
+<dt><font face="helvetica, arial"><a href="models.html#City">City</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#Founder">Founder</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#Startup">Startup</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -33,144 +32,23 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Company">class <strong>Company</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="City">class <strong>City</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Company">Company</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;representing&nbsp;a&nbsp;startup&nbsp;or&nbsp;VC&nbsp;Firm<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt><a href="#City">City</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;representing&nbsp;a&nbsp;geographical&nbsp;region&nbsp;that&nbsp;hosts&nbsp;People&nbsp;and&nbsp;Companies<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="models.html#Company">Company</a></dd>
+<dd><a href="models.html#City">City</a></dd>
 <dd>sqlalchemy.ext.declarative.api.Base</dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Company-__init__"><strong>__init__</strong></a>(self, name, location, follower_count, num_investors, market)</dt><dd><tt>Standard&nbsp;constructor&nbsp;for&nbsp;<a href="#Company">Company</a></tt></dd></dl>
+<dl><dt><a name="City-__init__"><strong>__init__</strong></a>(self, name, investor_followers, popularity, num_companies, num_people)</dt><dd><tt>Standard&nbsp;constructor&nbsp;for&nbsp;<a href="#City">City</a></tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>company_url</strong></dt>
-</dl>
-<dl><dt><strong>connections</strong></dt>
-</dl>
-<dl><dt><strong>follower_count</strong></dt>
-</dl>
-<dl><dt><strong>id</strong></dt>
-</dl>
-<dl><dt><strong>location</strong></dt>
-</dl>
-<dl><dt><strong>logo_url</strong></dt>
-</dl>
-<dl><dt><strong>market</strong></dt>
-</dl>
-<dl><dt><strong>name</strong></dt>
-</dl>
-<dl><dt><strong>num_investors</strong></dt>
-</dl>
-<dl><dt><strong>person_id</strong></dt>
-</dl>
-<dl><dt><strong>product_desc</strong></dt>
-</dl>
-<hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f136b59e150; Company&gt;</dl>
-
-<dl><dt><strong>__table__</strong> = Table('companies', MetaData(bind=None), Column('...'locations.id'), table=&lt;companies&gt;), schema=None)</dl>
-
-<dl><dt><strong>__tablename__</strong> = 'companies'</dl>
-
-<hr>
-Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<hr>
-Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:<br>
-<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
-
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Connection">class <strong>Connection</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Connection">Connection</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;that&nbsp;facilitates&nbsp;the&nbsp;many&nbsp;to&nbsp;many&nbsp;relationship&nbsp;between&nbsp;people&nbsp;and&nbsp;companies<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="models.html#Connection">Connection</a></dd>
-<dd>sqlalchemy.ext.declarative.api.Base</dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="Connection-__init__"><strong>__init__</strong></a>(self, **kwargs)</dt><dd><tt>A&nbsp;simple&nbsp;constructor&nbsp;that&nbsp;allows&nbsp;initialization&nbsp;from&nbsp;kwargs.<br>
-&nbsp;<br>
-Sets&nbsp;attributes&nbsp;on&nbsp;the&nbsp;constructed&nbsp;instance&nbsp;using&nbsp;the&nbsp;names&nbsp;and<br>
-values&nbsp;in&nbsp;``kwargs``.<br>
-&nbsp;<br>
-Only&nbsp;keys&nbsp;that&nbsp;are&nbsp;present&nbsp;as<br>
-attributes&nbsp;of&nbsp;the&nbsp;instance's&nbsp;class&nbsp;are&nbsp;allowed.&nbsp;These&nbsp;could&nbsp;be,<br>
-for&nbsp;example,&nbsp;any&nbsp;mapped&nbsp;columns&nbsp;or&nbsp;relationships.</tt></dd></dl>
-
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>company</strong></dt>
-</dl>
-<dl><dt><strong>company_id</strong></dt>
-</dl>
-<dl><dt><strong>id</strong></dt>
-</dl>
-<dl><dt><strong>person</strong></dt>
-</dl>
-<dl><dt><strong>person_id</strong></dt>
-</dl>
-<hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f136b5b5790; Connection&gt;</dl>
-
-<dl><dt><strong>__table__</strong> = Table('connections', MetaData(bind=None), Column...ompanies.id'), table=&lt;connections&gt;), schema=None)</dl>
-
-<dl><dt><strong>__tablename__</strong> = 'connections'</dl>
-
-<hr>
-Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<hr>
-Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:<br>
-<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
-
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Location">class <strong>Location</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Location">Location</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;representing&nbsp;a&nbsp;geographical&nbsp;region&nbsp;that&nbsp;hosts&nbsp;People&nbsp;and&nbsp;Companies<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="models.html#Location">Location</a></dd>
-<dd>sqlalchemy.ext.declarative.api.Base</dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="Location-__init__"><strong>__init__</strong></a>(self, name, investor_followers, followers, num_companies, num_people)</dt><dd><tt>Standard&nbsp;constructor&nbsp;for&nbsp;<a href="#Location">Location</a></tt></dd></dl>
-
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>companies</strong></dt>
-</dl>
-<dl><dt><strong>followers</strong></dt>
+<dl><dt><strong>founders</strong></dt>
 </dl>
 <dl><dt><strong>id</strong></dt>
 </dl>
@@ -182,15 +60,17 @@ Data descriptors defined here:<br>
 </dl>
 <dl><dt><strong>num_people</strong></dt>
 </dl>
-<dl><dt><strong>people</strong></dt>
+<dl><dt><strong>popularity</strong></dt>
+</dl>
+<dl><dt><strong>startups</strong></dt>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f136b5a9690; Location&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x10acd4f90; City&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('locations', MetaData(bind=None), Column('... table=&lt;locations&gt;, nullable=False), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('cities', MetaData(bind=None), Column('id'...(), table=&lt;cities&gt;, nullable=False), schema=None)</dl>
 
-<dl><dt><strong>__tablename__</strong> = 'locations'</dl>
+<dl><dt><strong>__tablename__</strong> = 'cities'</dl>
 
 <hr>
 Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:<br>
@@ -208,49 +88,117 @@ Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:<br
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Person">class <strong>Person</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Founder">class <strong>Founder</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Person">Person</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;representing&nbsp;an&nbsp;investor&nbsp;or&nbsp;a&nbsp;company&nbsp;founder<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt><a href="#Founder">Founder</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;representing&nbsp;an&nbsp;investor&nbsp;or&nbsp;a&nbsp;company&nbsp;founder<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="models.html#Person">Person</a></dd>
+<dd><a href="models.html#Founder">Founder</a></dd>
 <dd>sqlalchemy.ext.declarative.api.Base</dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Person-__init__"><strong>__init__</strong></a>(self, name, location, founder, investor, num_companies)</dt><dd><tt>Standard&nbsp;constructor&nbsp;for&nbsp;<a href="#Person">Person</a></tt></dd></dl>
+<dl><dt><a name="Founder-__init__"><strong>__init__</strong></a>(self, name, angel_id, popularity, image_url, bio, rank, num_startups, city_name, city)</dt><dd><tt>Standard&nbsp;constructor&nbsp;for&nbsp;<a href="#Founder">Founder</a></tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
+<dl><dt><strong>angel_id</strong></dt>
+</dl>
 <dl><dt><strong>bio</strong></dt>
 </dl>
-<dl><dt><strong>connections</strong></dt>
+<dl><dt><strong>city</strong></dt>
 </dl>
-<dl><dt><strong>founder</strong></dt>
+<dl><dt><strong>city_id</strong></dt>
+</dl>
+<dl><dt><strong>city_name</strong></dt>
 </dl>
 <dl><dt><strong>id</strong></dt>
 </dl>
-<dl><dt><strong>image</strong></dt>
-</dl>
-<dl><dt><strong>investor</strong></dt>
-</dl>
-<dl><dt><strong>location</strong></dt>
-</dl>
-<dl><dt><strong>location_id</strong></dt>
+<dl><dt><strong>image_url</strong></dt>
 </dl>
 <dl><dt><strong>name</strong></dt>
 </dl>
-<dl><dt><strong>num_companies</strong></dt>
+<dl><dt><strong>num_startups</strong></dt>
+</dl>
+<dl><dt><strong>popularity</strong></dt>
+</dl>
+<dl><dt><strong>rank</strong></dt>
+</dl>
+<dl><dt><strong>startups</strong></dt>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x7f136b5fe750; Person&gt;</dl>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x10aca5b50; Founder&gt;</dl>
 
-<dl><dt><strong>__table__</strong> = Table('people', MetaData(bind=None), Column('id'...ey('locations.id'), table=&lt;people&gt;), schema=None)</dl>
+<dl><dt><strong>__table__</strong> = Table('founders', MetaData(bind=None), Column('i...Key('cities.id'), table=&lt;founders&gt;), schema=None)</dl>
 
-<dl><dt><strong>__tablename__</strong> = 'people'</dl>
+<dl><dt><strong>__tablename__</strong> = 'founders'</dl>
+
+<hr>
+Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:<br>
+<dl><dt><strong>metadata</strong> = MetaData(bind=None)</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Startup">class <strong>Startup</strong></a>(sqlalchemy.ext.declarative.api.Base)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Startup">Startup</a>&nbsp;is&nbsp;a&nbsp;class&nbsp;representing&nbsp;a&nbsp;startup<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="models.html#Startup">Startup</a></dd>
+<dd>sqlalchemy.ext.declarative.api.Base</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Startup-__init__"><strong>__init__</strong></a>(self, name, location, popularity, market, num_founders, product_desc, company_url, logo_url, city)</dt><dd><tt>Standard&nbsp;constructor&nbsp;for&nbsp;<a href="#Startup">Startup</a></tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>city</strong></dt>
+</dl>
+<dl><dt><strong>city_id</strong></dt>
+</dl>
+<dl><dt><strong>company_url</strong></dt>
+</dl>
+<dl><dt><strong>founders</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>location</strong></dt>
+</dl>
+<dl><dt><strong>logo_url</strong></dt>
+</dl>
+<dl><dt><strong>market</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>num_founders</strong></dt>
+</dl>
+<dl><dt><strong>popularity</strong></dt>
+</dl>
+<dl><dt><strong>product_desc</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x10accb910; Startup&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('startups', MetaData(bind=None), Column('i...Key('cities.id'), table=&lt;startups&gt;), schema=None)</dl>
+
+<dl><dt><strong>__tablename__</strong> = 'startups'</dl>
 
 <hr>
 Data descriptors inherited from sqlalchemy.ext.declarative.api.Base:<br>
@@ -271,6 +219,5 @@ Data and other attributes inherited from sqlalchemy.ext.declarative.api.Base:<br
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>func</strong> = &lt;sqlalchemy.sql.expression._FunctionGenerator object&gt;<br>
-<strong>modifier</strong> = &lt;sqlalchemy.sql.expression._FunctionGenerator object&gt;</td></tr></table>
+<td width="100%"><strong>startup_to_founder</strong> = Table('startup_to_founder', MetaData(bind=None),..., primary_key=True, nullable=False), schema=None)</td></tr></table>
 </body></html>
