@@ -2263,6 +2263,15 @@
 				border-top: 0;
 			}
 
+/* Link button */
+
+a.button {
+	-moz-appearance: button;
+	-webkit-appearance: button;
+	-ms-appearance: button;
+	appearance: button;
+}
+
 /* Button */
 
 	input[type="submit"],

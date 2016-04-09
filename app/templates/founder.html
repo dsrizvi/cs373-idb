@@ -20,7 +20,7 @@
                 <nav id="nav">
                     <ul>
                         <li><a href="#about" class="active">About</a></li>
-                        <li><a href="#Companies">Companies</a></li>
+                        <li><a href="#Startups">Startups</a></li>
                     </ul>
                 </nav>
                 <footer>
@@ -37,10 +37,13 @@
                             <section id="one">
                                 <footer>
                                    <ul class="icons">
-                                        <li><a href="/" class="icon fa-home"><span class="label">Home</span></a></li>
-                                        <li><a href="/startups" class="icon fa-gears"><span class="label">Startups</span></a></li>
-                                        <li><a href="/founders" class="icon fa-users"><span class="label">People</span></a></li>
-                                        <li><a href="/cities" class="icon fa-building"><span class="label">Cities</span></a></li>
+                                        <li><a href="/" class="icon fa-home">Home<span class="label">Home</span></a></li>
+
+                                        <li><a href="/startups" class="icon fa-gears">Startups<span class="label">Startups</span></a></li>
+
+                                        <li><a href="/founders" class="icon fa-users">Founders<span class="label">Founders</span></a></li>
+
+                                        <li><a href="/cities" class="icon fa-building">Cities<span class="label">Cities</span></a></li>
                                     </ul>
                                 </footer>
                             </section>
@@ -53,17 +56,17 @@
                                     <ul class="feature-icons">
                                         <li class="fa-fire">{{ founder.popularity }} popularity score</li>
                                         <li class="fa-users">#{{ founder.rank }} best founder</li>
-                                        <li class="fa-star">{{ founder.num_startups }} companies</li>
+                                        <li class="fa-star">{{ founder.num_startups }} startup{{'s' if founder.num_startups > 1}}</li>
                                         <li class="fa-building"><a href="/cities/{{founder.city.id}}">{{ founder.city_name }}</a></li>
                                     </ul>
                                 </div>
                             </section>
 
-                        <!-- Companies -->
-                            <section id="Companies">
+                        <!-- Startups -->
+                            <section id="Startups">
                                 <div class="container">
-                                    <h3>Companies</h3>
-                                    <p>Here are the companies I've founded.</p>
+                                    <h3>Startups</h3>
+                                    <p>Here are the Startups I've founded.</p>
                                     <div class="features">
                                         {% for startup in founder.startups %}
                                         <article>

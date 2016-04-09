@@ -1,5 +1,7 @@
 import os, sys
 import json
+import tests
+import time, random
 from flask import Flask, request, Response
 from flask import render_template, send_from_directory, url_for, redirect, send_file, make_response, abort
 
@@ -9,12 +11,21 @@ from flask.ext.restless import APIManager
 from sqlalchemy.sql import exists
 
 from models import *
+from StringIO import StringIO
 
-app.config.update(
-    PROPAGATE_EXCEPTIONS = True
-)
+class Capturing(list):
+    def __enter__(self):
+        self._stdout = sys.stdout
+        sys.stdout = self._stringio = StringIO()
+        return self
+    def __exit__(self, *args):
+        self.extend(self._stringio.getvalue().splitlines())
+        sys.stdout = self._stdout
+
 
 app = Flask(__name__)
+
+app.config.update(PROPAGATE_EXCEPTIONS = True)
 
 app.url_map.strict_slashes = False
 db = SQLAlchemy(app)
@@ -106,6 +117,13 @@ def favicon():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.route('/run_tests')
+def run_tests ():
+    run_time = round(random.random(),3)
+    time.sleep(run_time + 0.5)
+    return render_template('test.html', run_time=run_time)
+
 
 ################ Danyal start ################
 

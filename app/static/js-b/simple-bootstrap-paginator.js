@@ -5,7 +5,7 @@ $(function() {
       var $previousPage = $('.pager .previous');
   
       var currentPage = 0;
-      var numPerPage  = 5;
+      var numPerPage  = 3;
   
       var numRows  = 0;
       var numPages = 0;
