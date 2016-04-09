@@ -12,6 +12,7 @@ from sqlalchemy.sql import exists
 
 from models import *
 
+URI = 'postgresql://postgres:postgres@146.20.68.107/postgres'
 
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
-engine = create_engine('sqlite:///seriesz.db')
+engine = create_engine(URI)
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
@@ -49,7 +50,7 @@ def show_model_page(model_name):
         data = db_session.query(Startup).all()
         return render_template("startup_listing.html", startups=data)
 
-    return render_template('404.html') 
+    return render_template('404.html')
 
 
 city_images = {"San Francisco" : "http://www.jetblue.com/img/vacations/destination/San-Francisco-960-x-420.jpg", "New York City" : "https://media-cdn.tripadvisor.com/media/photo-s/03/9b/2d/f2/new-york-city.jpg", "Austin" : "http://intelligenttravel.nationalgeographic.com/files/2015/11/dowtown-austin-skyline-590-590x393.jpg", "Boston" : "https://media-cdn.tripadvisor.com/media/photo-s/03/9b/2f/47/boston.jpg", "Boulder" : "https://res-3.cloudinary.com/simpleview/image/upload/c_fill,f_auto,h_360,q_50,w_1024/v1/clients/boulder/AerialwithBoulderHighField_013f6e79-aa0f-42df-8adf-cf81bf59a2f2.jpg", "Los Angeles" : "http://usa.sae.edu/assets/Campuses/Los-Angeles/2015/Los_Angeles_city_view.jpg", "Palo Alto" : "https://cbsboston.files.wordpress.com/2011/07/stanford-university-palo-alto-california.jpg"}

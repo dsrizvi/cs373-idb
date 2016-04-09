@@ -12,16 +12,17 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 #Setup
 #-----
 
+URI = 'postgresql://postgres:postgres@146.20.68.107/postgres'
+
 num_missed_startups = 0
 num_missed_founders = 0
 num_missed_cities = 0
 num_missed_city_data = 0
 
 def get_db_session() :
-    engine = create_engine('sqlite:///seriesz.db')
+    engine = create_engine(URI, echo=True)
     logging.info("DB engine created")
 
-    engine = create_engine('sqlite:///seriesz.db')
     Session = sessionmaker(bind=engine)
     s = Session()
     logging.info("DB session created")
@@ -34,9 +35,9 @@ def get_angel_list() :
     Returns AngelList API object
     """
     try :
-        ACCESS_TOKEN = os.environ['ANGEL_ACCESS_TOKEN']
-        CLIENT_ID = os.environ['ANGEL_CLIENT_ID']
-        CLIENT_SECRET = os.environ['ANGEL_CLIENT_SECRET']
+        ACCESS_TOKEN = '7b2f970c65843c003f29faab3cd089d9a2fe65fb738a1f69'
+        CLIENT_ID = 'f4bc189150f55e3a4e04d7dd47d6f60d5d0101b7c16c9719'
+        CLIENT_SECRET = '45e8cf40afa601846ea9af9dcf4d101aef2d183514690433'
     except KeyError as e :
         raise Exception("Missing environment variable: " + str(e[0]))
 
@@ -88,7 +89,7 @@ def get_city_data(city_id) :
                     'num_companies': city_stats['startups'] if city_stats['startups'] else 0,
                     'num_people': city_stats['users'] if city_stats['users'] else 0
                     }
-        
+
         return city_data
 
     response = None
@@ -154,7 +155,7 @@ def get_companies_by_city(city_id, page) :
         logging.debug("No startups in city with tag_id: " + city_id)
         num_missed_cities += 1
         return
-    
+
     companies_data = filter_hidden(response['startups'])
 
     return [clean_data(company) for company in companies_data]
@@ -215,9 +216,7 @@ if __name__ == "__main__" :
     configure_logging()
     test_angel_list(al)
 
-    # city_ids = [1692, 1664]
-    # city_ids = [1617, 1620, 84579, 1621, 1653, 1694]
-    city_ids = [1840, 1616, 84579, 1621, 1653, 1694]
+    city_ids = [1692, 1664, 1617, 1620, 1621, 1621, 1653, 1694]
 
     all_companies = []
     all_founders = []
@@ -242,8 +241,8 @@ if __name__ == "__main__" :
                         company_founders = get_founders_by_company(c['angel_id'])
                         c['num_founders'] = len(company_founders)
 
-                        company = Startup(c['name'], c['location'], c['popularity'], 
-                                          c['market'], c['num_founders'], c['product_desc'], 
+                        company = Startup(c['name'], c['location'], c['popularity'],
+                                          c['market'], c['num_founders'], c['product_desc'],
                                           c['company_url'], c['logo_url'], city = city)
 
                         for f in company_founders :
@@ -251,11 +250,11 @@ if __name__ == "__main__" :
                             try :
                                 if not session.query(exists().where(Founder.name == f['name'])).scalar() :
 
-                                    founder = Founder(f['name'], f['angel_id'], f['popularity'], 
-                                                      f['image_url'], f['bio'], f['rank'], f['num_startups'], 
+                                    founder = Founder(f['name'], f['angel_id'], f['popularity'],
+                                                      f['image_url'], f['bio'], f['rank'], f['num_startups'],
                                                       city_name=city.name, city=city)
 
-                                    
+
                                     city.founders.append(founder)
                                     founder.startups.append(company)
 
@@ -277,8 +276,11 @@ if __name__ == "__main__" :
             session.add(city)
             # logging.info("Added city: " + str(city.name))
 
-    for founder in session.query(Founder).all() :
+    i = 1
+    for founder in session.query(Founder).order_by(Founder.popularity.desc()).all() :
+        founder.rank = i
         founder.num_startups = len(founder.startups)
+        i += 1
 
     session.commit()
 
