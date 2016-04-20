@@ -2,7 +2,7 @@
 app:
   restart: always
   build: ./app
-  container_name: series-z-flask
+  container_name: series-z-app
   expose:
     - "8000"
   links:

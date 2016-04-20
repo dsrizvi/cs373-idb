@@ -104,7 +104,7 @@ def run_tests ():
 @app.route('/api/startups', methods=['GET'])
 def api_startups():
 
-    startups = db_session.query(City).all()
+    startups = db_session.query(Startup).all()
     data = []
 
     for startup in startups:
