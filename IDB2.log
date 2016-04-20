@@ -1,20 +1,130 @@
-commit 3e06d866e8f36f9f679a31429c342f3551faf03e
+commit 87a9258902bb9f148a98518874d2b23016dbaaf5
 Author: Moiz Rizvi <moizrizvi@gmail.com>
-Date:   Thu Apr 7 21:51:26 2016 -0500
+Date:   Fri Apr 8 21:22:38 2016 -0500
 
-    complete app
+    fixed about images
 
-commit 5ad986d01c1f0ab3fdd745e366fa194fb8d29dc7
+commit 67f7e7a2d110a8e27cdb4054c019736ffe89dbf9
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Fri Apr 8 21:21:57 2016 -0500
+
+    URI changed
+
+commit 5d9c5e9ebc3359770fe46557cc68a3124be0b745
 Author: Moiz Rizvi <moizrizvi@gmail.com>
-Date:   Thu Apr 7 19:45:07 2016 -0500
+Date:   Fri Apr 8 21:05:17 2016 -0500
 
-    added everything
+    db removed;
 
-commit 39f7eec1b11c38fd1e7e049a106edce75e8728a3
+commit 92fbbecc19a4f3e4bfb4dabe2a8ddbe6eaa741ea
 Author: Moiz Rizvi <moizrizvi@gmail.com>
-Date:   Thu Apr 7 17:17:31 2016 -0500
+Date:   Fri Apr 8 20:59:11 2016 -0500
 
-    fix
+    StringIO removed
+
+commit a60af038051ea20a08bbbf9aa5080a34fce9ffbc
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 20:53:45 2016 -0500
+
+    deploy ready
+
+commit 28e7745b34324c30130ad1cc3097fc6b3ba73653
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 20:26:30 2016 -0500
+
+    git issues resolved
+
+commit f23b07caf53acd1cee8094bd1e968a970a34a114
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Apr 7 20:54:51 2016 -0500
+
+    Added files via upload
+
+commit 1c79cadd9d61bfd94114e103fa839c3913d08ef4
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Apr 7 20:15:26 2016 -0500
+
+    Added files via upload
+
+commit 820a5b70311828e4356469988c11b47db8f600ad
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 16:20:31 2016 -0500
+
+    files added
+
+commit 840754312a0b49a9d318fc35c3f619886cb87127
+Merge: b32e97b 6fd3ea2
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 16:20:13 2016 -0500
+
+    ahhhhh
+
+commit b32e97b22778703afa06730d3875d053cd10aa82
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 16:19:10 2016 -0500
+
+    ahhhhh
+
+commit 6fd3ea2148673703ff74358f4e53c8beea9e926c
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 16:15:31 2016 -0500
+
+    app added
+
+commit 36fea3d53ff2a2c90fb3bbdcad8f5253672a4752
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 16:14:40 2016 -0500
+
+    moved more stuff
+
+commit 00d8c4bd8cb96f897c90f20cf9d7ab4603517687
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 16:14:13 2016 -0500
+
+    moved stuff;
+
+commit e2a7675f49045a4516c803db065bc6a7e282f742
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 15:59:54 2016 -0500
+
+    moved app to docker directory
+
+commit a71a74ec063f9119a4a54807c6508391dfc951dd
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 15:46:29 2016 -0500
+
+    db updated
+
+commit 424dae282e4aa980b672a920e4693a25c334064a
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 15:25:42 2016 -0500
+
+    app directory fixed
+
+commit 74dbf4c81c24a82d96dc241528845620e23db0b8
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 15:20:47 2016 -0500
+
+    travis ylm experiment
+
+commit 15b857ff94544a8a7878394a4234bdea44126575
+Merge: 2722c67 158a2f6
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 15:13:09 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 2722c676503868dc4dffa8d56747fea574c58076
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 15:12:59 2016 -0500
+
+    travis ylm experiment
+
+commit 158a2f6451df6fe02ad7e0f72e59c29b834b773f
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 14:40:18 2016 -0500
+
+    database added
 
 commit f15089e8d3ded2a9aa17e78bf799b9be15201e57
 Author: Moiz Rizvi <moizrizvi@gmail.com>
