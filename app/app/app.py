@@ -9,6 +9,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.restless import APIManager
 
 from sqlalchemy.sql import exists
+from sqlalchemy_searchable import search
 
 from models import *
 
@@ -79,6 +80,35 @@ def show_item_page(model_name, item_id):
             return render_template('404.html')
 
     return render_template('404.html')
+
+@app.route('/search', methods=['POST'])
+def search(**kwargs):
+    terms = request.form['text']
+
+    founders = row_dict(db_session.query(Founder).search(terms))
+    cities = row_dict(db_session.query(City).search(terms))
+    startups = row_dict(db_session.query(Startup).search(terms))
+
+    founders_or = row_dict(db_session.query(Founder).search(terms, or_=True))
+    cities_or = row_dict(db_session.query(City).search(terms, or_=True))
+    startups_or = row_dict(db_session.query(Startup).search(terms, or_=True))
+
+    results = {
+        'and': {
+                    'founders_and'    : founders,
+                    'cities_and'      : cities,
+                    'startups_and'    : startup,
+                    'founders_or' : founders_or
+                },
+        'or': {
+                    'cities_or'   : cities_or,
+                    'startup_or'  : startup_or
+                }
+    }
+
+    results = json.dumps(results, ensure_ascii=False)
+
+    return results
 
 
 # special file handlers and error handlers

@@ -3,10 +3,11 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-
+from sqlalchemy_searchable import make_searchable
+from sqlalchemy_utils.types import TSVectorType
 
 Base = declarative_base()
-
+make_searchable()
 #---------
 #Relations
 #---------
@@ -40,6 +41,8 @@ class Founder(Base):
     #Founder foreign keys
     city_id = Column(Integer, ForeignKey('cities.id'))
 
+    search_vector = Column(TSVectorType('name', 'bio', 'city_name'))
+
     #Founder relationships
     city = relationship("City", back_populates="founders")
     startups = relationship("Startup", secondary=startup_to_founder, back_populates="founders")
@@ -65,6 +68,7 @@ class Startup(Base):
     """
     Startup is a class representing a startup
     """
+    __searchable__ = ['name, location, market, product_desc']
 
     __tablename__ = 'startups'
 
@@ -79,6 +83,7 @@ class Startup(Base):
     company_url = Column(String)
     logo_url = Column(String)
 
+    search_vector = Column(TSVectorType('name', 'location', 'market', 'product_desc'))
     #Startup foreign keys
     city_id = Column(Integer, ForeignKey('cities.id'))
 
@@ -111,6 +116,8 @@ class City(Base):
 
     __tablename__ = 'cities'
 
+    __searchable__ = ['name']
+
     #City attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
@@ -118,6 +125,8 @@ class City(Base):
     popularity = Column(Integer, nullable=False)
     num_companies = Column(Integer, nullable=False)
     num_people = Column(Integer, nullable=False)
+
+    search_vector = Column(TSVectorType('name'))
 
     #City relationships
     startups = relationship("Startup", back_populates="city")

@@ -12,3 +12,5 @@ python-dateutil==2.1
 python-mimeparse==0.1.4
 requests==1.2.3
 psycopg2==2.6
+requests==1.2.3
+SQLAlchemy-Searchable==0.10.1
