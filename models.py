@@ -3,6 +3,20 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from flask.ext.sqlalchemy import SQLAlchemy
+import flask.ext.whooshalchemy
+from flask.ext.whooshee import Whooshee
+
+from app import app
+
+
+whooshee = Whooshee(app)
+
+whooshalchemy.whoosh_index(app, Founder)
+
+
+
+db = SQLAlchemy(app)
 
 
 Base = declarative_base()
@@ -20,12 +34,14 @@ startup_to_founder = Table("startup_to_founder", Base.metadata,
 #Founder
 #------
 
-class Founder(Base):
+@whooshee.register_model('name', 'city_name')
+class Founder(db.Model):
     """
     Founder is a class representing an investor or a company founder
     """
 
     __tablename__ = 'founders'
+    __searchable__ = ['name', 'city_name']
 
     #Founder attributes
     id = Column(Integer, primary_key=True)

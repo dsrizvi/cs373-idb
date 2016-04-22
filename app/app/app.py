@@ -12,7 +12,7 @@ from sqlalchemy.sql import exists
 
 from models import *
 
-URI = 'postgresql://postgres:postgres@146.20.68.107/postgres'
+URI = 'sqlite:///seriesz.db'
 
 app = Flask(__name__)
 
@@ -82,32 +82,57 @@ def show_item_page(model_name, item_id):
 
 @app.route('/search', methods=['POST'])
 def search(**kwargs):
-    query = request.form['text']
+    token = request.form['text']
+    tokens = token.split(" ")
 
-    founders = row_dict(Founder.query.whoosh_search(query))
-    cities = row_dict(City.query.whoosh_search(query))
-    startups = row_dict(Startup.query.whoosh_search(query))
+    if not tokens :
+        return render_template('search.html', results=[])
 
-    founders_or = row_dict(Founder.query.whoosh_search(query, or_=True))
-    cities_or = row_dict(City.query.whoosh_search(query, or_=True))
-    startups_or = row_dict(Startup.query.whoosh_search(query, or_=True))
 
-    results = {
-        'and': {
-                    'founders_and'    : founders,
-                    'cities_and'      : cities,
-                    'startups_and'    : startup,
-                    'founders_or' : founders_or
-                },
-        'or':   {
-                    'cities_or'   : cities_or,
-                    'startup_or'  : startup_or
-                }
-    }
+    res = [set(founder_search(t) + startup_search(t) + city_search(t)) for t in tokens]
+    orSet = set.union(*res)
+    andSet = set.intersection(*res)
 
-    results = json.dumps(results, ensure_ascii=False)
+    and_dict = {'startups': [], 'founders': [], 'cities': []}
+    for element in andSet :
+        if type(element) == Startup :
+            and_dict['startups'] += [element]
+        if type(element) == Founder :
+            and_dict['founders'] += [element]
+        if type(element) == City :
+            and_dict['cities'] += [element]
 
-    return results
+    or_dict = {'startups': [], 'founders': [], 'cities': []}
+    for element in orSet :
+        if type(element) == Startup :
+            or_dict['startups'] += [element]
+        if type(element) == Founder :
+            or_dict['founders'] += [element]
+        if type(element) == City :
+            or_dict['cities'] += [element]
+
+    return render_template('search.html', and_results=and_dict, or_results=or_dict, text=token)
+
+
+def founder_search (terms):
+    queryOutput = db_session.query(Founder).filter(Founder.name.like("%"+ terms +"%") |
+                                                   Founder.city_name.like("%"+ terms + "%") |
+                                                   Founder.startups.any(Startup.name == terms.capitalize())).all()
+    return queryOutput
+
+
+def startup_search (terms):
+    queryOutput = db_session.query(Startup).filter(Startup.name.like("%"+ terms + "%") | 
+                                                   Startup.location.like("%"+ terms + "%") |
+                                                   Startup.founders.any(Founder.name == terms.capitalize())).all()
+    return queryOutput
+
+
+def city_search (terms):
+    queryOutput = db_session.query(City).filter(City.name.like("%" + terms + "%") |
+                                                City.founders.any(Founder.name == terms.capitalize()) |
+                                                City.startups.any(Startup.name == terms.capitalize())).all()
+    return queryOutput
 
 
 # special file handlers and error handlers

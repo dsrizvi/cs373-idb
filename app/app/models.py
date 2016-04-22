@@ -3,8 +3,8 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-import flask.ext.whooshalchemy as whooshalchemy
 from init_db import Base
+
 
 #---------
 #Relations
@@ -25,8 +25,6 @@ class Founder(Base):
     """
 
     __tablename__ = 'founders'
-
-    __searchable__ = ['name', 'city_name']
 
     #Founder attributes
     id = Column(Integer, primary_key=True)
@@ -66,7 +64,6 @@ class Startup(Base):
     """
     Startup is a class representing a startup
     """
-    __searchable__ = ['name, location, market, product_desc']
 
     __tablename__ = 'startups'
 
@@ -112,8 +109,6 @@ class City(Base):
     """
 
     __tablename__ = 'cities'
-
-    __searchable__ = ['name']
 
     #City attributes
     id = Column(Integer, primary_key=True)
