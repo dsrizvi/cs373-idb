@@ -589,6 +589,7 @@
 
     form {
         margin: 0 0 2em 0;
+        display: inline-block;
     }
 
         form .message {

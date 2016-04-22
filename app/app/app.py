@@ -30,7 +30,7 @@ db_session = Session()
 
 @app.route('/')
 def basic_pages(**kwargs):
-    return make_response(open('templates/index-b.html').read())
+    return render_template('index-b.html')
 
 @app.route('/about')
 def show_about():
@@ -79,6 +79,14 @@ def show_item_page(model_name, item_id):
             return render_template('404.html')
 
     return render_template('404.html')
+
+@app.route('/search', methods=['POST'])
+def search(**kwargs):
+    text = request.form['text']
+    print text
+
+    return render_template('search.html', data=request.data)
+
 
 
 # special file handlers and error handlers

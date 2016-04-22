@@ -31,9 +31,18 @@
                 <p>Find the worlds best <b>startups</b>, <b>founders</b>, and <b>cities</b>.</p>
             </header>
 
+            <form action="/search" method="POST" id="form">
+                <input type="text" name="text" placeholder="Search" style="width: 250px">
+                <!-- <input type="submit" name="my-form" value="Search"> -->
+            </form>
+
+            <button type="submit" form="form" value="Search" style="width: 100px">Search</button>
+            <br>
+
             <h3><a href="/startups">Startups</a></h3>
             <h3><a href="/founders">Founders</a></h3>
             <h3><a href="/cities">Cities</a></h3>
+
 
         <!-- Footer -->
             <footer id="footer">
