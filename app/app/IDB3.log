@@ -1,0 +1,657 @@
+commit 0505263c12ecd4218a490d9b57cc25d509a1e1c4
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 21 21:44:00 2016 -0500
+
+    search done
+
+commit 457a66a8a6f8fd0926430cc3ae93ef28cc79c716
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 21 19:21:00 2016 -0500
+
+    trying to make search work
+
+commit 2bc5aae64f0c52fb1d6cca034be8080e4fe5c69e
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 21 18:34:07 2016 -0500
+
+    search attempt
+
+commit 99ed0e247c671547adccf4ae8a9ced5ca71d203e
+Merge: 58d7278 dc9349d
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 20 17:42:52 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 58d7278a26ca1f53c25121f11d600ecb2d35a745
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 20 17:42:35 2016 -0500
+
+    flask folder removed
+
+commit dc9349defa3e1f1666b41a265ee57d9204fcfb7d
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 21:32:45 2016 -0500
+
+    git log updated
+
+commit 87a9258902bb9f148a98518874d2b23016dbaaf5
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 21:22:38 2016 -0500
+
+    fixed about images
+
+commit 67f7e7a2d110a8e27cdb4054c019736ffe89dbf9
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Fri Apr 8 21:21:57 2016 -0500
+
+    URI changed
+
+commit 5d9c5e9ebc3359770fe46557cc68a3124be0b745
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 21:05:17 2016 -0500
+
+    db removed;
+
+commit 92fbbecc19a4f3e4bfb4dabe2a8ddbe6eaa741ea
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 20:59:11 2016 -0500
+
+    StringIO removed
+
+commit a60af038051ea20a08bbbf9aa5080a34fce9ffbc
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 20:53:45 2016 -0500
+
+    deploy ready
+
+commit 28e7745b34324c30130ad1cc3097fc6b3ba73653
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Fri Apr 8 20:26:30 2016 -0500
+
+    git issues resolved
+
+commit f23b07caf53acd1cee8094bd1e968a970a34a114
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Apr 7 20:54:51 2016 -0500
+
+    Added files via upload
+
+commit 1c79cadd9d61bfd94114e103fa839c3913d08ef4
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Apr 7 20:15:26 2016 -0500
+
+    Added files via upload
+
+commit 820a5b70311828e4356469988c11b47db8f600ad
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 16:20:31 2016 -0500
+
+    files added
+
+commit 840754312a0b49a9d318fc35c3f619886cb87127
+Merge: b32e97b 6fd3ea2
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 16:20:13 2016 -0500
+
+    ahhhhh
+
+commit b32e97b22778703afa06730d3875d053cd10aa82
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 16:19:10 2016 -0500
+
+    ahhhhh
+
+commit 6fd3ea2148673703ff74358f4e53c8beea9e926c
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 16:15:31 2016 -0500
+
+    app added
+
+commit 36fea3d53ff2a2c90fb3bbdcad8f5253672a4752
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 16:14:40 2016 -0500
+
+    moved more stuff
+
+commit 00d8c4bd8cb96f897c90f20cf9d7ab4603517687
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 16:14:13 2016 -0500
+
+    moved stuff;
+
+commit e2a7675f49045a4516c803db065bc6a7e282f742
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 15:59:54 2016 -0500
+
+    moved app to docker directory
+
+commit a71a74ec063f9119a4a54807c6508391dfc951dd
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 15:46:29 2016 -0500
+
+    db updated
+
+commit 424dae282e4aa980b672a920e4693a25c334064a
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 15:25:42 2016 -0500
+
+    app directory fixed
+
+commit 74dbf4c81c24a82d96dc241528845620e23db0b8
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 15:20:47 2016 -0500
+
+    travis ylm experiment
+
+commit 15b857ff94544a8a7878394a4234bdea44126575
+Merge: 2722c67 158a2f6
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 15:13:09 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 2722c676503868dc4dffa8d56747fea574c58076
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 15:12:59 2016 -0500
+
+    travis ylm experiment
+
+commit 158a2f6451df6fe02ad7e0f72e59c29b834b773f
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 14:40:18 2016 -0500
+
+    database added
+
+commit f15089e8d3ded2a9aa17e78bf799b9be15201e57
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Apr 7 14:06:42 2016 -0500
+
+    repo clean up
+
+commit eb2910477b1302ee1c6437d3ae068e7ec89a92bd
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Apr 7 00:01:27 2016 -0500
+
+    tests all done
+
+commit 8bec7b11a5de0ae4b42e0a4df46586f25ba60c2f
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 23:51:57 2016 -0500
+
+    tests updated
+
+commit bd5669a992e3049f67578c1528617527ca62a8a3
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 21:26:45 2016 -0500
+
+    models updated agian
+
+commit 53bffeb3f0784843cc8e945c364dd20fcdd09c76
+Merge: 6ad54a0 ff912a6
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 21:17:15 2016 -0500
+
+    models updated
+
+commit 6ad54a03f4e85a1c937210ca6844601b945189a0
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 21:14:09 2016 -0500
+
+    models updated
+
+commit ff912a6f37c2079cdb8466da4a29d5875f0b416d
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Wed Apr 6 20:23:07 2016 -0500
+
+    .pyc files deleted; models updates
+
+commit fc83e5c01034727d7435cb1e903ca9209e86f473
+Merge: 9064303 93f6065
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Wed Apr 6 20:19:34 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 90643030ead1ac8d9ba0f6df6d5a9d70767a4129
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Wed Apr 6 20:19:27 2016 -0500
+
+    .gitignore update
+
+commit 93f6065b4b82812391ae5de6383b2f9fe250cc71
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 20:18:54 2016 -0500
+
+    models.py
+
+commit 1e7feb7cfdc8929dbf20bb4be15eeb0bd08bf24d
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 19:04:42 2016 -0500
+
+    db_init functional and db building
+
+commit e084ffb662feb46f6c040ddd2f730472d5fcc334
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Apr 6 19:04:10 2016 -0500
+
+    db_init functional and db building
+
+commit 33d0b1be6fe318251dc488ec3ecb518b9d874d5f
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Wed Apr 6 14:37:13 2016 -0500
+
+    app added
+
+commit e6eba86dded24a918b51b64fe85aea7a5b60c4be
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Wed Apr 6 14:36:42 2016 -0500
+
+    deleted app repo, removed .git folder from app
+
+commit 361abbb8144909b51445d28c4057f69971c27ff8
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Wed Apr 6 13:17:17 2016 -0500
+
+    added app
+
+commit bf1816dd9c44b6f3729ab998b5016c3ff98f89f0
+Merge: 8036345 9c748b4
+Author: U-DESKTOP-O98JIA5\Austin <athom93@gmail.com>
+Date:   Wed Apr 6 01:33:43 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 8036345957d431dd441208e69e86f46fe6fd457f
+Author: U-DESKTOP-O98JIA5\Austin <athom93@gmail.com>
+Date:   Wed Apr 6 01:33:39 2016 -0500
+
+    Updated script and models
+
+commit 9c748b41ec9325f2eb205bc5aa6dfd3e5053a736
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 23:12:26 2016 -0500
+
+    models updated
+
+commit 6e642cad8b399e2b8362fad0064676f365ca40c8
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 23:08:19 2016 -0500
+
+    models updated
+
+commit f0b39c7f2589d28aedd13559cabefd3bd66fed5b
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 21:36:16 2016 -0500
+
+    scraper/app/models updated with association classes
+
+commit 49a7e05d3ab3badb4e6cde7f144f5efa5e02f331
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 21:32:13 2016 -0500
+
+    scraper/app/models.py updated
+    '
+
+commit a48b5b6649580f60e423315fe6718a7d148dbc35
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 21:09:13 2016 -0500
+
+    data-thief in progress
+
+commit 16c30f7ff4e5b49fb9cd19244608019d54727a44
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 20:35:08 2016 -0500
+
+    data-thief in progress
+
+commit 14e9280ff09c87f15c461f5703cc89649a8dcd6c
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 19:28:45 2016 -0500
+
+    data-theif in progress
+
+commit b44d6e952e5cc7ccc70ae8967300617d480df54b
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Apr 5 18:01:03 2016 -0500
+
+    working on scraper
+
+commit 78b8c63cbb9725b6add0d69d871c7a734668f327
+Author: U-DESKTOP-O98JIA5\Austin <athom93@gmail.com>
+Date:   Tue Apr 5 00:36:55 2016 -0500
+
+    Adding scrape script
+
+commit 1a53126b6c4a2e720b2afbfdf0bad5036dee556a
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Mon Apr 4 23:27:42 2016 -0500
+
+    dumb files removed
+
+commit daabd44f8f4c284e152ebe1816fda0cd8cc66b5b
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Mon Apr 4 23:25:16 2016 -0500
+
+    db models working
+
+commit df1efd32b16bcaa1fd29730535f2aceb9f968289
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Mon Apr 4 21:53:59 2016 -0500
+
+    angel-list api wrapper library modified
+
+commit 793ec3955c5631049de50e47ca6687fa8f53508c
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Mon Apr 4 21:03:05 2016 -0500
+
+    new flask app added
+
+commit 74b5dfabcf84cd5f804681f20641d2f270aee776
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Sun Apr 3 21:47:44 2016 -0500
+
+    db.py added
+
+commit 880502019e745639652b790238876ab3c63e0f88
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Thu Mar 31 23:24:41 2016 -0500
+
+    modifying models
+
+commit e9496bf44e82ebb47e3e2e538ebb883d3ef6781c
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Mar 30 12:12:38 2016 -0500
+
+    carina bs working
+
+commit fde8f90c21f69c2c50c09884f828a303ed679ec0
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Mar 29 23:14:25 2016 -0500
+
+    autodeploy test
+
+commit 1999be88a18a7b737443fcc624c15dd3ce57adf2
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Mar 29 23:07:32 2016 -0500
+
+    autodeploy test
+
+commit 2f1b1b830e9b7ae4326820824588afa6d930ec04
+Merge: c8e13fd fe27090
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Mar 29 22:59:07 2016 -0500
+
+    requirments deleted
+
+commit c8e13fde3d8b1ed6f52f6d6c61718ac2de3f9b8e
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Mar 29 22:57:52 2016 -0500
+
+    docker stuff working:
+
+commit fe270900854ea45d9889c5dbadafb074840e4fba
+Merge: bd0d4e9 fda43fc
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Tue Mar 29 20:44:10 2016 -0500
+
+    .gitignore updated
+
+commit bd0d4e9d29f3b2d9db57f3f892f19590dc40ea60
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Tue Mar 29 20:30:13 2016 -0500
+
+    .gitignore & requirements.txt update
+
+commit fda43fcf49eba3c90029717cd5452231a7982b92
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Tue Mar 29 20:29:15 2016 -0500
+
+    flask app directory changed
+
+commit 19a3c657708ce79c0728fbf6ec2e9e4538df1d38
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:46:25 2016 -0500
+
+    makefile fixedmake check
+
+commit daf08036007665c90a189594ce32ae9da9431c8a
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:43:35 2016 -0500
+
+    makecheck editied
+
+commit a3a6c44f61b3a73e3664002dadf4dfd7d537e905
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:41:01 2016 -0500
+
+    makecheck editied
+
+commit 6d2939b198d4cb63861151d7599f8b45b428340f
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:38:24 2016 -0500
+
+    spacing fixed
+
+commit f0e3bf51d660772b4230059cbb1ace92db02834a
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Thu Mar 24 21:32:42 2016 -0500
+
+    Added git log
+
+commit d61ff8805eb2e17c91184f12cf4b03c31d7df08c
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:31:20 2016 -0500
+
+    makefile changed
+
+commit 73e7d58483e1e049482fa43b8bd6e2fb6b0b45d4
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:25:07 2016 -0500
+
+    makefile fixed
+
+commit 440531adf0eb82adb516d1df3ff8f6734287d098
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 21:21:42 2016 -0500
+
+    install spelling fixed on travis ylm
+
+commit e3e5be04eb5a9a2f4958adf15b8f63a7f4e2c3a5
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 20:44:26 2016 -0500
+
+    Delete requirments.txt
+
+commit 8df946458c19ed30eae8e9b7b4e5b2e9a036a71f
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 20:44:04 2016 -0500
+
+    Delete seriesz.apiary
+
+commit 231024a83a1f79a666cf06812e7ae9148ae7918b
+Merge: 7f416e8 cfa971b
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Thu Mar 24 20:36:50 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 7f416e864c6114c200e1c839fee0d029113c1f2e
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Thu Mar 24 20:36:31 2016 -0500
+
+    Created models.html
+
+commit cfa971b6c678e68aa061bc43e0f1ad92941f844a
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:33:29 2016 -0500
+
+    README fix + apib additions
+
+commit 666150cd7bab0e46e595e43a04e4a2f3bcb1a2a7
+Merge: 4029a50 237f729
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:31:50 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 4029a50b747ee1603c946d68a2f5fe37d677a99c
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:31:43 2016 -0500
+
+    react config files added
+
+commit 237f72974fd8fb40ba04a58f067ef9b9561eea1e
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:14:55 2016 -0500
+
+    Update apiary.apib
+
+commit a950a785aa64415592fb419728c4bc36ed89df02
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:11:07 2016 -0500
+
+    Update apiary.apib
+
+commit bb92007a99c88c0075f2a7112d8ba1ebd3b65239
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:10:42 2016 -0500
+
+    apiary docs updated again
+
+commit 6e9adeb9035d2aaedbaadf2f1d5a094bfd9e2068
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:10:02 2016 -0500
+
+    updated apiary again
+
+commit c868cd0603df89b8b71215ba162f9e8f994094d1
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:09:14 2016 -0500
+
+    added README.md file; close #19
+
+commit dc31277f867489f3ce154d2b0da7ca5b4e8245fb
+Merge: dee859e 4d953f8
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:07:52 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 4d953f832c9c5eece9b84dbf84cc3c3bae2c0697
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:07:37 2016 -0500
+
+    apiary docs actually updated
+
+commit dee859e3cb85c81fab57b1c31a2b96072e3ca770
+Merge: 8e003eb 3e1ecf5
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:07:34 2016 -0500
+
+    Merge branch 'master' of github.com:dsrizvi/cs373-idb
+
+commit 8e003eb34bf4bf62616f4161eb57db0ba0560d08
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Thu Mar 24 20:07:28 2016 -0500
+
+    install more packages in travis; close issue #17
+
+commit 3e1ecf5ecba1aba6af5a63829904c6447a1b2c4d
+Author: dsrizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 20:07:06 2016 -0500
+
+    apiary docs updated
+
+commit af424f486c1791444df3131e091a4d1c256011cf
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 20:04:23 2016 -0500
+
+    Update .travis.yml
+
+commit 0e4432d70e94d7dfb98a0f63da4296ec6020507d
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 19:43:49 2016 -0500
+
+    apiary extenstion corrected
+
+commit 0418e1c585973e99d8e5fc9d214bbae96f6a1c2e
+Merge: fc96e6b e3808f4
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 19:40:38 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit fc96e6bb9729b85be2f37adf34ed65513199eb82
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Thu Mar 24 19:40:25 2016 -0500
+
+    apiary doc added
+
+commit e3808f420e5ad99df2618a55c5e5be9365373039
+Author: iamkeeb <amanda.keebler@gmail.com>
+Date:   Thu Mar 24 18:52:01 2016 -0500
+
+    adding makefile
+
+commit b36bf2426c6ec3467b5c8cfa3e9f63c542e1e66e
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 16:18:54 2016 -0500
+
+    Added files via upload
+
+commit fec7744e38b51aaedc07b85a443fde0d05c926e1
+Author: agt457 <agt457@users.noreply.github.com>
+Date:   Thu Mar 24 16:06:09 2016 -0500
+
+    Added YUML diagram
+
+commit 11e85a380ccaf78da8fcfa831910a7126e9c37ef
+Merge: 7ada9c5 6b27fcd
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 23:59:28 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 7ada9c51a6ed5a6f7314252e95357e932c1a7539
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 23:59:04 2016 -0500
+
+    Added unit tests
+
+commit 6b27fcd21561213e9f3c5f645a09727c82e18a61
+Merge: 747398f c95949f
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Mar 23 20:27:36 2016 -0500
+
+    Merge branch 'master' of https://github.com/dsrizvi/cs373-idb
+
+commit 747398f108a1c14addc882f8b89fbccd47f32ea1
+Author: Danyal Rizvi <d.s.rizvi@gmail.com>
+Date:   Wed Mar 23 20:27:22 2016 -0500
+
+    travis yml edited
+
+commit c95949f36085376d650535159360d32bae53abe4
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 20:17:48 2016 -0500
+
+    revised models with Locations entity
+
+commit 1a4f0f5b5bd5098d517eeeee96ae3e623611c53d
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Wed Mar 23 19:06:24 2016 -0500
+
+    recreated models to conform to startup data set
+
+commit b5283564e72943b932f47101318cf176ef8aedbf
+Author: Austin Thomas <athom93@gmail.com>
+Date:   Tue Mar 22 21:44:53 2016 -0500
+
+    rough outline for models.py
+
+commit 4505f9c49d598cf5684f6f64dfe0c2d0bb2d7953
+Author: Moiz Rizvi <moizrizvi@gmail.com>
+Date:   Tue Mar 22 19:55:23 2016 -0500
+
+    first commit
