@@ -3,11 +3,9 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy_searchable import make_searchable
-from sqlalchemy_utils.types import TSVectorType
+import flask.ext.whooshalchemy as whooshalchemy
+from init_db import Base
 
-Base = declarative_base()
-make_searchable()
 #---------
 #Relations
 #---------
@@ -28,6 +26,8 @@ class Founder(Base):
 
     __tablename__ = 'founders'
 
+    __searchable__ = ['name', 'city_name']
+
     #Founder attributes
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
@@ -40,8 +40,6 @@ class Founder(Base):
     city_name = Column(String)
     #Founder foreign keys
     city_id = Column(Integer, ForeignKey('cities.id'))
-
-    search_vector = Column(TSVectorType('name', 'bio', 'city_name'))
 
     #Founder relationships
     city = relationship("City", back_populates="founders")
@@ -83,7 +81,6 @@ class Startup(Base):
     company_url = Column(String)
     logo_url = Column(String)
 
-    search_vector = Column(TSVectorType('name', 'location', 'market', 'product_desc'))
     #Startup foreign keys
     city_id = Column(Integer, ForeignKey('cities.id'))
 
@@ -125,8 +122,6 @@ class City(Base):
     popularity = Column(Integer, nullable=False)
     num_companies = Column(Integer, nullable=False)
     num_people = Column(Integer, nullable=False)
-
-    search_vector = Column(TSVectorType('name'))
 
     #City relationships
     startups = relationship("Startup", back_populates="city")

@@ -9,7 +9,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.restless import APIManager
 
 from sqlalchemy.sql import exists
-from sqlalchemy_searchable import search
 
 from models import *
 
@@ -83,15 +82,15 @@ def show_item_page(model_name, item_id):
 
 @app.route('/search', methods=['POST'])
 def search(**kwargs):
-    terms = request.form['text']
+    query = request.form['text']
 
-    founders = row_dict(db_session.query(Founder).search(terms))
-    cities = row_dict(db_session.query(City).search(terms))
-    startups = row_dict(db_session.query(Startup).search(terms))
+    founders = row_dict(Founder.query.whoosh_search(query))
+    cities = row_dict(City.query.whoosh_search(query))
+    startups = row_dict(Startup.query.whoosh_search(query))
 
-    founders_or = row_dict(db_session.query(Founder).search(terms, or_=True))
-    cities_or = row_dict(db_session.query(City).search(terms, or_=True))
-    startups_or = row_dict(db_session.query(Startup).search(terms, or_=True))
+    founders_or = row_dict(Founder.query.whoosh_search(query, or_=True))
+    cities_or = row_dict(City.query.whoosh_search(query, or_=True))
+    startups_or = row_dict(Startup.query.whoosh_search(query, or_=True))
 
     results = {
         'and': {
@@ -100,7 +99,7 @@ def search(**kwargs):
                     'startups_and'    : startup,
                     'founders_or' : founders_or
                 },
-        'or': {
+        'or':   {
                     'cities_or'   : cities_or,
                     'startup_or'  : startup_or
                 }
